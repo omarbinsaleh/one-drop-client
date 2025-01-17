@@ -1,17 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import Slider from "../components/Slider";
 import Spinner from "../components/Spinner";
-import WhyUs from "../components/WhyUs";
 import AboutUs from "../components/AboutUs";
 import { AuthContext } from "../providers/AuthProvider";
 import Banner from "../components/Banner";
-// import Marathons from "../components/Marathons";
+import WhyUs from "../components/WhyUs";
+import ContactUs from "../components/ContactUs";
 
 const Home = () => {
   const {loading, darkMood} = useContext(AuthContext);
 
   // CHANGE THE PAGE TITLE:
-  document.title = "Home | Marathon Hub";
+  document.title = "Home | One Drop";
 
   console.log('loading state from home --> ', loading)
 
@@ -22,20 +21,24 @@ const Home = () => {
 
   return (
     <div className={`bg-gray-50 ${darkMood ? 'dark' : ''} dark:bg-slate-800`}>
-      {/* SLIDER SECTION */}
+      {/* BANNER SECTION */}
       <section>
-        {/* <Slider></Slider> */}
         <Banner></Banner>
       </section>
 
-      {/* 'WHY TO CHOOSE US' SECTIONS'*/}
+      {/* WHY CHOOS US SECTION */}
       <section>
-        <WhyUs />
+         <WhyUs></WhyUs>
       </section>
 
       {/* ABOUT US SECTIONS */}
       <section>
         <AboutUs></AboutUs>
+      </section>
+
+      {/* CONTACT US SECTION */}
+      <section>
+         <ContactUs></ContactUs>
       </section>
     </div>
   );

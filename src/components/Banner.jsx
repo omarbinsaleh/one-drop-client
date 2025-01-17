@@ -12,12 +12,12 @@ const Banner = () => {
          }}
       >
          {/* Parallax Overlay */}
-         <div className="absolute inset-0 bg-secondary bg-opacity-65"></div>
+         <div className="absolute inset-0 bg-secondary bg-opacity-50"></div>
 
          {/* Content */}
          <div className="relative z-10 text-center text-white px-6 max-w-3xl">
             <h1 className="text-5xl font-bold mb-4">
-               Be the Lifeline Someone Needs
+               Be the Lifeline, <span className=''>Someone Needs</span>
             </h1>
             <p className="text-lg mb-8">
                Join our mission to connect donors with those in need. Together, we can make a difference and save lives.

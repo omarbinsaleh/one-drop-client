@@ -19,7 +19,7 @@ const ErrorPage = () => {
       </p>
       <button
         onClick={() => navigate('/')}
-        className="mt-6 px-6 py-3 bg-blue-500 text-white font-bold rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+        className="mt-6 px-6 py-3 bg-secondary text-white font-bold rounded-sm shadow hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 ring-offset-2"
       >
         Back to Home
       </button>
