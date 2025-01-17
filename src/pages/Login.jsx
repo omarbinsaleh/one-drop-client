@@ -47,7 +47,7 @@ const Login = () => {
          .catch((err) => {
             toast.error(err.message);
          });
-         
+
       // 05. reset the form
       e.target.reset();
    }
