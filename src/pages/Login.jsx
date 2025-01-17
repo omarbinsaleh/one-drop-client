@@ -1,10 +1,10 @@
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { useContext, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
    const [showPassword, setShowPassword] = useState(false);
@@ -16,7 +16,7 @@ const Login = () => {
    const [password, setPassword] = useState("");
    const location = useLocation();
    const navigate = useNavigate();
-   const { signInUser, user, setUser, setLoading, logInWithGoogle } = useContext(AuthContext);
+   const { signIn, setUser, setLoading, } = useContext(AuthContext);
 
    const PassRegEX = /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z\d@$!%*?&#]{6,}$/
 
@@ -40,7 +40,7 @@ const Login = () => {
 
       // TODO: check if the user exists in the database:
 
-      signInUser(email, password)
+      signIn(email, password)
          .then((result) => {
             setUser(result.user);
             toast.success("User logged in successfully")
@@ -53,21 +53,6 @@ const Login = () => {
       e.target.reset();
    }
 
-   function handlLogInWithGoogle() {
-      logInWithGoogle()
-         .then((result) => {
-            setUser(result.user);
-            toast.success("Logged in successfully")
-            { location.state ? navigate(location.state) : navigate('/'); }
-         })
-         .catch((err) => {
-            toast.error(err.message);
-         })
-   }
-
-   // if(user) {
-   //    return <Navigate to={location.state ? location.state : '/'}></Navigate>
-   // }
 
 
    return (
