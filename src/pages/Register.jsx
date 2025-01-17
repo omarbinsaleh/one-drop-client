@@ -20,8 +20,8 @@ const Register = () => {
       password: ''
    })
 
-   // change the title:
-   document.title = "Sign-Up | Marathon Hub";
+   // CHANGE THE PAGE TITLE:
+   document.title = "Sign-Up | One Drop";
 
    function handleSubmit(e) {
       e.preventDefault();
@@ -97,7 +97,7 @@ const Register = () => {
             <div>
                <img className='w-[130px] mx-auto' src={logo} alt="" />
             </div>
-            <h1 className="text-3xl font-semibold">Create your account</h1>
+            <h1 className="text-3xl text-secondary font-semibold">Create your account</h1>
             <div className="card bg-base-100 w-full max-w-md  shrink-0 ">
                <form onSubmit={handleSubmit} className="card-body">
                   <div className="form-control">
@@ -136,18 +136,13 @@ const Register = () => {
                      </label>
                   </div>
                   <div className="form-control mt-6">
-                     <button className="btn bg-blue-500 hover:bg-blue-700 text-white rounded-sm">Create Account</button>
+                     <button className="btn bg-secondary hover:bg-secondary/90 text-white rounded-sm">Create Account</button>
                   </div>
                   <div className='w-full text-center'>
-                     <p className=''>Already have account? <span className="text-red-600 font-semibold"><Link to={'/auth/login'}>Sign In</Link></span></p>
+                     <p className=''>Already have account? <span className="text-primary font-semibold"><Link to={'/auth/sign-in'}>Sign In</Link></span></p>
                   </div>
                </form>
-               <div className="divider">OR</div>
-               <div className='card'>
-                  <div className='card-body'>
-                     <button onClick={handlLogInWithGoogle} className="btn btn-block btn-primary bg-white text-blue-700 border-blue-700 hover:text-white rounded-sm"><FaGoogle></FaGoogle> Login with Google</button>
-                  </div>
-               </div>
+               
             </div>
          </section>
 
