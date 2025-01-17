@@ -11,10 +11,10 @@ const MainLayout = () => {
 
   return (
     <section className={`min-h-screen w-full flex flex-col ${darkMood ? 'dark' : ''}`}>
-      <header>
+      <header className='fixed z-20 top-0 w-full text-center'>
         <Navbar></Navbar>
       </header>
-      <main className='flex-1 border border-red-500'>
+      <main className='flex-1 border border-red-500 mt-16'>
          <Outlet></Outlet>
       </main>
       <footer>

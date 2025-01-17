@@ -4,6 +4,7 @@ import Spinner from "../components/Spinner";
 import WhyUs from "../components/WhyUs";
 import AboutUs from "../components/AboutUs";
 import { AuthContext } from "../providers/AuthProvider";
+import Banner from "../components/Banner";
 // import Marathons from "../components/Marathons";
 
 const Home = () => {
@@ -23,7 +24,8 @@ const Home = () => {
     <div className={`bg-gray-50 ${darkMood ? 'dark' : ''} dark:bg-slate-800`}>
       {/* SLIDER SECTION */}
       <section>
-        <Slider></Slider>
+        {/* <Slider></Slider> */}
+        <Banner></Banner>
       </section>
 
       {/* 'WHY TO CHOOSE US' SECTIONS'*/}

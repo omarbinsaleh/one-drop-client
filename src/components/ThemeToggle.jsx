@@ -14,19 +14,15 @@ const ThemeToggle = ({classList}) => {
    return (
       <button
          onClick={handleThemeToggle}
-         className={`p-3 rounded-xl focus:outline-none transition-all duration-300 bg-gray-200/40 dark:bg-gray-800/20 shadow-md hover:shadow-lg dark-light-mood`}
+         className={`p-3 rounded-full btn btn-ghost focus:outline-none transition-all duration-300 bg-gray-200/40 dark:bg-gray-800/20 shadow-md hover:shadow-lg dark-light-mood`}
          aria-label="Toggle Theme"
+         title={!darkMood ? 'Dark Mood' : 'Light Mood'}
       >
          {!darkMood ? (
             <FaMoon className="text-gray-600 text-xl dark:text-gray-300" />
          ) : (
             <FaSun className="text-yellow-400 text-xl" />
          )}
-
-         <Tooltip
-            anchorSelect=".dark-light-mood"
-            content={!darkMood ? "Dark Mood" : "Light Mood"}
-         />
       </button>
    );
 };

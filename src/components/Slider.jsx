@@ -38,7 +38,7 @@ const Slider = () => {
                         <div className="text-center max-w-[900px] px-3 space-y-5">
                            <h1 className="text-3xl sm:text-4xl font-bold">{slider.title}</h1>
                            <p>{slider?.description.slice(0, 200)}...</p>
-                           <Link className='btn bg-blue-900 text-white border border-blue-900 rounded-md hover:bg-blue-700' to={`/marathons/${slider._id}`}>See Event's Details</Link>
+                           <Link className='btn bg-secondary text-white border border-blue-900 rounded-md hover:bg-blue-900' to={`/marathons/${slider._id}`}>See Event's Details</Link>
                         </div>
                      </div>
                   </div>
