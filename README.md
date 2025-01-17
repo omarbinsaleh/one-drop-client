@@ -10,6 +10,6 @@
 
 # setup firebase authentication system
    1. create a firebase project --> done
-   2. install the firebase SDK --> 
-   3. copy the firebase config and save in the `.env.local` file -->
+   2. install the firebase SDK --> done
+   3. copy the firebase config and save in the `.env.local` file --> done
    
