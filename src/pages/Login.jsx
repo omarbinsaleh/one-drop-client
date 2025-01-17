@@ -1,10 +1,10 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
-import { useContext, useState } from 'react';
-import { AuthContext } from '../providers/AuthProvider';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import useAuth from '../hooks/useAuth';
 
 const Login = () => {
    const [showPassword, setShowPassword] = useState(false);
@@ -16,30 +16,28 @@ const Login = () => {
    const [password, setPassword] = useState("");
    const location = useLocation();
    const navigate = useNavigate();
-   const { signIn, setUser, setLoading, } = useContext(AuthContext);
+   const { signIn, setUser, setLoading, } = useAuth();
 
+   // REGURLAR EXPRESSION FOR PASSWORD VALIDATION
    const PassRegEX = /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z\d@$!%*?&#]{6,}$/
 
    // CHANGE THE PAGE TITLE:
    document.title = "Sign-In | One Drop";
 
+   // HANDLE SIGN-IN FORM SUBMITION
    function handleSubmit(e) {
-
+      // 01. block the native form submit behaviour
       e.preventDefault();
 
-      // const form = new FormData(e.target);
-      // const formEmail = form.get('email');
-      // const formPassword = form.get('password');
-
+      // 02. validate the password
       if (!PassRegEX.test(password)) {
          setErrorMessage({ ...errorMessage, password: "Invalid Password: Password must be at least 6 character log and must include at least one lowercase and one uppercase latter" })
          return;
       }
 
-      console.log("Login User", { email, password });
+      // 03. TODO: check if the user exists in the database:
 
-      // TODO: check if the user exists in the database:
-
+      // 04. sign-in user with firebase
       signIn(email, password)
          .then((result) => {
             setUser(result.user);
@@ -48,8 +46,9 @@ const Login = () => {
          })
          .catch((err) => {
             toast.error(err.message);
-         })
-
+         });
+         
+      // 05. reset the form
       e.target.reset();
    }
 
