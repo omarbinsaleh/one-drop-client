@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Outlet } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { AuthContext } from '../providers/AuthProvider';
+import Navbar from '../components/Navbar';
 
 const MainLayout = () => {
    const {darkMood} = useContext(AuthContext);
@@ -11,7 +12,7 @@ const MainLayout = () => {
   return (
     <section className={`min-h-screen w-full flex flex-col ${darkMood ? 'dark' : ''}`}>
       <header>
-         this is the header section
+        <Navbar></Navbar>
       </header>
       <main className='flex-1 border border-red-500'>
          <Outlet></Outlet>
