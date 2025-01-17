@@ -59,7 +59,8 @@ const Navbar = () => {
                <ul className='flex items-center gap-7 justify-center dark:text-white'>
                   <li><NavLink to='/' onClick={hideLink} className='' > Home</NavLink></li>
                   {/* <li><NavLink to='/about' onClick={hideLink} >About</NavLink></li> */}
-                  <li><NavLink to='/marathons' onClick={hideLink} >Marathons</NavLink></li>
+                  <li><NavLink to='/donation-request' onClick={hideLink} >Donation Request</NavLink></li>
+                  <li><NavLink to='/blogs' onClick={hideLink} >Blogs</NavLink></li>
                </ul>
             </div>
 

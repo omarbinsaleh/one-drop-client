@@ -12,7 +12,7 @@ const Banner = () => {
          }}
       >
          {/* Parallax Overlay */}
-         <div className="absolute inset-0 bg-secondary bg-opacity-60"></div>
+         <div className="absolute inset-0 bg-secondary bg-opacity-65"></div>
 
          {/* Content */}
          <div className="relative z-10 text-center text-white px-6 max-w-3xl">
@@ -30,7 +30,7 @@ const Banner = () => {
                   Join as a Donor
                </button>
                <button
-                  className="btn text-white bg-transparent hover:bg-secondary hover:text-white border-2 border-white"
+                  className="btn text-white bg-transparent hover:bg-secondary hover:text-white border-2 border-white rounded-sm"
                   onClick={() => navigate('/search')}
                >
                   Search Donors
