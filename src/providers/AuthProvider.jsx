@@ -10,6 +10,8 @@ const AuthProvider = ({children}) => {
    const [loading, setLoading] = useState(true);
    const [darkMood, setDarkMood] = useState(false);
 
+   console.log(loading);
+
    // CREATE USER WITH EMAIL AND PASSWORD
     const signUp = (email, password) => {
       setLoading(true);

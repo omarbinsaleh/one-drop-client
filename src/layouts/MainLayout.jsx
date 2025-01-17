@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Outlet } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { AuthContext } from '../providers/AuthProvider';
 
 const MainLayout = () => {
+   const {darkMood} = useContext(AuthContext);
+
+   console.log('dark mood -->', darkMood);
+
   return (
-    <section className='w-full min-h-screen flex flex-col'>
+    <section className={`min-h-screen w-full flex flex-col ${darkMood ? 'dark' : ''}`}>
       <header>
          this is the header section
       </header>
