@@ -18,7 +18,7 @@ const Navbar = () => {
    const navigate = useNavigate();
    const { darkMood, setDarkMood } = useContext(AuthContext);
 
-   const { user, signOutUser } = useContext(AuthContext);
+   const { user, logOut } = useContext(AuthContext);
    const [showLink, setShowLink] = useState(false);
    const [showMenu, setShowMenu] = useState(false);
 
@@ -35,7 +35,7 @@ const Navbar = () => {
       // logout the user:
       // logOut();
       setShowLink(false)
-      signOutUser()
+      logOut()
 
       navigate('/')
       alert('User has logged out')

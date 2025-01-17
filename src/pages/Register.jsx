@@ -10,7 +10,7 @@ import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 
 const Register = () => {
    const location = useLocation();
-   const { createNewUser, user, setUser, logInWithGoogle, updateUserInfo } = useContext(AuthContext)
+   const { signUp, user, setUser, updateUserInfo } = useContext(AuthContext)
    const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(false);
    const [errorMessage, setErrorMessage] = useState({
@@ -43,7 +43,7 @@ const Register = () => {
       console.log("Creating New User", { name, photoURL, email, password })
 
       // create new user:
-      createNewUser(email, password)
+      signUp(email, password)
          .then((result) => {
             setUser(result.user)
 
@@ -76,17 +76,6 @@ const Register = () => {
          email: "",
          password: ""
       })
-   }
-
-   function handlLogInWithGoogle() {
-      logInWithGoogle()
-         .then((result) => {
-            setUser(result.user);
-            { location.state ? navigate(location.state) : navigate('/'); }
-         })
-         .catch((err) => {
-            toast.error(err.message);
-         })
    }
 
    console.log(location);

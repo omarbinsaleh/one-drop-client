@@ -12,6 +12,8 @@ const Home = () => {
   // CHANGE THE PAGE TITLE:
   document.title = "Home | Marathon Hub";
 
+  console.log('loading state from home --> ', loading)
+
   if (loading) {
     return <Spinner></Spinner>
   }
