@@ -13,36 +13,49 @@ const Register = () => {
    const { signUp, user, setUser, updateUserInfo } = useContext(AuthContext)
    const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(false);
+   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
    const [errorMessage, setErrorMessage] = useState({
       name: '',
       photoURL: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
    })
 
    // CHANGE THE PAGE TITLE:
    document.title = "Sign-Up | One Drop";
 
+   // HANDLE SIGN-UP FORM SUBMITION
    function handleSubmit(e) {
+      // 01. block native form behaviour
       e.preventDefault();
 
       const PassRegEX = /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z\d@$!%*?&#]{6,}$/
 
+      // 02. retrive data from user
       const form = new FormData(e.target);
       const name = form.get('name');
       const photoURL = form.get('photoURL');
       const email = form.get("email");
       const password = form.get("password");
+      const confirmPassword = form.get("confirm-password");
       const newUser = { name, email, photoURL };
 
-      // validate password:
+      // 03. validate password:
       if (!PassRegEX.test(password)) {
          setErrorMessage({ ...errorMessage, password: "Invalid Password: Password must be at least 6 character log and must include at least one lowercase and one uppercase latter" })
          return;
       }
-      console.log("Creating New User", { name, photoURL, email, password })
 
-      // create new user:
+      // 04. confirm password validation
+      if(password !== confirmPassword) {
+         setErrorMessage({...errorMessage, confirmPassword: "Please confirm your password"});
+         return;
+      }
+
+      console.log("Creating New User", { name, photoURL, email, password, confirmPassword })
+
+      // 05. create new user:
       signUp(email, password)
          .then((result) => {
             setUser(result.user)
@@ -52,7 +65,6 @@ const Register = () => {
                displayName: name,
                photoURL: photoURL,
             }).then(() => {
-               console.log("A new user has been created successfully");
                toast.success("A new user has been created successfully");
                
             }).catch((err) => {
@@ -62,7 +74,8 @@ const Register = () => {
             // TODO: save user information to the database:
 
 
-
+            // redirect the user to a particular page, where he wated to go
+            // by default, user will be redirected to the home page
             { location.state ? navigate(location.state) : navigate('/') }
 
          }).catch((err) => {
@@ -74,7 +87,8 @@ const Register = () => {
          name: "",
          photoURL: "",
          email: "",
-         password: ""
+         password: "",
+         confirmPassword: ''
       })
    }
 
@@ -89,34 +103,53 @@ const Register = () => {
             <h1 className="text-3xl text-secondary font-semibold">Create your account</h1>
             <div className="card bg-base-100 w-full max-w-md  shrink-0 ">
                <form onSubmit={handleSubmit} className="card-body">
+                  {/* name input field */}
                   <div className="form-control">
                      <label className="label">
                         <span className="label-text">Name</span>
                      </label>
                      <input name='name' type="text" placeholder="Full Name" className="input input-bordered rounded-sm" />
                   </div>
+                  {/* user photoURL input field */}
                   <div className="form-control">
                      <label className="label">
                         <span className="label-text">Photo URL</span>
                      </label>
                      <input name='photoURL' type="text" placeholder="Photo URL" className="input input-bordered rounded-sm" />
                   </div>
+                  {/* email input field */}
                   <div className="form-control">
                      <label className="label">
                         <span className="label-text">Email</span>
                      </label>
                      <input name='email' type="email" placeholder="email" className="input input-bordered rounded-sm" required />
                   </div>
+                  {/* password input field */}
                   <div className="form-control relative">
                      <label className="label">
                         <span className="label-text">Password</span>
                      </label>
-                     <input name='password' type={showPassword ? "text" : "password"} placeholder="password" className="input input-bordered rounded-sm" required />
+                     <input name='password' type={showPassword ? "text" : "password"} placeholder="Password" className="input input-bordered rounded-sm" required />
                      <div onClick={() => setShowPassword(!showPassword)} className=' absolute right-3 top-[52px] cursor-pointer'>{showPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</div>
                      {
                         errorMessage.password ? (
                            <label className="label">
                               <p className='text-xs text-red-500'>{errorMessage.password}</p>
+                           </label>
+                        ) : ''
+                     }
+                  </div>
+                  {/* confirm password input field */}
+                  <div className="form-control relative">
+                     <label className="label">
+                        <span className="label-text">Confirm Password</span>
+                     </label>
+                     <input name='confirm-password' type={showConfirmedPassword ? "text" : "password"} placeholder="Confirm Password" className="input input-bordered rounded-sm" required />
+                     <div onClick={() => setShowConfirmedPassword(!showConfirmedPassword)} className=' absolute right-3 top-[52px] cursor-pointer'>{showConfirmedPassword ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>}</div>
+                     {
+                        errorMessage.confirmPassword ? (
+                           <label className="label">
+                              <p className='text-xs text-red-500'>{errorMessage.confirmPassword}</p>
                            </label>
                         ) : ''
                      }

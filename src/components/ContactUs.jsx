@@ -70,8 +70,8 @@ const ContactUs = () => {
                {/* Contact Information */}
                <div
                   style={{ backgroundImage: `url('${contactBg}')` }}
-                  className=" text-white shadow-lg rounded-lg  r bg-center bg-cover relative">
-                  <div className=' w-full h-full bg-secondary/85 inset-0 flex flex-col justify-center p-6'>
+                  className=" text-white shadow-lg rounded-md bg-center bg-cover relative">
+                  <div className=' w-full h-full bg-secondary/85 rounded-md inset-0 flex flex-col justify-center p-6'>
                      <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
                      <p className="text-lg mb-6">
                         Have any questions? Feel free to reach out to us directly!
