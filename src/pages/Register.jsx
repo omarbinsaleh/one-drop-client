@@ -37,6 +37,7 @@ const Register = () => {
       const name = form.get('name');
       const photoURL = form.get('photoURL');
       const email = form.get("email");
+      const blood = form.get("blood-group");
       const password = form.get("password");
       const confirmPassword = form.get("confirm-password");
       const newUser = { name, email, photoURL };
@@ -48,12 +49,12 @@ const Register = () => {
       }
 
       // 04. confirm password validation
-      if(password !== confirmPassword) {
-         setErrorMessage({...errorMessage, confirmPassword: "Please confirm your password"});
+      if (password !== confirmPassword) {
+         setErrorMessage({ ...errorMessage, confirmPassword: "Please confirm your password" });
          return;
       }
 
-      console.log("Creating New User", { name, photoURL, email, password, confirmPassword })
+      console.log("Creating New User", { name, photoURL, email, blood, password, confirmPassword })
 
       // 05. create new user:
       signUp(email, password)
@@ -66,11 +67,11 @@ const Register = () => {
                photoURL: photoURL,
             }).then(() => {
                toast.success("A new user has been created successfully");
-               
+
             }).catch((err) => {
                toast.error(err.message)
             })
-            
+
             // TODO: save user information to the database:
 
 
@@ -124,6 +125,23 @@ const Register = () => {
                      </label>
                      <input name='email' type="email" placeholder="email" className="input input-bordered rounded-sm" required />
                   </div>
+                  {/* blood group input field  */}
+                  <label className="form-control w-full rounded-sm">
+                     <div className="label">
+                        <span className="label-text">Blood Group</span>
+                     </div>
+                     <select className="select select-bordered rounded-sm" defaultValue='' name='blood-group'>
+                        <option value=''>Choose your blood group</option>
+                        <option value='A+'>A+</option>
+                        <option value='A-'>A-</option>
+                        <option value='B+'>B+</option>
+                        <option value='B-'>B-</option>
+                        <option value='AB+'>AB+</option>
+                        <option value='AB-'>AB-</option>
+                        <option value='O+'>O+</option>
+                        <option value='O-'>O-</option>
+                     </select>
+                  </label>
                   {/* password input field */}
                   <div className="form-control relative">
                      <label className="label">
@@ -164,7 +182,7 @@ const Register = () => {
                      <p className=''>Already have account? <span className="text-primary font-semibold"><Link to={'/auth/sign-in'}>Sign In</Link></span></p>
                   </div>
                </form>
-               
+
             </div>
          </section>
 
