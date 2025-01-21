@@ -1,11 +1,8 @@
 import { useContext, useState } from 'react'
 import { HiMiniBars3 } from 'react-icons/hi2';
 import { RxCross2 } from 'react-icons/rx';
-import { FaArrowDown, FaBriefcase, FaChevronDown, FaChevronUp, FaDatabase, FaHome, FaListAlt, FaUser, } from 'react-icons/fa';
-import { IoIosContact, IoIosSearch } from 'react-icons/io';
-import { MdDashboard, MdDesignServices } from 'react-icons/md';
-import { IoNewspaper } from 'react-icons/io5';
-import { RiMessage2Fill } from 'react-icons/ri';
+import { FaBlog, FaBriefcaseMedical, FaHome, } from 'react-icons/fa';
+import { MdDashboard } from 'react-icons/md';
 import newLogo from '../assets/logo.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { VscSignIn, VscSignOut } from 'react-icons/vsc';
@@ -58,7 +55,7 @@ const Navbar = () => {
                <ul className='flex items-center gap-7 justify-center dark:text-white'>
                   <li><NavLink to='/' onClick={hideLink} className='' > Home</NavLink></li>
                   {/* <li><NavLink to='/about' onClick={hideLink} >About</NavLink></li> */}
-                  <li><NavLink to='/donation-request' onClick={hideLink} >Donation Request</NavLink></li>
+                  <li><NavLink to='/donation-requests' onClick={hideLink} > Donation Requests</NavLink></li>
                   <li><NavLink to='/blogs' onClick={hideLink} >Blogs</NavLink></li>
                </ul>
             </div>
@@ -120,18 +117,10 @@ const Navbar = () => {
          <div className={` ${showLink ? 'block animate__animated animate__fadeInDown' : 'hidden animate_animated animate_fadeInUp'} pt-3`}>
             <ul className='pb-4 space-y-3 text-lg dark:text-white'>
                <li><NavLink to='/' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaHome /> Home</NavLink></li>
-               <li><NavLink to='/marathons' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaListAlt /> Marathons</NavLink> </li>
-               <li onClick={() => setShowMenu(!showMenu)} className={user ? 'block' : 'hidden'}>
-                  <div className='flex items-center justify-between pr-5'><span className='flex items-center gap-2 p-2'> <MdDashboard /> Dashboard</span> {showMenu ? <FaChevronUp /> : <FaChevronDown />}</div>
-                  {/* dashboard sub menus */}
-                  <ul className={`${showMenu ? 'block' : 'hidden'} px-4`}>
-                     <li><NavLink to='/dashboard' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaHome /> Home</NavLink> </li>
-                     <li><NavLink to='/dashboard/add-marathon' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaDatabase /> Add Marathon</NavLink> </li>
-                     <li><NavLink to='/dashboard/my-marathons-list' onClick={hideLink} className='flex items-center gap-2 p-2'> <IoNewspaper /> My Marathons List </NavLink> </li>
-                     <li><NavLink to='/dashboard/my-apply-list' onClick={hideLink} className='flex items-center gap-2 p-2'> <RiMessage2Fill /> My Apply List</NavLink> </li>
-                     <li><NavLink to='/dashboard/profile' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaUser />My Profile</NavLink> </li>
-                  </ul>
-               </li>
+               <li><NavLink to='/donation-requests' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaBriefcaseMedical /> Donation Requests</NavLink></li>
+               <li><NavLink to='/blogs' onClick={hideLink} className='flex items-center gap-2 p-2'> <FaBlog /> Blogs</NavLink></li>
+               <li><NavLink to='/dashboard' onClick={hideLink} className='flex items-center gap-2 p-2'> <MdDashboard /> Dashboard</NavLink> </li>
+               
                <li>
                   {user
                      ?

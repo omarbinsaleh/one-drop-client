@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {  NavLink } from 'react-router-dom'
 
-const SidebarButton = ({ name, path, icon }) => {
+const SidebarButton = ({ name, path, icon, onClick:handleClick }) => {
    return (
       <li>
-         <Link to={path} className='btn btn-sm btn-block rounded-none justify-start'> {icon} {name} </Link>
+         <NavLink onClick={handleClick} to={path} className='btn btn-sm btn-block btn-ghost hover:bg-secondary/10 rounded-none justify-start' title={name}> {icon} <span className='hidden md:inline'>{name}</span> </NavLink>
       </li>
    )
 }

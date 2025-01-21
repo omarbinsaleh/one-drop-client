@@ -5,3 +5,8 @@
 nav ul li a.active {
    text-decoration: underline;
 }
+
+#sidebar ul li a.active {
+   background-color: #1f2b5b;
+   color: white;
+}
