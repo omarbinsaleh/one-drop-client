@@ -23,7 +23,6 @@ const DashboardLayout = () => {
 
    const handleDashboardHomeButtonClick = () => {
       navigate('/dashboard');
-      setHideSidebar(true);
    }
 
    return (
@@ -40,12 +39,12 @@ const DashboardLayout = () => {
 
             {/* SIDEBAR: header section */}
             <header className='border-b-2 border-gray-200'>
-               <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 rounded-none hover:bg-transparent text-2xl font-bold' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className='hidden md:inline'>Dashboard</span> </button>
+               {hideSidebar || <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 rounded-none hover:bg-transparent text-2xl font-bold' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className='hidden md:inline'>Dashboard</span> </button>}
             </header>
 
             {/* SIDEBAR: nav links section */}
             <ul className='pt-2 flex-1 overflow-auto p-1'>
-               {hideSidebar || navLinks.map((link, index) => <SidebarButton key={index} onClick={hideSidebarLinks} icon={link.icon} name={link.name} path={link.path} />)}
+               {hideSidebar || navLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
             </ul>
 
             {/* SIDEBAR: footer section */}
@@ -53,7 +52,7 @@ const DashboardLayout = () => {
                {hideSidebar || <Link to='/dashboard/profile' className=' flex gap-2 items-center w-full p-3'>
                   <img src={defaultAvatar} alt="Profile avatar" className=' w-[30px] md:w-10 border border-primary p-[2px] aspect-square rounded-full' />
                   <div className='hidden md:flex flex-col'>
-                     <p to='/dashboard/profile' className='hover:underline'>{user?.displayName} </p>
+                     <p  className='hover:underline'>{user?.displayName} </p>
                      <small>{user?.email}</small>
                   </div>
                </Link>}

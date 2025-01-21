@@ -10,6 +10,7 @@ import DashboardHome from "../pages/DashboardHome";
 import MyDonationRequest from "../pages/MyDonationRequest";
 import Blogs from "../pages/Blogs";
 import AllDonationRequest from "../pages/AllDonationRequest";
+import UserProfile from "../pages/UserProfile";
 
 export const router = createBrowserRouter([
    {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
          {
             path: '/dashboard/my-donation-requests',
             element: <MyDonationRequest></MyDonationRequest>
+         },
+         {
+            path: '/dashboard/profile', 
+            element: <UserProfile></UserProfile>
          }
       ]
    },
