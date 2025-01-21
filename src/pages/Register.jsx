@@ -125,7 +125,7 @@ const Register = () => {
                      </label>
                      <input name='email' type="email" placeholder="email" className="input input-bordered rounded-sm" required />
                   </div>
-                  {/* blood group input field  */}
+                  {/* blood group input field   */}
                   <label className="form-control w-full rounded-sm">
                      <div className="label">
                         <span className="label-text">Blood Group</span>
