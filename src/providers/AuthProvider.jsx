@@ -62,6 +62,7 @@ const AuthProvider = ({children}) => {
    }, [])
 
    console.log('user in the auth provider -->', user);
+   console.log("loading state from AuthProvider -->", loading);
 
    return(
       <AuthContext.Provider value={authInfo}>

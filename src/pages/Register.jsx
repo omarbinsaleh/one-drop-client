@@ -2,18 +2,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../providers/AuthProvider';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { updateProfile } from 'firebase/auth';
-import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios';
+import Spinner from '../components/Spinner';
 
 
 const Register = () => {
    const location = useLocation();
-   const { signUp, user, setUser, updateUserInfo } = useContext(AuthContext)
+   const { signUp, user, setUser, updateUserInfo, setLoading } = useContext(AuthContext)
    const navigate = useNavigate();
    const [showPassword, setShowPassword] = useState(false);
    const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+   const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
    const [errorMessage, setErrorMessage] = useState({
       name: '',
       photoURL: '',
@@ -22,8 +25,38 @@ const Register = () => {
       confirmPassword: ''
    })
 
+   // FETCH DATA FROM THE DATABASE
+   const { isPending, data, error } = useQuery({
+      queryKey: ['districts', 'upazilas'],
+      queryFn: async () => {
+         // FETCH THE DISTRICTS DATA
+         const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
+         const districts = districtsData[2].data;
+
+         // FETCH UPAZILAS DATA
+         const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
+         const upazilas = upazilasData[2].data;
+
+         return { districts, upazilas }
+      }
+   })
+
+   // RENDER THE SPINNER, WHILE THE DATA IS BEING LOADED
+   if (isPending) return <Spinner></Spinner>
+
+   console.log('districts from register page --> ', data);
+
    // CHANGE THE PAGE TITLE:
    document.title = "Sign-Up | One Drop";
+
+   // HANDLE 'onChange' EVENT IN THE DISTRICTS INPUT FIELD
+   const handleDistrictsChange = (e) => {
+      const districtName = e.target.value;
+      const district = data.districts.find(district => district.name === districtName);
+      const districtId = district.id;
+      const upazilasData = data.upazilas.filter(upazila => upazila.district_id === districtId);
+      setUpazilas(upazilasData);
+   }
 
    // HANDLE SIGN-UP FORM SUBMITION
    function handleSubmit(e) {
@@ -32,15 +65,16 @@ const Register = () => {
 
       const PassRegEX = /^(?=.*[A-Z])(?=.*[a-z])[A-Za-z\d@$!%*?&#]{6,}$/
 
-      // 02. retrive data from user
+      // 02. take data from user
       const form = new FormData(e.target);
       const name = form.get('name');
       const photoURL = form.get('photoURL');
       const email = form.get("email");
       const blood = form.get("blood-group");
+      const district = form.get("district");
+      const upazila = form.get("upazila");
       const password = form.get("password");
       const confirmPassword = form.get("confirm-password");
-      const newUser = { name, email, photoURL };
 
       // 03. validate password:
       if (!PassRegEX.test(password)) {
@@ -54,7 +88,8 @@ const Register = () => {
          return;
       }
 
-      console.log("Creating New User", { name, photoURL, email, blood, password, confirmPassword })
+      const newUser = { name, photoURL, email, blood, district, upazila };
+      console.log("Creating New User -->", newUser)
 
       // 05. create new user:
       signUp(email, password)
@@ -66,13 +101,24 @@ const Register = () => {
                displayName: name,
                photoURL: photoURL,
             }).then(() => {
-               toast.success("A new user has been created successfully");
+               console.log("User Creation by firebase is done.");
 
             }).catch((err) => {
                toast.error(err.message)
             })
 
             // TODO: save user information to the database:
+            axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser)
+            .then(response => {
+               console.log(response.data)
+               if(response.data.insertedId) {
+                  toast.success("New User Created Successfully!!");
+                  setLoading(false);
+               }
+            }).catch((error) => {
+               toast.error(error.message);
+            })
+
 
 
             // redirect the user to a particular page, where he wated to go
@@ -83,13 +129,14 @@ const Register = () => {
             toast.error(err.message);
          })
 
+      // 06. reset the sign-up form and clear all error messages
       e.target.reset();
       setErrorMessage({
          name: "",
          photoURL: "",
          email: "",
          password: "",
-         confirmPassword: ''
+         confirmPassword: ""
       })
    }
 
@@ -142,6 +189,26 @@ const Register = () => {
                         <option value='O-'>O-</option>
                      </select>
                   </label>
+                  {/* districts input field   */}
+                  <label className="form-control w-full rounded-sm">
+                     <div className="label">
+                        <span className="label-text">District</span>
+                     </div>
+                     <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue='' name='district'>
+                        <option value=''>Choose your district</option>
+                        {data.districts.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
+                     </select>
+                  </label>
+                  {/* upazilas input field   */}
+                  <label className="form-control w-full rounded-sm">
+                     <div className="label">
+                        <span className="label-text">Upazila</span>
+                     </div>
+                     <select className="select select-bordered rounded-sm" defaultValue='' name='upazila'>
+                        <option value=''>Choose your upazila</option>
+                        {upazilas.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
+                     </select>
+                  </label>
                   {/* password input field */}
                   <div className="form-control relative">
                      <label className="label">
@@ -185,15 +252,6 @@ const Register = () => {
 
             </div>
          </section>
-
-         {/* <ToastContainer
-            containerId={"registerId"}
-            position="top-right"
-            autoClose={5000}
-            closeOnClick={true}
-            pauseOnHover={true}
-            transition={"Bounce"}
-         /><ToastContainer /> */}
       </div>
    )
 }

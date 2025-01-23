@@ -98,7 +98,7 @@ const Navbar = () => {
                </div>
                :
                // display this section before user login
-               <div className='hidden lg:flex items-center gap-2'>
+               <div className='hidden md:flex items-center gap-2'>
                   <div>
                      {/* <button onClick={() => setDarkMood(!darkMood)} className='btn'>{darkMood ? 'Light' : 'Dark'}</button> */}
                      <ThemeToggle></ThemeToggle>
