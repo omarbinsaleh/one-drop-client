@@ -78,7 +78,7 @@ const UserProfile = () => {
         <h1 className="text-2xl font-bold text-secondary">Profile</h1>
         {!isEditable ? (
           <button
-            className="btn btn-primary bg-gray-200 text-black rounded-[4px] btn-md"
+            className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
             onClick={handleEditClick}
           >
             <FaEdit />
@@ -86,7 +86,7 @@ const UserProfile = () => {
           </button>
         ) : (
           <button
-            className="btn btn-success bg-green-600 hover:bg-green-700 text-white"
+            className="btn btn-success bg-green-600 hover:bg-green-700 text-white rounded-[4px] btn-sm"
             onClick={handleSaveClick}
           >
             <FaSave></FaSave>

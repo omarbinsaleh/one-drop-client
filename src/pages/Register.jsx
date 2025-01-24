@@ -31,7 +31,7 @@ const Register = () => {
       queryFn: async () => {
          // FETCH THE DISTRICTS DATA
          const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-         const districts = districtsData[2].data;
+         const districts = districtsData[1].data;
 
          // FETCH UPAZILAS DATA
          const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
@@ -211,7 +211,7 @@ const Register = () => {
                      </div>
                      <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue='' name='district'>
                         <option value=''>Choose your district</option>
-                        {data.districts.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
+                        {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
                      </select>
                   </label>
                   {/* upazilas input field   */}

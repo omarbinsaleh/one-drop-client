@@ -3,8 +3,9 @@ import { MdDashboard } from 'react-icons/md'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import defaultAvatar from '../assets/profile.png'
-import { FaAngleLeft, FaAngleRight, FaArrowRight, FaHome, FaListAlt } from 'react-icons/fa'
+import { FaAngleLeft, FaAngleRight, FaArrowRight, FaDonate, FaHome, FaListAlt } from 'react-icons/fa'
 import SidebarButton from '../components/SidebarButton'
+import { BiSolidDonateBlood } from 'react-icons/bi'
 
 const DashboardLayout = () => {
    const navigate = useNavigate();
@@ -14,6 +15,7 @@ const DashboardLayout = () => {
    // SIDEBAR NAVLINKS:
    const navLinks = [
       { name: "Home", path: '/', icon: <FaHome className='text-[20px]' /> },
+      {name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BiSolidDonateBlood />},
       {name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> }
    ]
 
