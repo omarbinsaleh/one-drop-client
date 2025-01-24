@@ -17,10 +17,12 @@ const DashboardLayout = () => {
       {name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> }
    ]
 
+   // HELPER FUNCTION: TO DISPLAY AND HIDE THE SIDEBAR LINKS
    const hideSidebarLinks = () => {
       setHideSidebar(true);
    }
 
+   // HANDLE CLICK EVENT ON DASHBOARD HOME BUTTON ON THE TOP OF THE SIDEBAR
    const handleDashboardHomeButtonClick = () => {
       navigate('/dashboard');
    }
@@ -50,7 +52,7 @@ const DashboardLayout = () => {
             {/* SIDEBAR: footer section */}
             <footer className=' border-t-2 border-gray-200'>
                {hideSidebar || <Link to='/dashboard/profile' className=' flex gap-2 items-center w-full p-3'>
-                  <img src={defaultAvatar} alt="Profile avatar" className=' w-[30px] md:w-10 border border-primary p-[2px] aspect-square rounded-full' />
+                  <img src={user?.photoURL || defaultAvatar} alt="Profile avatar" className=' w-[30px] md:w-10 border border-primary p-[2px] aspect-square rounded-full' />
                   <div className='hidden md:flex flex-col'>
                      <p  className='hover:underline'>{user?.displayName} </p>
                      <small>{user?.email}</small>

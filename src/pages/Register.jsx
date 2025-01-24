@@ -91,53 +91,61 @@ const Register = () => {
       const newUser = { name, photoURL, email, blood, district, upazila };
       console.log("Creating New User -->", newUser)
 
-      // 05. create new user:
-      signUp(email, password)
-         .then((result) => {
-            setUser(result.user)
+      // 05 save user information to the database:
+      axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser)
+         .then(response => {
+            console.log(response.data)
 
-            // update profile:
-            updateUserInfo({
-               displayName: name,
-               photoURL: photoURL,
-            }).then(() => {
-               console.log("User Creation by firebase is done.");
+            // when the user information is successfully saved in the database
+            if (response.data.insertedId) {
+               // 06. create new user in the firebase:
+               signUp(email, password)
+                  .then((result) => {
+                     setUser(result.user)
 
-            }).catch((err) => {
-               toast.error(err.message)
-            })
+                     // 07. update user profile in the firebase:
+                     updateUserInfo({
+                        displayName: name,
+                        photoURL: photoURL,
+                     }).then(() => {
+                        console.log("User Creation by firebase is done.");
 
-            // TODO: save user information to the database:
-            axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser)
-            .then(response => {
-               console.log(response.data)
-               if(response.data.insertedId) {
-                  toast.success("New User Created Successfully!!");
-                  setLoading(false);
-               }
-            }).catch((error) => {
-               toast.error(error.message);
-            })
+                        // 08 show a success message
+                        toast.success("User Created Successfully!")
+                        
+                        // 09. reset the sign-up form and clear all error messages
+                        e.target.reset();
+                        setErrorMessage({
+                           name: "",
+                           photoURL: "",
+                           email: "",
+                           password: "",
+                           confirmPassword: ""
+                        })
 
+                        // 10. redirect the user to a particular page, where he wated to go
+                        // by default, user will be redirected to the home page
+                        { location.state ? navigate(location.state) : navigate('/') }
+                        setLoading(false);
 
+                     }).catch((err) => {
+                        toast.error(err)
+                     })
 
-            // redirect the user to a particular page, where he wated to go
-            // by default, user will be redirected to the home page
-            { location.state ? navigate(location.state) : navigate('/') }
+                  }).catch((err) => {
+                     toast.error(err);
+                  })
+            }
 
-         }).catch((err) => {
-            toast.error(err.message);
+            // when the email provided is already in use in the data base and the database fails to save the user information
+            if (response.data.message === 'user already exists') {
+               toast.error("User already exists with the same email")
+               setErrorMessage({ ...errorMessage, email: "Try with a different email" });
+            }
+
+         }).catch((error) => {
+            toast.error(error.message);
          })
-
-      // 06. reset the sign-up form and clear all error messages
-      e.target.reset();
-      setErrorMessage({
-         name: "",
-         photoURL: "",
-         email: "",
-         password: "",
-         confirmPassword: ""
-      })
    }
 
    console.log(location);
@@ -171,6 +179,13 @@ const Register = () => {
                         <span className="label-text">Email</span>
                      </label>
                      <input name='email' type="email" placeholder="email" className="input input-bordered rounded-sm" required />
+                     {
+                        errorMessage.email ? (
+                           <label className="label">
+                              <p className='text-xs text-red-500'>{errorMessage.email}</p>
+                           </label>
+                        ) : ''
+                     }
                   </div>
                   {/* blood group input field   */}
                   <label className="form-control w-full rounded-sm">
