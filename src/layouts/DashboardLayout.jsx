@@ -32,7 +32,7 @@ const DashboardLayout = () => {
          {/* DASHBOARD: SIDEBAR */}
          <div
             id='sidebar'
-            className={` ${hideSidebar ? 'w-[10px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200`}>
+            className={` ${hideSidebar ? 'w-[10px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen max-h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200`}>
             <button
                onClick={() => setHideSidebar(!hideSidebar)}
                className='w-6 h-6 flex items-center justify-center border-2 border-gray-200 rounded-sm absolute -right-[15px] bg-white top-9  z-50 sm:hidden text-secondary'>
@@ -62,7 +62,7 @@ const DashboardLayout = () => {
          </div>
 
          {/* DASHBOARD: MAIN CONTENT */}
-         <div className='flex-1 overflow-auto p-4 pl-7 relative'>
+         <div className='flex-1 max-h-screen overflow-auto p-4  relative'>
             <Outlet></Outlet>
          </div>
       </section>

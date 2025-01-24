@@ -1,10 +1,11 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react'
 import { auth } from '../firebase/firebase.config';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
    // STATE VALUES
    const [user, setUser] = useState(null);
    const [loading, setLoading] = useState(true);
@@ -13,10 +14,10 @@ const AuthProvider = ({children}) => {
    console.log(loading);
 
    // CREATE USER WITH EMAIL AND PASSWORD
-    const signUp = (email, password) => {
+   const signUp = (email, password) => {
       setLoading(true);
       return createUserWithEmailAndPassword(auth, email, password);
-    }
+   }
 
    // SIGN-IN EXISTING USER
    const signIn = (email, password) => {
@@ -30,6 +31,25 @@ const AuthProvider = ({children}) => {
       return updateProfile(auth.currentUser, userInfoObj);
    }
 
+   // REFETCH USER DATA FROM DATA BASE
+   const refetchUser = async () => {
+      const userEmail = user.email;
+      if (userEmail) {
+         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${user?.email}`);
+         const userIno = data[0]
+         const newUser = {
+            ...user,
+            displayName: userIno.name,
+            photoURL: userIno.photoURL,
+            district: userIno.district,
+            upazila: userIno.upazila,
+            blood: userIno.blood
+         }
+         setUser(newUser);
+      }
+
+   }
+
    // SIGN-OUT USER
    const logOut = () => {
       setLoading(true);
@@ -40,31 +60,53 @@ const AuthProvider = ({children}) => {
    const authInfo = {
       user,
       setUser,
-      loading, 
+      loading,
       setLoading,
-      darkMood, 
+      darkMood,
       setDarkMood,
       signUp,
       signIn,
       logOut,
-      updateUserInfo
+      updateUserInfo,
+      refetchUser
    }
 
-   useEffect(()=> {
+   useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-         setUser(currentUser);
-         setLoading(false);
+         const email = currentUser?.email;
+
+         if (email) {
+            // when user exists with email
+            axios.get(`${import.meta.env.VITE_API_URL}/users?email=${email}`)
+               .then(response => {
+                  const data = response.data[0];
+                  console.log('user data from db -->', data)
+                  currentUser.blood = data.blood;
+                  currentUser.district = data.district;
+                  currentUser.upazila = data.upazila;
+
+                  setUser(currentUser);
+                  setLoading(false);
+               }).catch(error => {
+                  console.log(error.message);
+               })
+         } else {
+            // when user does not exists
+            setUser(currentUser);
+            setLoading(false);
+         }
+
       })
 
       return () => {
-        return unsubscribe();
+         return unsubscribe();
       }
    }, [])
 
    console.log('user in the auth provider -->', user);
    console.log("loading state from AuthProvider -->", loading);
 
-   return(
+   return (
       <AuthContext.Provider value={authInfo}>
          {children}
       </AuthContext.Provider>
