@@ -138,7 +138,7 @@ const Register = () => {
             }
 
             // when the email provided is already in use in the data base and the database fails to save the user information
-            if (response.data.message === 'user already exists') {
+            if (response.data.isExistingUser) {
                toast.error("User already exists with the same email")
                setErrorMessage({ ...errorMessage, email: "Try with a different email" });
             }
