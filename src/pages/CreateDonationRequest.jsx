@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const CreateDonationRequest = () => {
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
@@ -39,7 +40,7 @@ const CreateDonationRequest = () => {
    }
 
    // HANDLE FORM SUBMISION
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       // 01. block the native behaviour of the form submision
       e.preventDefault();
 
@@ -75,10 +76,17 @@ const CreateDonationRequest = () => {
       }
 
       // 04. send the data to the backend here
-      console.log(request);
-
-      alert("Donation Request Created Successfully!");
-      // Reset form after submission
+      try {
+         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, request)
+         if (data.insertedId) {
+            toast.success("Request Posted Successfully!")
+            // Reset form after submission
+            e.target.reset();
+         }
+      } catch (error) {
+         toast.error(error.message)
+         console.log(error);
+      }
    };
 
    return (
@@ -118,39 +126,39 @@ const CreateDonationRequest = () => {
                </div>
             </div>
 
-           <div className="flex items-center gap-3 flex-wrap">
-             {/* Recipient Name */}
-             <div className="flex-1">
-               <label className="block text-sm font-medium dark:text-white label">
-                  Recipient Name
-               </label>
-               <input
-                  type="text"
-                  required
-                  name="recipientName"
-                  placeholder="Enter recipient name"
-                  className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
-               />
-            </div>
-
-            {/* blood group input field   */}
-            <label className="form-control w-full rounded-sm flex-1">
-                     <div className="label">
-                        <span className="label-text font-medium">Blood Group</span>
-                     </div>
-                     <select className="select select-bordered rounded-sm" defaultValue='' name='blood-group' required>
-                        <option value=''>Choose your blood group</option>
-                        <option value='A+'>A+</option>
-                        <option value='A-'>A-</option>
-                        <option value='B+'>B+</option>
-                        <option value='B-'>B-</option>
-                        <option value='AB+'>AB+</option>
-                        <option value='AB-'>AB-</option>
-                        <option value='O+'>O+</option>
-                        <option value='O-'>O-</option>
-                     </select>
+            <div className="flex items-center gap-3 flex-wrap">
+               {/* Recipient Name */}
+               <div className="flex-1">
+                  <label className="block text-sm font-medium dark:text-white label">
+                     Recipient Name
                   </label>
-           </div>
+                  <input
+                     type="text"
+                     required
+                     name="recipientName"
+                     placeholder="Enter recipient name"
+                     className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
+                  />
+               </div>
+
+               {/* blood group input field   */}
+               <label className="form-control w-full rounded-sm flex-1">
+                  <div className="label">
+                     <span className="label-text font-medium">Blood Group</span>
+                  </div>
+                  <select className="select select-bordered rounded-sm" defaultValue='' name='blood-group' required>
+                     <option value=''>Choose your blood group</option>
+                     <option value='A+'>A+</option>
+                     <option value='A-'>A-</option>
+                     <option value='B+'>B+</option>
+                     <option value='B-'>B-</option>
+                     <option value='AB+'>AB+</option>
+                     <option value='AB-'>AB-</option>
+                     <option value='O+'>O+</option>
+                     <option value='O-'>O-</option>
+                  </select>
+               </label>
+            </div>
 
             <div className="flex items-center gap-3 flex-wrap">
                {/* Recipient Districts Input Field   */}
