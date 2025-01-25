@@ -10,7 +10,7 @@ import { FaEdit, FaSave } from "react-icons/fa";
 const UserProfile = () => {
   // State for edit mode
   const [isEditable, setIsEditable] = useState(false);
-  const { user, loading, refetchUser } = useAuth();
+  const { user, loading, setLoading, refetchUser } = useAuth();
   const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
 
   const formRef = useRef();
@@ -69,6 +69,8 @@ const UserProfile = () => {
     return <Spinner></Spinner>
   }
 
+  console.log('user in user profile --->', user);
+
   return (
     <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg">
       <div className="flex items-center justify-between mb-6">
@@ -99,7 +101,7 @@ const UserProfile = () => {
           className="w-24 h-24 rounded-full object-cover border-2 border-primary p-1"
         />
         <div>
-          <h2 className="text-2xl font-semibold">{user.displayName}</h2>
+          <h2 className="text-2xl font-semibold">{user?.displayName}</h2>
           <p className="text-gray-600">{user.email}</p>
         </div>
       </div>
@@ -107,13 +109,13 @@ const UserProfile = () => {
       <form className="space-y-4" ref={formRef}>
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 label py-1">
             Name
           </label>
           <input
             type="text"
             name="name"
-            defaultValue={user.displayName}
+            defaultValue={user?.displayName}
             onChange={handleInputChange}
             disabled={!isEditable}
             className={`w-full mt-1 p-3 border rounded-sm ${isEditable
@@ -125,7 +127,7 @@ const UserProfile = () => {
 
         {/* Email (Non-editable) */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700 label py-1">
             Email
           </label>
           <input
@@ -144,7 +146,7 @@ const UserProfile = () => {
               <div className="label">
                 <span className="block text-sm font-medium text-gray-700">District</span>
               </div>
-              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-300 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
+              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
                 <option value=''>Choose your district</option>
                 {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
               </select>
@@ -154,34 +156,35 @@ const UserProfile = () => {
           <div className="flex-1">
             {/* upazila    */}
             <label className="form-control w-full rounded-sm">
-              <div className="label">
+              <div className="label py-2">
                 <span className="block text-sm font-medium text-gray-700">Upazila</span>
               </div>
-              <select className={`select select-bordered font-semibold rounded-sm disabled:bg-gray-300 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.upazila} disabled={!isEditable} name='upazila'>
+              <select className={`select select-bordered font-semibold rounded-sm disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.upazila} disabled={!isEditable} name='upazila'>
                 <option value=''>Choose your district</option>
                 {data?.upazilas?.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
               </select>
             </label>
           </div>
+
+          {/* Blood Group    */}
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-700 label py-1">
+              Blood Group
+            </label>
+            <input
+              type="text"
+              name="blood"
+              defaultValue={user?.blood}
+              disabled={!isEditable}
+              className={`w-full mt-1 p-3 border rounded-sm ${isEditable
+                ? "focus:ring-primary focus:border-primary"
+                : "bg-gray-200 cursor-not-allowed"
+                }`}
+            />
+          </div>
         </div>
 
-        {/* Blood Group */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Blood Group
-          </label>
-          <input
-            type="text"
-            name="blood"
-            defaultValue={user.blood}
-            onChange={handleInputChange}
-            disabled={!isEditable}
-            className={`w-full mt-1 p-3 border rounded-sm ${isEditable
-              ? "focus:ring-primary focus:border-primary"
-              : "bg-gray-200 cursor-not-allowed"
-              }`}
-          />
-        </div>
+
       </form>
     </div>
   );

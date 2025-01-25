@@ -6,25 +6,25 @@ import useAuth from '../hooks/useAuth';
 
 const PrivateRoutes = ({ children }) => {
    const location = useLocation();
-   const { user, setUser } = useAuth();
-   const [currentUser, setCurrentUser] = useState({});
-   const [loading, setLoading] = useState(true);
+   const { user, setUser, loading } = useAuth();
+   // const [currentUser, setCurrentUser] = useState({});
+   // const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
-      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-         console.log('currentUser:', currentUser);
-         setUser(currentUser)
-         setCurrentUser(currentUser);
-         setLoading(false);
-      })
+   // useEffect(() => {
+   //    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+   //       console.log('currentUser:', currentUser);
+   //       setUser(currentUser)
+   //       setCurrentUser(currentUser);
+   //       setLoading(false);
+   //    })
 
-      return () => {
-         unsubscribe();
-      }
-   }, [user])
+   //    return () => {
+   //       unsubscribe();
+   //    }
+   // }, [user])
 
-   console.log("user", currentUser);
-   console.log("loading", loading)
+   // console.log("user", currentUser);
+   // console.log("loading", loading)
 
    if (loading) {
       return (
@@ -34,7 +34,7 @@ const PrivateRoutes = ({ children }) => {
       )
    }
 
-   if (!currentUser) {
+   if (!user) {
       return <Navigate to={'/auth/sign-in'} state={location.pathname}></Navigate>
    }
 

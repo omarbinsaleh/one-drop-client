@@ -96,9 +96,9 @@ const CreateDonationRequest = () => {
          </h1>
 
          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Requester Name */}
-               <div className="flex-1">
+               <div className="flex-1 w-full">
                   <label className="block text-sm font-medium dark:text-white">
                      Requester Name
                   </label>
@@ -112,7 +112,7 @@ const CreateDonationRequest = () => {
                </div>
 
                {/* Requester Email */}
-               <div className="flex-1">
+               <div className="flex-1 w-full">
                   <label className="block text-sm font-medium dark:text-white">
                      Requester Email
                   </label>
@@ -126,9 +126,9 @@ const CreateDonationRequest = () => {
                </div>
             </div>
 
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Recipient Name */}
-               <div className="flex-1">
+               <div className="flex-1 w-full">
                   <label className="block text-sm font-medium dark:text-white label">
                      Recipient Name
                   </label>

@@ -12,6 +12,7 @@ import Blogs from "../pages/Blogs";
 import AllDonationRequest from "../pages/AllDonationRequest";
 import UserProfile from "../pages/UserProfile";
 import CreateDonationRequest from "../pages/CreateDonationRequest";
+import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
    {
@@ -38,19 +39,27 @@ export const router = createBrowserRouter([
       children: [
          {
             index: true,
-            element: <PrivateRoutes><DashboardHome></DashboardHome></PrivateRoutes>
+            element: <PrivateRoutes>
+               <DashboardHome></DashboardHome>
+            </PrivateRoutes>
          },
          {
             path: '/dashboard/my-donation-requests',
-            element: <PrivateRoutes><MyDonationRequest></MyDonationRequest></PrivateRoutes>
+            element: <PrivateRoutes>
+               <MyDonationRequest></MyDonationRequest>
+            </PrivateRoutes>
          },
          {
-            path: '/dashboard/profile', 
-            element: <PrivateRoutes><UserProfile></UserProfile></PrivateRoutes>
+            path: '/dashboard/profile',
+            element: <PrivateRoutes>
+               <UserProfile></UserProfile>
+            </PrivateRoutes>
          },
          {
             path: '/dashboard/create-donation-request',
-            element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
+            element: <PrivateRoutes>
+               <CreateDonationRequest></CreateDonationRequest>
+            </PrivateRoutes>
          }
       ]
    },

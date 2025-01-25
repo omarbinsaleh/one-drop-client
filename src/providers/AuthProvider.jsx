@@ -33,19 +33,22 @@ const AuthProvider = ({ children }) => {
 
    // REFETCH USER DATA FROM DATA BASE
    const refetchUser = async () => {
-      const userEmail = user.email;
+      const userEmail = user?.email;
       if (userEmail) {
          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users?email=${user?.email}`);
-         const userIno = data[0]
+
+         const userInfo = data[0]
+         console.log('user info -->', userInfo)
          const newUser = {
             ...user,
-            displayName: userIno.name,
-            photoURL: userIno.photoURL,
-            district: userIno.district,
-            upazila: userIno.upazila,
-            blood: userIno.blood
+            displayName: userInfo.name,
+            photoURL: userInfo.photoURL,
+            district: userInfo.district,
+            upazila: userInfo.upazila,
+            blood: userInfo.blood
          }
          setUser(newUser);
+         console.log('newUser in refechUser -->', newUser)
       }
 
    }
@@ -81,9 +84,13 @@ const AuthProvider = ({ children }) => {
                .then(response => {
                   const data = response.data[0];
                   console.log('user data from db -->', data)
+                  currentUser.displayName = data.name;
+                  currentUser.photoURL = data.photoURL;
                   currentUser.blood = data.blood;
                   currentUser.district = data.district;
                   currentUser.upazila = data.upazila;
+                  currentUser.role = data.role;
+                  currentUser.status = data.status;
 
                   setUser(currentUser);
                   setLoading(false);
