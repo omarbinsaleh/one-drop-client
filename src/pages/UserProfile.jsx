@@ -21,11 +21,12 @@ const UserProfile = () => {
     queryFn: async () => {
       // FETCH THE DISTRICTS DATA
       const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-      const districts = districtsData[2].data;
+      const districts = districtsData[1].data;
 
       // FETCH UPAZILAS DATA
       const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
       const upazilas = upazilasData[2].data;
+
       return { districts, upazilas }
     }
   })
@@ -64,13 +65,9 @@ const UserProfile = () => {
     setIsEditable(false); // Switch back to view-only mode
   };
 
-
-
   if (loading || isPending) {
     return <Spinner></Spinner>
   }
-
-
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg">

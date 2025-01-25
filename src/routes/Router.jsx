@@ -34,23 +34,23 @@ export const router = createBrowserRouter([
    },
    {
       path: '/dashboard',
-      element: <DashboardLayout></DashboardLayout>,
+      element: <PrivateRoutes><DashboardLayout></DashboardLayout></PrivateRoutes>,
       children: [
          {
             index: true,
-            element: <DashboardHome></DashboardHome>
+            element: <PrivateRoutes><DashboardHome></DashboardHome></PrivateRoutes>
          },
          {
             path: '/dashboard/my-donation-requests',
-            element: <MyDonationRequest></MyDonationRequest>
+            element: <PrivateRoutes><MyDonationRequest></MyDonationRequest></PrivateRoutes>
          },
          {
             path: '/dashboard/profile', 
-            element: <UserProfile></UserProfile>
+            element: <PrivateRoutes><UserProfile></UserProfile></PrivateRoutes>
          },
          {
             path: '/dashboard/create-donation-request',
-            element: <CreateDonationRequest></CreateDonationRequest>
+            element: <PrivateRoutes><CreateDonationRequest></CreateDonationRequest></PrivateRoutes>
          }
       ]
    },
