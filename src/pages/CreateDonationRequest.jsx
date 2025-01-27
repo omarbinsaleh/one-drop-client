@@ -57,7 +57,6 @@ const CreateDonationRequest = () => {
       const donationDate = form.get('donationDate');
       const donationTime = form.get('donationTime');
       const requestMessage = form.get('requestMessage');
-      const status = 'pending';
 
       // 03. create donation request
       const request = {
@@ -72,12 +71,12 @@ const CreateDonationRequest = () => {
          donationDate,
          donationTime,
          requestMessage,
-         status
+         status: 'pending'
       }
 
       // 04. send the data to the backend here
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, request)
+         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, {donationRequest: request})
          if (data.insertedId) {
             toast.success("Request Posted Successfully!")
             // Reset form after submission

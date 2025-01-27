@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { MdDashboard } from 'react-icons/md'
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import defaultAvatar from '../assets/profile.png'
-import { FaAngleDown, FaAngleLeft, FaAngleRight, FaAngleUp, FaArrowRight, FaDonate, FaHome, FaListAlt } from 'react-icons/fa'
+import { FaAngleLeft, FaAngleRight, FaHome, FaListAlt } from 'react-icons/fa'
 import SidebarButton from '../components/SidebarButton'
-import { BiSolidDonateBlood } from 'react-icons/bi'
-import AdminLinks from '../components/AdminLinks'
+import { BsDatabaseFillAdd } from 'react-icons/bs'
+import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
 
 const DashboardLayout = () => {
    const navigate = useNavigate();
@@ -26,10 +26,17 @@ const DashboardLayout = () => {
    ]
 
    // ADMIN NAVLINKS
-      const adminLinks = [
-         { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BiSolidDonateBlood /> },
-         { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> }
-      ]
+   const adminLinks = [
+      { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
+      { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> }
+   ]
+
+   // CLICK EVENT HANDLER ON THE MAIN CONTENT
+   const handleMainContentClick = (e) => {
+      if (window.innerWidth <= 450) {
+         setHideSidebar(true);
+      }
+   }
 
    // HELPER FUNCTION: TO DISPLAY AND HIDE THE SIDEBAR LINKS
    const hideSidebarLinks = () => {
@@ -46,11 +53,11 @@ const DashboardLayout = () => {
          {/* DASHBOARD: SIDEBAR */}
          <div
             id='sidebar'
-            className={` ${hideSidebar ? 'w-[10px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen max-h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200`}>
+            className={` ${hideSidebar ? 'w-[2px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen max-h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200`}>
             <button
                onClick={() => setHideSidebar(!hideSidebar)}
-               className='w-6 h-6 flex items-center justify-center border-2 border-gray-200 rounded-sm absolute -right-[15px] bg-white top-9  z-50 sm:hidden text-secondary'>
-               {hideSidebar ? <FaAngleRight /> : <FaAngleLeft />}
+               className='w-8 h-8 text-xl flex items-center justify-center border-2 border-gray-200 rounded-sm absolute -right-[30px] bg-white font-bold top-[9px]  z-50 sm:hidden text-secondary'>
+               {hideSidebar ? <GoSidebarCollapse /> : <GoSidebarExpand /> }
             </button>
 
             {/* SIDEBAR: header section */}
@@ -60,13 +67,13 @@ const DashboardLayout = () => {
 
             {/* SIDEBAR: nav links section */}
             <ul className='pt-2 flex-1 overflow-auto'>
-               {/* shared links */}
+               {/* shared nav links */}
                {sharedLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
 
-               {/* admin links */}
+               {/* admin's nav links */}
                {isAdmin && adminLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
 
-               {/* common sidebar links */}
+               {/* donor's nav links */}
                {isDonor && donorLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
             </ul>
 
@@ -83,7 +90,7 @@ const DashboardLayout = () => {
          </div>
 
          {/* DASHBOARD: MAIN CONTENT */}
-         <div className='flex-1 max-h-screen overflow-auto p-4'>
+         <div onClick={handleMainContentClick} className='flex-1 max-h-screen overflow-auto p-4'>
             <Outlet></Outlet>
          </div>
       </section>

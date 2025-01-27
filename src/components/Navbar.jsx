@@ -128,7 +128,7 @@ const Navbar = () => {
                      <button onClick={handleLogout} className='btn btn-md btn-block bg-opacity-80 border-none bg-secondary text-white rounded-sm  flex items-center justify-center'> <VscSignOut className='text-[17px]' /> Sign out</button>
                      :
                      // will be visible only before login
-                     <Link to='/auth/sign-in' onClick={() => setShowLink(false)} className='btn bg-opacity-50 border-none bg-secondary rounded-sm flex items-center justify-center' > <VscSignIn className='text-[17px]' /> Sign In</Link>
+                     <Link to='/auth/sign-in' onClick={() => setShowLink(false)} className='btn bg-opacity-80 text-white border-none bg-secondary rounded-sm flex items-center justify-center' > <VscSignIn className='text-[17px]' /> Sign In</Link>
                   }
                </li>
             </ul>
