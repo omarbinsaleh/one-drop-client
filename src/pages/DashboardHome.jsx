@@ -1,6 +1,7 @@
 import React from 'react'
 import useAuth from '../hooks/useAuth'
 import Spinner from '../components/Spinner';
+import DashboardWelcome from '../components/DashboardWelcom';
 
 const DashboardHome = () => {
   const {user, loading} = useAuth();
@@ -17,7 +18,8 @@ const DashboardHome = () => {
     <div>
       {/* welcome section */}
       <section>
-        <h1 className="text-2xl font-bold text-secondary mb-6 dark:text-white" >Welcome {user?.displayName} 👋</h1>
+        {/* <h1 className="text-2xl font-bold text-secondary mb-6 dark:text-white" >Welcome {user?.displayName} 👋</h1> */}
+        <DashboardWelcome user={user}></DashboardWelcome>
       </section>
     </div>
   )
