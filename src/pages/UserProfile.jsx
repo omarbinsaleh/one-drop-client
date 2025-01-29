@@ -15,6 +15,9 @@ const UserProfile = () => {
 
   const formRef = useRef();
 
+  // CHANGE THE PAGE TITLE
+  document.title = "User Profile | One Drop";
+
   // FETCH DATA FROM THE DATABASE
   const { isPending, data, error } = useQuery({
     queryKey: ['districts', 'upazilas'],

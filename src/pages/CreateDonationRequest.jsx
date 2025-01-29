@@ -9,6 +9,9 @@ const CreateDonationRequest = () => {
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
    const { user, loading } = useAuth();
 
+   // CHANGE THE PAGE TITLE
+   document.title = "New Donation Request | One Drop";
+
    // FETCH DATA FROM THE DATABASE
    const { isPending, data, error } = useQuery({
       queryKey: ['districtsData', 'upazilasData'],
