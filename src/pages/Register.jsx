@@ -31,23 +31,23 @@ const Register = () => {
       queryFn: async () => {
          // FETCH THE DISTRICTS DATA
          const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-         const districts = districtsData[1].data;
+         const districts = districtsData.find(item => item.name === 'districts').data;
 
          // FETCH UPAZILAS DATA
          const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-         const upazilas = upazilasData[2].data;
+         const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
 
          return { districts, upazilas }
       }
    })
 
-   // RENDER THE SPINNER, WHILE THE DATA IS BEING LOADED
-   if (isPending) return <Spinner></Spinner>
-
    console.log('districts from register page --> ', data);
 
    // CHANGE THE PAGE TITLE:
    document.title = "Sign-Up | One Drop";
+
+   // RENDER THE SPINNER, WHILE THE DATA IS BEING LOADED
+   if (isPending) return <Spinner></Spinner>
 
    // HANDLE 'onChange' EVENT IN THE DISTRICTS INPUT FIELD
    const handleDistrictsChange = (e) => {
@@ -56,7 +56,7 @@ const Register = () => {
       const districtId = district.id;
       const upazilasData = data.upazilas.filter(upazila => upazila.district_id === districtId);
       setUpazilas(upazilasData);
-   }
+   };
 
    // HANDLE SIGN-UP FORM SUBMITION
    function handleSubmit(e) {
@@ -80,16 +80,16 @@ const Register = () => {
       if (!PassRegEX.test(password)) {
          setErrorMessage({ ...errorMessage, password: "Invalid Password: Password must be at least 6 character log and must include at least one lowercase and one uppercase latter" })
          return;
-      }
+      };
 
       // 04. confirm password validation
       if (password !== confirmPassword) {
          setErrorMessage({ ...errorMessage, confirmPassword: "Please confirm your password" });
          return;
-      }
+      };
 
       const newUser = { name, photoURL, email, blood, district, upazila };
-      console.log("Creating New User -->", newUser)
+      console.log("Creating New User -->", newUser);
 
       // 05 save user information to the database:
       axios.post(`${import.meta.env.VITE_API_URL}/users`, newUser)
@@ -112,7 +112,7 @@ const Register = () => {
 
                         // 08 show a success message
                         toast.success("User Created Successfully!")
-                        
+
                         // 09. reset the sign-up form and clear all error messages
                         e.target.reset();
                         setErrorMessage({

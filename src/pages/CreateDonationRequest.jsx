@@ -18,11 +18,11 @@ const CreateDonationRequest = () => {
       queryFn: async () => {
          // FETCH THE DISTRICTS DATA
          const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-         const districts = districtsData[1].data;
+         const districts = districtsData.find(item => item.name === 'districts').data;
 
          // FETCH UPAZILAS DATA
          const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-         const upazilas = upazilasData[2].data;
+         const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
 
          return { districts, upazilas }
       }
