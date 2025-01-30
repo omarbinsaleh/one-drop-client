@@ -13,6 +13,7 @@ const UserProfile = () => {
   const { user, loading, setLoading, refetchUser } = useAuth();
   const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
 
+  // CREATE A REFERANCE TO TARGET THE FORM
   const formRef = useRef();
 
   // CHANGE THE PAGE TITLE
@@ -30,9 +31,9 @@ const UserProfile = () => {
       const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
       const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
 
-      return { districts, upazilas }
+      return { districts, upazilas };
     }
-  })
+  });
 
   // HANDLE DISTRICT CHANGE
   const handleDistrictsChange = (e) => {
@@ -43,18 +44,18 @@ const UserProfile = () => {
     setUpazilas(upazilasData);
   };
 
-  // Handle input changes
+  // HANDLE INPUT CHANGE
   const handleInputChange = (e) => {
     // const { name, value } = e.target;
     // setFormValues({ ...formValues, [name]: value });
   };
 
-  // Handle edit button click
+  // HANDLE EDIT BUTTON CLICK
   const handleEditClick = () => {
     setIsEditable(true);
   };
 
-  // Handle save button click
+  // HANDLE SAVE BUTTON CLICK
   const handleSaveClick = async () => {
 
     // 01. take form data
@@ -66,17 +67,22 @@ const UserProfile = () => {
     const blood = form.get('blood');
     const userInfo = { email, updatedInfo: { name, email, district, upazila, blood } };
 
-    // make an API request
+    // 02. make an API call to the server and save the data in the database
     const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users`, userInfo);
     console.log(data)
     if (data.modifiedCount > 0) {
+      // 03. show a success message
       toast.success("Data updated successfully!")
+
+      // 04. refetch the user's data from database and update the UI
       refetchUser();
     }
 
-    setIsEditable(false); // Switch back to view-only mode
+    // 03. Switch back to view-only mode
+    setIsEditable(false);
   };
 
+  // RENDER THE SPINNER, WHILE DATA IS BEING LOADED
   if (loading || isPending) {
     return <Spinner></Spinner>
   };
