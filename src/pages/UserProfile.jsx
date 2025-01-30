@@ -24,15 +24,24 @@ const UserProfile = () => {
     queryFn: async () => {
       // FETCH THE DISTRICTS DATA
       const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-      const districts = districtsData[1].data;
+      const districts = districtsData.find(item => item.name === 'districts').data;
 
       // FETCH UPAZILAS DATA
       const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-      const upazilas = upazilasData[2].data;
+      const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
 
       return { districts, upazilas }
     }
   })
+
+  // HANDLE DISTRICT CHANGE
+  const handleDistrictsChange = (e) => {
+    const districtName = e.target.value;
+    const district = data.districts.find(district => district.name === districtName);
+    const districtId = district.id;
+    const upazilasData = data.upazilas.filter(upazila => upazila.district_id === districtId);
+    setUpazilas(upazilasData);
+  };
 
   // Handle input changes
   const handleInputChange = (e) => {
@@ -70,7 +79,7 @@ const UserProfile = () => {
 
   if (loading || isPending) {
     return <Spinner></Spinner>
-  }
+  };
 
   console.log('user in user profile --->', user);
 
@@ -149,7 +158,7 @@ const UserProfile = () => {
               <div className="label">
                 <span className="block text-sm font-medium text-gray-700">District</span>
               </div>
-              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
+              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleDistrictsChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
                 <option value=''>Choose your district</option>
                 {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
               </select>
