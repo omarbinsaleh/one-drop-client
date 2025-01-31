@@ -5,7 +5,7 @@ import { FaHandHoldingHeart, FaTint, FaUserPlus } from "react-icons/fa";
 const DashboardWelcome = ({user}) => {
 
   return (
-    <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-8 rounded-sm shadow-lg">
+    <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-8 rounded-sm shadow-sm">
       {/* Greeting Section */}
       <h1 className="text-3xl font-bold flex items-center gap-2">
         Welcome, {user.displayName} 👋
