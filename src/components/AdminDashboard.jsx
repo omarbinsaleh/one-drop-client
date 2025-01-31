@@ -2,11 +2,8 @@ import React from 'react'
 import useAuth from '../hooks/useAuth'
 import Spinner from '../components/Spinner';
 import DashboardWelcome from '../components/DashboardWelcome';
-import Table from '../components/Table';
-import AdminDashboard from '../components/AdminDashboard';
-import DonorDashboard from '../components/DonorDashboard';
 
-const DashboardHome = () => {
+const AdminDashboard = () => {
   const {user, loading} = useAuth();
 
   // CHANGE THE PAGE TITLE:
@@ -19,11 +16,16 @@ const DashboardHome = () => {
 
   return (
     <div>
-      {user?.role === 'admin' && <AdminDashboard />}
+      {/* welcome section */}
+      <section>
+        <DashboardWelcome user={user}></DashboardWelcome>
+      </section>
 
-      {user?.role === 'donor' && <DonorDashboard />}
+      <section>
+        
+      </section>
     </div>
   )
 }
 
-export default DashboardHome
+export default AdminDashboard;
