@@ -58,7 +58,7 @@ const Table = ({ tabelData, handleAction }) => {
                   <td className='capitalize'>
                      <div>
                         <h3>Name: <span className='text-slate-600'>{data.status === 'done' ? data?.donorInfo?.name : 'N/A'}</span></h3>
-                        <h3>Email: <span className='text-slate-600'>{data.status === 'done' ? data?.donorInfo?.email : 'N/A'}</span></h3>
+                        <h3>Email: <span className='text-slate-600 lowercase'>{data.status === 'done' ? data?.donorInfo?.email : 'N/A'}</span></h3>
                      </div>
                   </td>
 
@@ -67,6 +67,7 @@ const Table = ({ tabelData, handleAction }) => {
                      <select onChange={(e) => handleActionChange(e, data._id, data.status)} defaultValue='' className='select select-sm rounded-sm'>
                         <option value="">Take Action</option>
                         <option value="edit">📝 Edit</option>
+                        <option value="inprogress">⌛ Inprogress</option>
                         <option value="done">✅ Done</option>
                         <option value="cancel">❌ Cancel</option>
                         <option value="delete">🗑️ Delete</option>

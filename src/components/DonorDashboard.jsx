@@ -30,6 +30,28 @@ const DonorDashboard = () => {
       // identify the action triggered by using any of the action buttons in the Table
       const action = e.target.value;
 
+      // when the Inprogress button is clicked on
+      if (action === 'inprogress') {
+         // check for current status and 
+         // do not proceed any further if the current status is 'done' already
+         if (currentStatus === 'inprogress') {
+            toast.warn('Action not allowed');
+            return {success: true, modifiedCount: 0, message:`Action not allowed`}
+         }
+
+         const updatedDoc = {
+            status: 'inprogress',
+            donorInfo: {name: '', email: ''}
+         };
+         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
+         console.log(data);
+         if (data.modifiedCount) {
+            refetch();
+            toast.success("Status is updated successfully");
+            return {success: true, modifiedCount:data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress'};
+         }
+      }
+
       // when the Done button is clicked on
       if (action === 'done') {
          // check for current status and 
@@ -110,7 +132,7 @@ const DonorDashboard = () => {
             <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
 
             <main className='border border-secondary/10 my-10 min-h-80 flex-1'>
-               {data?.recentDonationRequests.length
+               {data?.recentDonationRequests?.length
                   // if there is any donation request
                   ? <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
 
