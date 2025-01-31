@@ -1,13 +1,12 @@
 import React from 'react'
 
-const Table = ({tabelData}) => {
+const Table = ({ tabelData }) => {
    return (
-      <div className="overflow-x-auto">
-         <h1>Data = {tabelData.length}</h1>
+      <div className="overflow-x-auto p-1">
          <table className="table">
             {/* head */}
-            <thead>
-               <tr>
+            <thead className='bg-secondary text-white'>
+               <tr className=''>
                   <th></th>
                   <th>Recipient Name</th>
                   <th>Recipient Location</th>
@@ -19,26 +18,32 @@ const Table = ({tabelData}) => {
             </thead>
             <tbody>
                {/* row 1 */}
-               <tr>
-                  <th>1</th>
-                  <td>Cy Ganderton</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
-               </tr>
-               {/* row 2 */}
-               <tr>
-                  <th>2</th>
-                  <td>Hart Hagerty</td>
-                  <td>Desktop Support Technician</td>
-                  <td>Purple</td>
-               </tr>
-               {/* row 3 */}
-               <tr>
-                  <th>3</th>
-                  <td>Brice Swyre</td>
-                  <td>Tax Accountant</td>
-                  <td>Red</td>
-               </tr>
+               {tabelData.map((data, index) => <tr key={data._id}>
+                  {/* serial number */}
+                  <th>{index + 1}</th>
+
+                  {/* recipient name */}
+                  <td> {data.recipientName} </td>
+
+                  {/* recipient location */}
+                  <td> 
+                     <div>{data.hospitalName}</div>
+                     <div>{data.district}, {data.upazila}</div> 
+                  </td>
+
+                  {/* donation date */}
+                  <td> {data.donationDate} </td>
+
+                  {/* donation time */}
+                  <td> {data.donationTime} </td>
+
+                  {/* blood group needed */}
+                  <td> {data.bloodGroup} </td>
+
+                  {/* donation status */}
+                  <td> {data.status} </td>
+               </tr>)}
+
             </tbody>
          </table>
       </div>

@@ -1,8 +1,6 @@
 import React from 'react'
 import useAuth from '../hooks/useAuth'
 import Spinner from '../components/Spinner';
-import DashboardWelcome from '../components/DashboardWelcome';
-import Table from '../components/Table';
 import AdminDashboard from '../components/AdminDashboard';
 import DonorDashboard from '../components/DonorDashboard';
 
