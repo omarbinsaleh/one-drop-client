@@ -25,46 +25,70 @@ const DonorDashboard = () => {
    // CHANGE THE PAGE TITLE:
    document.title = "Dashboard | One Drop"
 
-   const handleAction = async (e, id) => {
+   // HANDLE THE ACTION BUTTON CLICK
+   const handleAction = async (e, id, currentStatus) => {
+      // identify the action triggered by using any of the action buttons in the Table
       const action = e.target.value;
-      console.log(action);
-      console.log(id);
 
       // when the Done button is clicked on
       if (action === 'done') {
-         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {status: 'done'});
+         // check for current status and 
+         // do not proceed any further if the current status is 'done' already
+         if (currentStatus === 'done') {
+            toast.warn('Action not allowed');
+            return {success: true, modifiedCount: 0, message:`Action not allowed`}
+         }
+
+         const updatedDoc = {
+            status: 'done',
+            donorInfo: {name: user.displayName, email: user.email}
+         };
+         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
          console.log(data);
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return;
+            return {success: true, modifiedCount:data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Done'};
          }
       }
 
-      // when the Done button is clicked on
+      // when the Cancel button is clicked on
       if (action === 'cancel') {
-         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {status: 'pending'});
+         // check for current status and 
+         // do not proceed any furthere if the status is in 'pending' mood already
+         if (currentStatus === 'pending') {
+            toast.warn('Action not allowed');
+            return {success: true, modifiedCount: 0, message: 'Action not allowed'};
+         }
+
+         const updatedDoc = {
+            status: 'pending',
+            donorInfo: {name: '', email: ''}
+         }
+         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
          console.log(data);
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return;
+            return {success: true, modifiedCount: data.modifiedCount, donationStatus: 'pending', message: 'donation request has been set to pending state'};
          }
       }
 
-      // when the delete button is clicked on
+      // when the Delete button is clicked on
       if (action === 'delete') {
          const isConfirm = confirm("Are you sure to delete theis request?\nThis action can not be undo.");
-         if (!isConfirm) return;
-         
+         if (!isConfirm) return {success: true, deletedCount: 0, message: 'delete request canceled'};
+
          const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
          console.log(data);
          if (data.deletedCount) {
             refetch();
             toast.success("Deleted Successfully");
-            return;
+            return {success: true, deletedCount: data.deletedCount, message: 'donation request has been deleted successfully'};
          };
       }
+
+      return {success: false, message: 'something went wrong'}
 
    }
 
