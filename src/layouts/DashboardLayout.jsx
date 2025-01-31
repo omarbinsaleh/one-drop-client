@@ -22,7 +22,8 @@ const DashboardLayout = () => {
 
    // DONOR NAVLINK:
    const donorLinks = [
-      { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> }
+      { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
+      { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
    ]
 
    // ADMIN NAVLINKS
