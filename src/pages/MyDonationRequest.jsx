@@ -129,15 +129,16 @@ const MyDonationRequest = () => {
       <h1 className='text-2xl font-bold text-center uppercase text-secondary'>Donation Requests</h1>
       <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
 
+      {/* filter based on the status */}
       <div className='flex items-center justify-end mt-8'>
-        <select onChange={handleFilter} className='select rounded-sm select-sm border border-secondary/50'>
+        <select onChange={handleFilter} className='select select-sm rounded-none border border-secondary/50'>
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>
           <option value="pending">Pending</option>
           <option value="done">Done</option>
         </select>
       </div>
-      <main className='border border-secondary/10 my-10 mt-1 min-h-80 flex-1'>
+      <main className='border border-secondary/10 my-10 mt-2 min-h-80 flex-1'>
         {data?.donationRequests.length
           // if there is any donation request
           ? <Table tabelData={data.donationRequests} handleAction={handleAction}></Table>
