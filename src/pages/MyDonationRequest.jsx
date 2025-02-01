@@ -7,9 +7,12 @@ import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import SearchBox from '../components/SearchBox';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MyDonationRequest = () => {
-  const {user, loading} = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [filter, setFilter] = useState('');
 
   // FETCH NECESSARY DATA
@@ -30,7 +33,7 @@ const MyDonationRequest = () => {
     setFilter(e.target.value);
     console.log(filter);
   }
-  
+
   // HANDLE SEARCH
   const handleSearch = (event) => {
     console.log(event.target.value);
@@ -41,27 +44,40 @@ const MyDonationRequest = () => {
     // identify the action triggered by using any of the action buttons in the Table
     const action = e.target.value;
 
+    // when the edit button is clicked on
+    if (action === 'edit') {
+      // check for current status and
+      // do not proceed any further if the current status is 'eidt' already
+      if (currentStatus === 'edit') {
+        toast.warn('Action not allowed');
+        return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
+      }
+
+      navigate(`/dashboard/update-donation-request/${id}`, { state: location.pathname });
+      return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
+    }
+
     // when the Inprogress button is clicked on
     if (action === 'inprogress') {
       // check for current status and 
       // do not proceed any further if the current status is 'done' already
       if (currentStatus === 'inprogress') {
-         toast.warn('Action not allowed');
-         return {success: true, modifiedCount: 0, message:`Action not allowed`}
+        toast.warn('Action not allowed');
+        return { success: true, modifiedCount: 0, message: `Action not allowed` }
       }
 
       const updatedDoc = {
-         status: 'inprogress',
-         donorInfo: {name: '', email: ''}
+        status: 'inprogress',
+        donorInfo: { name: '', email: '' }
       };
-      const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
       console.log(data);
       if (data.modifiedCount) {
-         refetch();
-         toast.success("Status is updated successfully");
-         return {success: true, modifiedCount:data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress'};
+        refetch();
+        toast.success("Status is updated successfully");
+        return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress' };
       }
-   }
+    }
 
     // when the Done button is clicked on
     if (action === 'done') {
@@ -135,7 +151,7 @@ const MyDonationRequest = () => {
       <h1 className='text-2xl font-bold text-center uppercase text-secondary'>Donation Requests</h1>
       <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
 
-      
+
       <div className='flex items-center  sm:justify-end mt-8 gap-3 flex-wrap px-1'>
         {/* search box to search donation request by recipient name */}
         <SearchBox onChange={handleSearch} />

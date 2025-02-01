@@ -7,8 +7,11 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NoData from './NoData';
 import { toast } from 'react-toastify';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const DonorDashboard = () => {
+   const location = useLocation();
+   const navigate = useNavigate();
    const { user, loading } = useAuth();
 
    // FETCH NECESSARY DATA
@@ -29,6 +32,19 @@ const DonorDashboard = () => {
    const handleAction = async (e, id, currentStatus) => {
       // identify the action triggered by using any of the action buttons in the Table
       const action = e.target.value;
+
+      // when the edit button is clicked on
+      if (action === 'edit') {
+         // check for current status and
+         // do not proceed any further if the current status is 'eidt' already
+         if (currentStatus === 'edit') {
+            toast.warn('Action not allowed');
+            return {success: true, message: 'Navigation to Update Donation Request page was successfull'}
+         }
+
+         navigate(`/dashboard/update-donation-request/${id}`, {state: location.pathname});
+         return {success: true, message: 'Navigation to Update Donation Request page was successfull'}
+      }
 
       // when the Inprogress button is clicked on
       if (action === 'inprogress') {
