@@ -6,6 +6,7 @@ import Spinner from '../components/Spinner';
 import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import SearchBox from '../components/SearchBox';
 
 const MyDonationRequest = () => {
   const {user, loading} = useAuth();
@@ -28,6 +29,11 @@ const MyDonationRequest = () => {
   const handleFilter = (e) => {
     setFilter(e.target.value);
     console.log(filter);
+  }
+  
+  // HANDLE SEARCH
+  const handleSearch = (event) => {
+    console.log(event.target.value);
   }
 
   // HANDLE THE ACTION BUTTON CLICK
@@ -129,9 +135,12 @@ const MyDonationRequest = () => {
       <h1 className='text-2xl font-bold text-center uppercase text-secondary'>Donation Requests</h1>
       <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
 
-      {/* filter based on the status */}
-      <div className='flex items-center justify-end mt-8'>
-        <select onChange={handleFilter} className='select select-sm rounded-none border border-secondary/50'>
+      
+      <div className='flex items-center  sm:justify-end mt-8 gap-3 flex-wrap px-1'>
+        {/* search box to search donation request by recipient name */}
+        <SearchBox onChange={handleSearch} />
+        {/* filter based on the status */}
+        <select onChange={handleFilter} value={filter} className='select select-sm rounded-none border border-secondary/50'>
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>
           <option value="pending">Pending</option>
