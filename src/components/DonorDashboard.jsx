@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import useAuth from '../hooks/useAuth'
 import Spinner from '../components/Spinner';
 import DashboardWelcome from '../components/DashboardWelcome';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import NoData from './NoData';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
+import DataFethingMessage from './DataFethingMessage';
 
 const DonorDashboard = () => {
    const location = useLocation();
@@ -15,7 +16,7 @@ const DonorDashboard = () => {
    const { user, loading } = useAuth();
 
    // FETCH NECESSARY DATA
-   const { isPending, data, error, refetch } = useQuery({
+   const { isPending, data, error, refetch, isFetching } = useQuery({
       queryKey: ['donation-request'],
       queryFn: async () => {
          const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}`);
@@ -24,6 +25,11 @@ const DonorDashboard = () => {
          return { donationRequests, recentDonationRequests };
       }
    })
+
+   // FORCE REFETCHING DATA ON COMPONENT MOUNT
+   useEffect(() => {
+      refetch()
+   }, [])
 
    // CHANGE THE PAGE TITLE:
    document.title = "Dashboard | One Drop"
@@ -39,11 +45,11 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'eidt' already
          if (currentStatus === 'edit') {
             toast.warn('Action not allowed');
-            return {success: true, message: 'Navigation to Update Donation Request page was successfull'}
+            return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
          }
 
-         navigate(`/dashboard/update-donation-request/${id}`, {state: location.pathname});
-         return {success: true, message: 'Navigation to Update Donation Request page was successfull'}
+         navigate(`/dashboard/update-donation-request/${id}`, { state: location.pathname });
+         return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
       }
 
       // when the Inprogress button is clicked on
@@ -52,19 +58,19 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'done' already
          if (currentStatus === 'inprogress') {
             toast.warn('Action not allowed');
-            return {success: true, modifiedCount: 0, message:`Action not allowed`}
+            return { success: true, modifiedCount: 0, message: `Action not allowed` }
          }
 
          const updatedDoc = {
             status: 'inprogress',
-            donorInfo: {name: '', email: ''}
+            donorInfo: { name: '', email: '' }
          };
-         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
+         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return {success: true, modifiedCount:data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress'};
+            return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress' };
          }
       }
 
@@ -74,19 +80,19 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'done' already
          if (currentStatus === 'done') {
             toast.warn('Action not allowed');
-            return {success: true, modifiedCount: 0, message:`Action not allowed`}
+            return { success: true, modifiedCount: 0, message: `Action not allowed` }
          }
 
          const updatedDoc = {
             status: 'done',
-            donorInfo: {name: user.displayName, email: user.email}
+            donorInfo: { name: user.displayName, email: user.email }
          };
-         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
+         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return {success: true, modifiedCount:data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Done'};
+            return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Done' };
          }
       }
 
@@ -96,37 +102,37 @@ const DonorDashboard = () => {
          // do not proceed any furthere if the status is in 'pending' mood already
          if (currentStatus === 'pending') {
             toast.warn('Action not allowed');
-            return {success: true, modifiedCount: 0, message: 'Action not allowed'};
+            return { success: true, modifiedCount: 0, message: 'Action not allowed' };
          }
 
          const updatedDoc = {
             status: 'pending',
-            donorInfo: {name: '', email: ''}
+            donorInfo: { name: '', email: '' }
          }
-         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, {donationRequest: updatedDoc});
+         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return {success: true, modifiedCount: data.modifiedCount, donationStatus: 'pending', message: 'donation request has been set to pending state'};
+            return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'pending', message: 'donation request has been set to pending state' };
          }
       }
 
       // when the Delete button is clicked on
       if (action === 'delete') {
          const isConfirm = confirm("Are you sure to delete theis request?\nThis action can not be undo.");
-         if (!isConfirm) return {success: true, deletedCount: 0, message: 'delete request canceled'};
+         if (!isConfirm) return { success: true, deletedCount: 0, message: 'delete request canceled' };
 
          const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
          console.log(data);
          if (data.deletedCount) {
             refetch();
             toast.success("Deleted Successfully");
-            return {success: true, deletedCount: data.deletedCount, message: 'donation request has been deleted successfully'};
+            return { success: true, deletedCount: data.deletedCount, message: 'donation request has been deleted successfully' };
          };
       }
 
-      return {success: false, message: 'something went wrong'}
+      return { success: false, message: 'something went wrong' }
 
    }
 
@@ -148,18 +154,21 @@ const DonorDashboard = () => {
             <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
 
             <main className='border border-secondary/10 my-10 min-h-80 flex-1'>
-               {data?.recentDonationRequests?.length
-                  // if there is any donation request
-                  ? <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
+               {isFetching ? <DataFethingMessage /> : <>
+                  {data?.recentDonationRequests?.length
+                     // if there is any donation request
+                     ? <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
 
-                  // when there is no donation requests to display
-                  : (
-                     <NoData
-                        message="You haven't made any donation requests yet."
-                        actionText="Create a Request"
-                        actionLink="/dashboard/create-donation-request"
-                     />
-                  )}
+                     // when there is no donation requests to display
+                     : (
+                        <NoData
+                           message="You haven't made any donation requests yet."
+                           actionText="Create a Request"
+                           actionLink="/dashboard/create-donation-request"
+                        />
+                     )}
+               </>}
+
             </main>
          </section>
       </div>

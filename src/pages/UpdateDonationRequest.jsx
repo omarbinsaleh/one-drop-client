@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import DataFethingMessage from "../components/DataFethingMessage";
 
 const UpdateDonationRequest = () => {
    const {id:donationRequestId} = useParams();
@@ -17,7 +18,7 @@ const UpdateDonationRequest = () => {
    document.title = "New Donation Request | One Drop";
 
    // FETCH DATA FROM THE DATABASE
-   const { isPending, data, error, refetch } = useQuery({
+   const { isPending, data, error, refetch, isFetching } = useQuery({
       queryKey: ['updated-request'],
       queryFn: async () => {
          // FETCH THE DONATION REQUEST DATA
@@ -43,6 +44,11 @@ const UpdateDonationRequest = () => {
    // RENDER THE SPINNER, WHILE THE DATA IS BEING FETCHED
    if (isPending || loading) {
       return <Spinner></Spinner>
+   }
+
+   // RENDER A MESSAGE WHILE FETCHING DATA
+   if (isFetching) {
+      return <DataFethingMessage />
    }
 
    // HANDLE DISTRICT CHANGE
