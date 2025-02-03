@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Title from "../components/Title";
 
 const CreateDonationRequest = () => {
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
@@ -79,7 +80,7 @@ const CreateDonationRequest = () => {
 
       // 04. send the data to the backend here
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, {donationRequest: request})
+         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, { donationRequest: request })
          if (data.insertedId) {
             toast.success("Request Posted Successfully!")
             // Reset form after submission
@@ -92,12 +93,12 @@ const CreateDonationRequest = () => {
    };
 
    return (
-      <div className="max-w-4xl mx-auto py-10 px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
-         <h1 className="text-2xl font-bold text-secondary mb-6 dark:text-white">
-            Create Donation Request
-         </h1>
+      <div className=" mx-auto px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
+         <header>
+            <Title title="Create Donation Requests" />
+         </header>
 
-         <form onSubmit={handleSubmit} className="space-y-4">
+         <form onSubmit={handleSubmit} className="space-y-4 pb-10">
             <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Requester Name */}
                <div className="flex-1 w-full">
@@ -185,32 +186,34 @@ const CreateDonationRequest = () => {
                </label>
             </div>
 
-            {/* Hospital Name */}
-            <div>
-               <label className="block text-sm font-medium dark:text-white">
-                  Hospital Name
-               </label>
-               <input
-                  type="text"
-                  required
-                  name="hospitalName"
-                  placeholder="Enter hospital name"
-                  className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
-               />
-            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+               {/* Hospital Name */}
+               <div className="flex-1">
+                  <label className="block text-sm font-medium dark:text-white">
+                     Hospital Name
+                  </label>
+                  <input
+                     type="text"
+                     required
+                     name="hospitalName"
+                     placeholder="Enter hospital name"
+                     className="w-full  mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
+                  />
+               </div>
 
-            {/* Full Address */}
-            <div>
-               <label className="block text-sm font-medium dark:text-white">
-                  Full Address
-               </label>
-               <input
-                  type="text"
-                  required
-                  name="fullAddress"
-                  placeholder="Enter full address"
-                  className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
-               />
+               {/* Full Address */}
+               <div className="flex-1 min-w-72">
+                  <label className="block text-sm font-medium dark:text-white">
+                     Full Address
+                  </label>
+                  <input
+                     type="text"
+                     required
+                     name="fullAddress"
+                     placeholder="Enter full address"
+                     className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
+                  />
+               </div>
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
@@ -256,7 +259,7 @@ const CreateDonationRequest = () => {
             {/* Submit Button */}
             <button
                type="submit"
-               className="btn btn-primary btn-block max-w-sm mx-auto bg-secondary hover:bg-red-600 text-white mt-4 rounded-sm"
+               className="btn btn-primary btn-block capitalize  max-w-sm mx-auto bg-secondary hover:bg-secondary/90 focus:ring-2 ring-offset-2 ring-secondary text-white mt-4 rounded-sm"
             >
                Request
             </button>

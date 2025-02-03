@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import SearchBox from '../components/SearchBox';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Title from '../components/Title';
 
 const MyDonationRequest = () => {
   const location = useLocation();
@@ -148,11 +149,9 @@ const MyDonationRequest = () => {
 
   return (
     <section className='py-8 pt-2 max-h-screen flex flex-col w-full'>
-      <h1 className='text-2xl font-bold text-center uppercase text-secondary'>Donation Requests</h1>
-      <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
+      <Title title='My Donation Requests' />
 
-
-      <div className='flex items-center  sm:justify-end mt-8 gap-3 flex-wrap px-1'>
+      <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
         {/* search box to search donation request by recipient name */}
         <SearchBox onChange={handleSearch} />
         {/* filter based on the status */}

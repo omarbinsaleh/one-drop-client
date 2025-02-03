@@ -63,7 +63,7 @@ const DashboardLayout = () => {
 
             {/* SIDEBAR: header section */}
             <header className='border-b-2 border-gray-200'>
-               {hideSidebar || <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 rounded-none hover:bg-transparent text-2xl font-bold' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className=''>Dashboard</span> </button>}
+               {hideSidebar || <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 text-secondary rounded-none hover:bg-transparent text-2xl font-bold' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className=''>Dashboard</span> </button>}
             </header>
 
             {/* SIDEBAR: nav links section */}

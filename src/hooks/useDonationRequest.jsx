@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios';
-import React from 'react'
 
 const useDonationRequest = (donationRequestId) => {
    const query = useQuery({
@@ -23,4 +22,4 @@ const useDonationRequest = (donationRequestId) => {
    return query;
 }
 
-export default useDonationRequest
+export default useDonationRequest;

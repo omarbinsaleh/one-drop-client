@@ -7,8 +7,10 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NoData from './NoData';
 import { toast } from 'react-toastify';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DataFethingMessage from './DataFethingMessage';
+import { FaArrowAltCircleDown, FaArrowAltCircleRight } from 'react-icons/fa';
+import Title from './Title';
 
 const DonorDashboard = () => {
    const location = useLocation();
@@ -150,14 +152,22 @@ const DonorDashboard = () => {
 
          {/* Display Donation Request Made by the Current User */}
          <section className='py-8 my-12 max-h-screen flex flex-col w-full'>
-            <h1 className='text-2xl font-bold text-center uppercase text-secondary'>Recent Donation Requests</h1>
-            <div className="w-24 h-[2px] my-1 mx-auto bg-secondary/80"></div>
+            <Title title='Recent Donation Requests' />
 
-            <main className='border border-secondary/10 my-10 min-h-80 flex-1'>
+            <main className='border border-secondary/10 min-h-80 flex-1'>
                {isFetching ? <DataFethingMessage /> : <>
                   {data?.recentDonationRequests?.length
                      // if there is any donation request
-                     ? <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
+                     ? <>
+                        <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
+                        <div className='text-center my-4'>
+                           <Link
+                              to='/dashboard/my-donation-requests'
+                              className='btn bg-white btn-md capitalize btn-outline rounded-md border-secondary px-9 text-secondary hover:bg-secondary hover:text-white focus:ring-2 ring-secondary ring-offset-2'>
+                              View all requests <FaArrowAltCircleRight  />
+                           </Link>
+                        </div>
+                     </>
 
                      // when there is no donation requests to display
                      : (

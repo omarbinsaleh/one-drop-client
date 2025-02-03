@@ -6,9 +6,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DataFethingMessage from "../components/DataFethingMessage";
+import Title from "../components/Title";
 
 const UpdateDonationRequest = () => {
-   const {id:donationRequestId} = useParams();
+   const { id: donationRequestId } = useParams();
    const navigate = useNavigate();
    const location = useLocation();
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
@@ -22,7 +23,7 @@ const UpdateDonationRequest = () => {
       queryKey: ['updated-request'],
       queryFn: async () => {
          // FETCH THE DONATION REQUEST DATA
-         const {data:donationRequest} = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${donationRequestId}`);
+         const { data: donationRequest } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${donationRequestId}`);
          console.log(donationRequest)
 
          // FETCH THE DISTRICTS DATA
@@ -96,7 +97,7 @@ const UpdateDonationRequest = () => {
 
       // 04. send the data to the backend here
       try {
-         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${donationRequestId}`, {donationRequest: request})
+         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${donationRequestId}`, { donationRequest: request })
          if (data.modifiedCount) {
             toast.success("Request Data Updated Successfully!")
             const route = location.state ? location.state : '/dashboard/my-donation-requests'
@@ -111,10 +112,8 @@ const UpdateDonationRequest = () => {
    };
 
    return (
-      <div className="max-w-4xl mx-auto py-10 px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
-         <h1 className="text-2xl font-bold text-secondary mb-6 dark:text-white">
-            Update Donation Request
-         </h1>
+      <div className=" mx-auto px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
+         <Title title="Update Donation Request" />
 
          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
@@ -205,34 +204,36 @@ const UpdateDonationRequest = () => {
                </label>
             </div>
 
-            {/* Hospital Name */}
-            <div>
-               <label className="block text-sm font-medium dark:text-white">
-                  Hospital Name
-               </label>
-               <input
-                  type="text"
-                  defaultValue={data?.donationRequest?.hospitalName}
-                  required
-                  name="hospitalName"
-                  placeholder="Enter hospital name"
-                  className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
-               />
-            </div>
+            <div className="flex items-center gap-3 flex-wrap">
+               {/* Hospital Name */}
+               <div className="flex-1 min-w-72">
+                  <label className="block text-sm font-medium dark:text-white">
+                     Hospital Name
+                  </label>
+                  <input
+                     type="text"
+                     defaultValue={data?.donationRequest?.hospitalName}
+                     required
+                     name="hospitalName"
+                     placeholder="Enter hospital name"
+                     className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
+                  />
+               </div>
 
-            {/* Full Address */}
-            <div>
-               <label className="block text-sm font-medium dark:text-white">
-                  Full Address
-               </label>
-               <input
-                  type="text"
-                  defaultValue={data?.donationRequest?.fullAddress}
-                  required
-                  name="fullAddress"
-                  placeholder="Enter full address"
-                  className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
-               />
+               {/* Full Address */}
+               <div className="flex-1 min-w-72">
+                  <label className="block text-sm font-medium dark:text-white">
+                     Full Address
+                  </label>
+                  <input
+                     type="text"
+                     defaultValue={data?.donationRequest?.fullAddress}
+                     required
+                     name="fullAddress"
+                     placeholder="Enter full address"
+                     className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
+                  />
+               </div>
             </div>
 
             <div className="flex items-center gap-3 flex-wrap">
@@ -281,7 +282,7 @@ const UpdateDonationRequest = () => {
             {/* Submit Button */}
             <button
                type="submit"
-               className="btn btn-primary btn-block max-w-sm mx-auto bg-secondary hover:bg-red-600 text-white mt-4 rounded-sm"
+               className="btn btn-primary btn-block max-w-sm mx-auto bg-secondary hover:bg-secondary/90 focus:ring-2 ring-offset-2 ring-secondary text-white mt-4 rounded-sm"
             >
                Update Request
             </button>
