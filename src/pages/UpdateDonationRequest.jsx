@@ -115,7 +115,7 @@ const UpdateDonationRequest = () => {
       <div className=" mx-auto px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
          <Title title="Update Donation Request" />
 
-         <form onSubmit={handleSubmit} className="space-y-4">
+         <form onSubmit={handleSubmit} className="space-y-4 max-w-5xl mx-auto pb-10">
             <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Requester Name */}
                <div className="flex-1 w-full">

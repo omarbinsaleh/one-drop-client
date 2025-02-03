@@ -21,10 +21,11 @@ const DonorDashboard = () => {
    const { isPending, data, error, refetch, isFetching } = useQuery({
       queryKey: ['donation-request'],
       queryFn: async () => {
-         const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}`);
-         const recentDonationRequests = donationRequests.length >= 3 ? donationRequests.slice(0, 3) : donationRequests;
+         // const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}`);
+         // const recentDonationRequests = donationRequests.length >= 3 ? donationRequests.slice(0, 3) : donationRequests;
+         const {data:recentDonationRequests} = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
 
-         return { donationRequests, recentDonationRequests };
+         return { recentDonationRequests };
       }
    })
 
@@ -154,7 +155,7 @@ const DonorDashboard = () => {
          <section className='py-8 my-12 max-h-screen flex flex-col w-full'>
             <Title title='Recent Donation Requests' />
 
-            <main className='border border-secondary/10 min-h-80 flex-1'>
+            <main className='border border-secondary/10 min-h-96 flex-1'>
                {isFetching ? <DataFethingMessage /> : <>
                   {data?.recentDonationRequests?.length
                      // if there is any donation request

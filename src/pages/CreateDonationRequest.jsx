@@ -98,7 +98,7 @@ const CreateDonationRequest = () => {
             <Title title="Create Donation Requests" />
          </header>
 
-         <form onSubmit={handleSubmit} className="space-y-4 pb-10">
+         <form onSubmit={handleSubmit} className="space-y-4 pb-10 max-w-5xl mx-auto">
             <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Requester Name */}
                <div className="flex-1 w-full">
