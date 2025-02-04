@@ -91,6 +91,9 @@ const AuthProvider = ({ children }) => {
                   currentUser.upazila = data.upazila;
                   currentUser.role = data.role;
                   currentUser.status = data.status;
+                  currentUser.isAdmin = data.role === 'admin';
+                  currentUser.isDonor = data.role === 'donor';
+                  currentUser.isBlocked = data.status === 'blocked';
 
                   setUser(currentUser);
                   setLoading(false);

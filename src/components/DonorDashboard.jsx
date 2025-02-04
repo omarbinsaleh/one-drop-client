@@ -152,10 +152,10 @@ const DonorDashboard = () => {
          </section>
 
          {/* Display Donation Request Made by the Current User */}
-         <section className='py-8 my-12 max-h-screen flex flex-col w-full'>
+         <section className='py-4 my-12 max-h-screen flex flex-col w-full'>
             <Title title='Recent Donation Requests' />
 
-            <main className='border border-secondary/10 min-h-96 flex-1'>
+            <main className='border border-secondary/10 min-h-80 flex-1'>
                {isFetching ? <DataFethingMessage /> : <>
                   {data?.recentDonationRequests?.length
                      // if there is any donation request

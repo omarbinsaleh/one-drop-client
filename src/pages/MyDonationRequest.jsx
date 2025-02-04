@@ -18,7 +18,7 @@ const MyDonationRequest = () => {
 
   // FETCH NECESSARY DATA
   const { isPending, data, error, refetch } = useQuery({
-    queryKey: ['donation-request', filter],
+    queryKey: ['donation-request', filter, user?.email],
     queryFn: async () => {
       const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
 
