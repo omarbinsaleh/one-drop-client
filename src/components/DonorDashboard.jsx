@@ -21,8 +21,6 @@ const DonorDashboard = () => {
    const { isPending, data, error, refetch, isFetching } = useQuery({
       queryKey: ['donation-request', user?.email],
       queryFn: async () => {
-         // const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}`);
-         // const recentDonationRequests = donationRequests.length >= 3 ? donationRequests.slice(0, 3) : donationRequests;
          const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
 
          return { recentDonationRequests };
@@ -34,10 +32,10 @@ const DonorDashboard = () => {
 
    // HANDLE THE ACTION BUTTON CLICK
    const handleAction = async (e, id, currentStatus) => {
-      // identify the action triggered by using any of the action buttons in the Table
+      // 01. identify the action triggered by using any of the action buttons in the Table
       const action = e.target.value;
 
-      // when the edit button is clicked on
+      // 02. when the edit button is clicked on
       if (action === 'edit') {
          // check for current status and
          // do not proceed any further if the current status is 'eidt' already
@@ -50,7 +48,7 @@ const DonorDashboard = () => {
          return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
       }
 
-      // when the Inprogress button is clicked on
+      // 03. when the Inprogress button is clicked on
       if (action === 'inprogress') {
          // check for current status and 
          // do not proceed any further if the current status is 'done' already
@@ -59,12 +57,17 @@ const DonorDashboard = () => {
             return { success: true, modifiedCount: 0, message: `Action not allowed` }
          }
 
+         // information to be updated
          const updatedDoc = {
             status: 'inprogress',
             donorInfo: { name: '', email: '' }
          };
+
+         // make an API call to apply the update
          const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
+
+         // show user a success message immediately after the update has been made successfully
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
@@ -72,7 +75,7 @@ const DonorDashboard = () => {
          }
       }
 
-      // when the Done button is clicked on
+      // 04. when the Done button is clicked on
       if (action === 'done') {
          // check for current status and 
          // do not proceed any further if the current status is 'done' already
@@ -81,12 +84,17 @@ const DonorDashboard = () => {
             return { success: true, modifiedCount: 0, message: `Action not allowed` }
          }
 
+         // information to be updated
          const updatedDoc = {
             status: 'done',
             donorInfo: { name: user.displayName, email: user.email }
          };
+
+         // make an API call to make that update
          const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
+
+         // show user a success message after the update has been made successfully
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
@@ -94,7 +102,7 @@ const DonorDashboard = () => {
          }
       }
 
-      // when the Cancel button is clicked on
+      // 05. when the Cancel button is clicked on
       if (action === 'cancel') {
          // check for current status and 
          // do not proceed any furthere if the status is in 'pending' mood already
@@ -103,12 +111,17 @@ const DonorDashboard = () => {
             return { success: true, modifiedCount: 0, message: 'Action not allowed' };
          }
 
+         // information to be updated
          const updatedDoc = {
             status: 'pending',
             donorInfo: { name: '', email: '' }
          }
+
+         // make an API call to make necessary update
          const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
          console.log(data);
+
+         // show user a success message after the udpate has been made successfully
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
