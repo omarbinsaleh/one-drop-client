@@ -17,9 +17,9 @@ const DashboardHome = () => {
 
   return (
     <div>
-      {user?.role === 'admin' && <AdminDashboard />}
+      {user?.isAdmin && <AdminDashboard />}
 
-      {user?.role === 'donor' && <DonorDashboard />}
+      {user?.isDonor && <DonorDashboard />}
     </div>
   )
 }

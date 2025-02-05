@@ -19,11 +19,11 @@ const DonorDashboard = () => {
 
    // FETCH NECESSARY DATA
    const { isPending, data, error, refetch, isFetching } = useQuery({
-      queryKey: ['donation-request'],
+      queryKey: ['donation-request', user?.email],
       queryFn: async () => {
          // const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}`);
          // const recentDonationRequests = donationRequests.length >= 3 ? donationRequests.slice(0, 3) : donationRequests;
-         const {data:recentDonationRequests} = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
+         const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
 
          return { recentDonationRequests };
       }
@@ -156,29 +156,40 @@ const DonorDashboard = () => {
             <Title title='Recent Donation Requests' />
 
             <main className='border border-secondary/10 min-h-80 flex-1'>
-               {isFetching ? <DataFethingMessage /> : <>
-                  {data?.recentDonationRequests?.length
-                     // if there is any donation request
-                     ? <>
-                        <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
-                        <div className='text-center my-4'>
-                           <Link
-                              to='/dashboard/my-donation-requests'
-                              className='btn bg-white btn-md capitalize btn-outline rounded-md border-secondary px-9 text-secondary hover:bg-secondary hover:text-white focus:ring-2 ring-secondary ring-offset-2'>
-                              View all requests <FaArrowAltCircleRight  />
-                           </Link>
-                        </div>
-                     </>
+               {isFetching
+                  ?
+                  // display a message while the data is being fetched
+                  <DataFethingMessage />
 
-                     // when there is no donation requests to display
-                     : (
-                        <NoData
-                           message="You haven't made any donation requests yet."
-                           actionText="Create a Request"
-                           actionLink="/dashboard/create-donation-request"
-                        />
-                     )}
-               </>}
+                  :
+                  // display this section after successfull data fetching
+                  <>
+                     {data?.recentDonationRequests?.length
+                        ?
+                        // if there is any donation request
+                        <>
+                           <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
+                           <div className='text-center my-4'>
+                              <Link
+                                 to='/dashboard/my-donation-requests'
+                                 className='btn bg-white btn-md capitalize btn-outline rounded-md border-secondary px-9 text-secondary hover:bg-secondary hover:text-white focus:ring-2 ring-secondary ring-offset-2'>
+                                 View all requests <FaArrowAltCircleRight />
+                              </Link>
+                           </div>
+                        </>
+
+                        :
+                        // when there is no donation requests to display
+                        (
+                           <NoData
+                              message="You haven't made any donation requests yet."
+                              actionText="Create a Request"
+                              actionLink="/dashboard/create-donation-request"
+                           />
+                        )
+                     }
+                  </>
+               }
 
             </main>
          </section>
