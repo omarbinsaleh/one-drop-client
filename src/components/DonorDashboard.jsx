@@ -27,12 +27,7 @@ const DonorDashboard = () => {
 
          return { recentDonationRequests };
       }
-   })
-
-   // FORCE REFETCHING DATA ON COMPONENT MOUNT
-   useEffect(() => {
-      refetch()
-   }, [])
+   });
 
    // CHANGE THE PAGE TITLE:
    document.title = "Dashboard | One Drop"
@@ -158,11 +153,11 @@ const DonorDashboard = () => {
             <main className='border border-secondary/10 min-h-80 flex-1'>
                {isFetching
                   ?
-                  // display a message while the data is being fetched
+                  // display a message while the data is being refetched
                   <DataFethingMessage />
 
                   :
-                  // display this section after successfull data fetching
+                  // display this section after successfull data refetching
                   <>
                      {data?.recentDonationRequests?.length
                         ?

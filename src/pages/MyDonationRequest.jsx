@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import SearchBox from '../components/SearchBox';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Title from '../components/Title';
+import DataFethingMessage from '../components/DataFethingMessage';
 
 const MyDonationRequest = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const MyDonationRequest = () => {
   const [filter, setFilter] = useState('');
 
   // FETCH NECESSARY DATA
-  const { isPending, data, error, refetch } = useQuery({
+  const { isPending, data, error, refetch, isFetching } = useQuery({
     queryKey: ['donation-request', filter, user?.email],
     queryFn: async () => {
       const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
@@ -155,7 +156,7 @@ const MyDonationRequest = () => {
         {/* search box to search donation request by recipient name */}
         <SearchBox onChange={handleSearch} />
         {/* filter based on the status */}
-        <select onChange={handleFilter} value={filter} className='select select-sm rounded-none border border-secondary/50'>
+        <select onChange={handleFilter} value={filter} className='select select-sm rounded-none border border-gray-300'>
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>
           <option value="pending">Pending</option>
@@ -163,18 +164,29 @@ const MyDonationRequest = () => {
         </select>
       </div>
       <main className='border border-secondary/10 my-10 mt-2 min-h-80 flex-1'>
-        {data?.donationRequests.length
-          // if there is any donation request
-          ? <Table tabelData={data.donationRequests} handleAction={handleAction}></Table>
+        {isFetching
+          ?
+          // display a message while data refetching
+          <DataFethingMessage />
 
-          // when there is no donation requests to display
-          : (
-            <NoData
-              message="You haven't made any donation requests yet."
-              actionText="Create a Request"
-              actionLink="/dashboard/create-donation-request"
-            />
-          )}
+          :
+          // display data after successfull data fetching
+          <>
+            {data?.donationRequests.length
+              // if there is any donation request
+              ? <Table tabelData={data.donationRequests} handleAction={handleAction}></Table>
+
+              // when there is no donation requests to display
+              : (
+                <NoData
+                  message="You haven't made any donation requests yet."
+                  actionText="Create a Request"
+                  actionLink="/dashboard/create-donation-request"
+                />
+              )
+            }
+          </>
+        }
       </main>
     </section>
   )
