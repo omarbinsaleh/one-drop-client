@@ -129,13 +129,17 @@ const DonorDashboard = () => {
          }
       }
 
-      // when the Delete button is clicked on
+      // 06. when the Delete button is clicked on
       if (action === 'delete') {
+         // ask user for confirmation before delete operation
          const isConfirm = confirm("Are you sure to delete theis request?\nThis action can not be undo.");
          if (!isConfirm) return { success: true, deletedCount: 0, message: 'delete request canceled' };
 
+         // make an API call to delete a donation request
          const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
          console.log(data);
+
+         // show a success message after the successfull delete operation
          if (data.deletedCount) {
             refetch();
             toast.success("Deleted Successfully");
