@@ -11,6 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DataFethingMessage from './DataFethingMessage';
 import { FaArrowAltCircleDown, FaArrowAltCircleRight } from 'react-icons/fa';
 import Title from './Title';
+import useDonationRequest from '../hooks/useDonationRequest';
 
 const DonorDashboard = () => {
    const location = useLocation();
@@ -18,14 +19,19 @@ const DonorDashboard = () => {
    const { user, loading } = useAuth();
 
    // FETCH NECESSARY DATA
-   const { isPending, data, error, refetch, isFetching } = useQuery({
-      queryKey: ['donation-request', user?.email],
-      queryFn: async () => {
-         const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
+   // const { isPending, data, error, refetch, isFetching } = useQuery({
+   //    queryKey: ['donation-request', user?.email],
+   //    queryFn: async () => {
+   //       const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
 
-         return { recentDonationRequests };
-      }
-   });
+   //       return { recentDonationRequests };
+   //    }
+   // });
+
+   const { isPending, data, error, refetch, isFetching } = useDonationRequest({
+      allDonationRequests: false,
+      currentUserDonationRequests: false,
+   })
 
    // CHANGE THE PAGE TITLE:
    document.title = "Dashboard | One Drop"
@@ -87,7 +93,7 @@ const DonorDashboard = () => {
          // information to be updated
          const updatedDoc = {
             status: 'done',
-            donorInfo: { name: user.displayName, email: user.email }
+            // donorInfo: { name: user.displayName, email: user.email }
          };
 
          // make an API call to make that update
@@ -156,6 +162,7 @@ const DonorDashboard = () => {
       return <Spinner />
    }
 
+
    return (
       <div>
          {/* Welcome Section */}
@@ -176,11 +183,11 @@ const DonorDashboard = () => {
                   :
                   // display this section after successfull data refetching
                   <>
-                     {data?.recentDonationRequests?.length
+                     {data?.recentDonationRequests?.data?.length
                         ?
                         // if there is any donation request
                         <>
-                           <Table tabelData={data.recentDonationRequests} handleAction={handleAction}></Table>
+                           <Table tabelData={data.recentDonationRequests?.data} handleAction={handleAction}></Table>
                            <div className='text-center my-4'>
                               <Link
                                  to='/dashboard/my-donation-requests'

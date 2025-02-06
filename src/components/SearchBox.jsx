@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchBox = ({onChange}) => {
+const SearchBox = ({onChange, search}) => {
    // HANDLE ON CHANGE EVENT
    const handleChage = (e) => {
       onChange(e);
@@ -8,7 +8,7 @@ const SearchBox = ({onChange}) => {
 
    return (
       <label className="input input-bordered input-sm rounded-none flex items-center gap-2 flex-1 max-w-sm">
-         <input onChange={handleChage} type="text" className="grow" placeholder="Search" />
+         <input onChange={handleChage} value={search} type="text" className="grow" placeholder="Search" />
          <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"

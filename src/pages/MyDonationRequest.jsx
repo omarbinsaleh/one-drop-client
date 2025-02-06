@@ -10,6 +10,7 @@ import SearchBox from '../components/SearchBox';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Title from '../components/Title';
 import DataFethingMessage from '../components/DataFethingMessage';
+import useDonationRequest from '../hooks/useDonationRequest';
 
 const MyDonationRequest = () => {
   const location = useLocation();
@@ -18,14 +19,23 @@ const MyDonationRequest = () => {
   const [filter, setFilter] = useState('');
 
   // FETCH NECESSARY DATA
-  const { isPending, data, error, refetch, isFetching } = useQuery({
-    queryKey: ['donation-request', filter, user?.email],
-    queryFn: async () => {
-      const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
-
-      return { donationRequests };
-    }
+  const { isPending, data, error, refetch, isFetching } = useDonationRequest({
+    allDonationRequests: false,
+    recentDonationRequests: false,
+    filter: filter,
+    search: search,
+    upazilas: false,
+    districts: false
   })
+
+  // const { isPending, data, error, refetch, isFetching } = useQuery({
+  //   queryKey: ['donation-request', filter, user?.email],
+  //   queryFn: async () => {
+  //     const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
+
+  //     return { donationRequests };
+  //   }
+  // })
 
   // CHANGE THE PAGE TITLE
   document.title = "My Donation Requests | One Drop";
@@ -154,7 +164,7 @@ const MyDonationRequest = () => {
 
       <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
         {/* search box to search donation request by recipient name */}
-        <SearchBox onChange={handleSearch} />
+        <SearchBox onChange={handleSearch} search={search}/>
         {/* filter based on the status */}
         <select onChange={handleFilter} value={filter} className='select select-sm rounded-none border border-gray-300'>
           <option value="">Filter by Status</option>
@@ -172,9 +182,9 @@ const MyDonationRequest = () => {
           :
           // display data after successfull data fetching
           <>
-            {data?.donationRequests.length
+            {data?.currentUserDonationRequests?.data?.length
               // if there is any donation request
-              ? <Table tabelData={data.donationRequests} handleAction={handleAction}></Table>
+              ? <Table tabelData={data?.currentUserDonationRequests?.data} handleAction={handleAction}></Table>
 
               // when there is no donation requests to display
               : (

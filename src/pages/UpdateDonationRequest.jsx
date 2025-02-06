@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import DataFethingMessage from "../components/DataFethingMessage";
 import Title from "../components/Title";
+import useDonationRequest from "../hooks/useDonationRequest";
+import useSingleDonationRequest from "../hooks/useSingleDonationRequest";
 
 const UpdateDonationRequest = () => {
    const { id: donationRequestId } = useParams();
@@ -19,24 +21,7 @@ const UpdateDonationRequest = () => {
    document.title = "New Donation Request | One Drop";
 
    // FETCH DATA FROM THE DATABASE
-   const { isPending, data, error, refetch, isFetching } = useQuery({
-      queryKey: ['updated-request'],
-      queryFn: async () => {
-         // FETCH THE DONATION REQUEST DATA
-         const { data: donationRequest } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${donationRequestId}`);
-         console.log(donationRequest)
-
-         // FETCH THE DISTRICTS DATA
-         const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-         const districts = districtsData.find(item => item.name === 'districts').data;
-
-         // FETCH UPAZILAS DATA
-         const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-         const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
-
-         return { donationRequest, districts, upazilas }
-      }
-   })
+   const { isPending, data, error, refetch, isFetching } = useSingleDonationRequest({donationRequestId:donationRequestId})
 
    useEffect(() => {
       refetch();
@@ -55,9 +40,9 @@ const UpdateDonationRequest = () => {
    // HANDLE DISTRICT CHANGE
    const handleDistrictsChange = (e) => {
       const districtName = e.target.value;
-      const district = data.districts.find(district => district.name === districtName);
+      const district = data.districts.data.find(district => district.name === districtName);
       const districtId = district.id;
-      const upazilasData = data.upazilas.filter(upazila => upazila.district_id === districtId);
+      const upazilasData = data.upazilas.data.filter(upazila => upazila.district_id === districtId);
       setUpazilas(upazilasData);
    }
 
@@ -111,6 +96,7 @@ const UpdateDonationRequest = () => {
       }
    };
 
+   console.log(data);
    return (
       <div className=" mx-auto px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
          <Title title="Update Donation Request" />
@@ -154,7 +140,7 @@ const UpdateDonationRequest = () => {
                   </label>
                   <input
                      type="text"
-                     defaultValue={data?.donationRequest?.recipientName}
+                     defaultValue={data?.donationRequest?.data?.recipientName}
                      required
                      name="recipientName"
                      placeholder="Enter recipient name"
@@ -167,7 +153,7 @@ const UpdateDonationRequest = () => {
                   <div className="label">
                      <span className="label-text font-medium">Blood Group</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" defaultValue={data?.donationRequest?.bloodGroup} name='blood-group' required>
+                  <select className="select select-bordered rounded-sm" defaultValue={data?.donationRequest?.data?.bloodGroup} name='blood-group' required>
                      <option value=''>Choose your blood group</option>
                      <option value='A+'>A+</option>
                      <option value='A-'>A-</option>
@@ -187,9 +173,9 @@ const UpdateDonationRequest = () => {
                   <div className="label">
                      <span className="label-text font-medium">District</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue={data?.donationRequest?.district} name='district' required>
+                  <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue={data?.donationRequest?.data?.district} name='district' required>
                      <option value=''>Choose your district</option>
-                     {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
+                     {data?.districts?.data?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
                   </select>
                </label>
                {/* Recipient Upazilas Input Field   */}
@@ -197,9 +183,9 @@ const UpdateDonationRequest = () => {
                   <div className="label">
                      <span className="label-text font-medium">Upazila</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" defaultValue={data?.donationRequest?.upazila} name='upazila' required>
+                  <select className="select select-bordered rounded-sm" defaultValue={data?.donationRequest?.data?.upazila} name='upazila' required>
                      <option value=''>Choose your upazila</option>
-                     {data?.upazilas?.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
+                     {data?.upazilas?.data?.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
                   </select>
                </label>
             </div>
@@ -212,7 +198,7 @@ const UpdateDonationRequest = () => {
                   </label>
                   <input
                      type="text"
-                     defaultValue={data?.donationRequest?.hospitalName}
+                     defaultValue={data?.donationRequest?.data?.hospitalName}
                      required
                      name="hospitalName"
                      placeholder="Enter hospital name"
@@ -227,7 +213,7 @@ const UpdateDonationRequest = () => {
                   </label>
                   <input
                      type="text"
-                     defaultValue={data?.donationRequest?.fullAddress}
+                     defaultValue={data?.donationRequest?.data?.fullAddress}
                      required
                      name="fullAddress"
                      placeholder="Enter full address"
@@ -244,7 +230,7 @@ const UpdateDonationRequest = () => {
                   </label>
                   <input
                      type="date"
-                     defaultValue={data?.donationRequest?.donationDate}
+                     defaultValue={data?.donationRequest?.data?.donationDate}
                      required
                      name="donationDate"
                      className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
@@ -258,7 +244,7 @@ const UpdateDonationRequest = () => {
                   </label>
                   <input
                      type="time"
-                     defaultValue={data?.donationRequest?.donationTime}
+                     defaultValue={data?.donationRequest?.data?.donationTime}
                      required
                      name="donationTime"
                      className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
@@ -273,7 +259,7 @@ const UpdateDonationRequest = () => {
                </label>
                <textarea
                   name="requestMessage"
-                  defaultValue={data?.donationRequest?.requestMessage}
+                  defaultValue={data?.donationRequest?.data?.requestMessage}
                   placeholder="Why do you need blood?"
                   className="w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 dark:text-white focus:ring-primary focus:border-primary"
                />
