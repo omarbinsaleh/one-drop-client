@@ -12,7 +12,7 @@ const AdminRoutes = ({children}) => {
   }
 
   if(user?.role !== 'admin') {
-   return <Navigate to={'/auth/sign-in'} state={location.state} />
+   return <Navigate to={'/auth/sign-in'} state={location.pathname} />
   }
 
   return children;

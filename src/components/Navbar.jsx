@@ -75,20 +75,20 @@ const Navbar = () => {
                   </div>
                   <div className=''>
                      <button onClick={() => setShowProfileSubMenu(!showProfileSubMenu)} role="button" className="btn btn-ghost btn-circle avatar relative">
-                        <img className='w-12 p-1 rounded-full border aspect-square user-profile' referrerPolicy='no-referrer' src={user?.photoURL ? user.photoURL : profileImg} alt="" />
+                        <img className='w-12 p-[2px] rounded-full border border-primary dark:border-gray-200 aspect-square user-profile' referrerPolicy='no-referrer' src={user?.photoURL ? user.photoURL : profileImg} alt="" />
 
                         {/* profile sub menu close button */}
                         <div
                            style={{ display: showProfileSubMenu ? 'block' : 'none' }}
-                           className='p-1 flex items-center justify-center rounded-full absolute top-0 left-0 w-full h-full  text-xl z-10 text-white bg-gray-700/80 border border-green-500'>
+                           className='p-1 flex items-center justify-center rounded-full absolute top-0 left-0 w-full h-full  text-xl z-10 text-white bg-gray-700/80 border border-primary'>
                            <RxCross2 className='mt-[9px] mx-auto' />
                         </div>
                      </button>
                      <ul
                         style={{ display: showProfileSubMenu ? 'block' : 'none' }}
                         tabIndex={0}
-                        className="bg-base-100 z-[1] rounded-sm mt-3 w-52 p-2 shadow absolute right-0 space-y-1 dark:bg-slate-600 dark:text-white border-2">
-                        <div className='w-5 h-5 bg-white rotate-45 absolute right-3 -top-[11px] bg-inherit dark:bg-slate-600 border border-t-2 border-l-2 border-r-0 border-b-0'></div>
+                        className="bg-base-100 z-[1] rounded-sm mt-3 w-52 p-2 shadow absolute right-2 space-y-1 dark:bg-slate-600 dark:text-white border-2 dark:border-slate-400">
+                        <div className='w-5 h-5 bg-white rotate-45 absolute right-4 -top-[11px] bg-inherit dark:bg-slate-600 border border-t-2 border-l-2 border-r-0 border-b-0 dark:border-slate-400'></div>
                         <li><Link to='/dashboard' className='btn btn-sm btn-block btn-ghost rounded-sm mt-1' onClick={hideLink}>Dashboard</Link></li>
                         <li>
                            <button onClick={handleLogout} className='btn btn-sm btn-block bg-opacity-80 border-none bg-secondary hover:bg-secondary/90 text-white rounded-sm flex items-center justify-center'> <VscSignOut className='text-[17px]' /> Sign out</button>

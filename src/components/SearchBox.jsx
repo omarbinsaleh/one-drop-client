@@ -16,7 +16,7 @@ const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Searc
    };
 
    return (
-      <label className="input input-bordered input-md rounded-none flex items-center gap-2 flex-1 max-w-sm  pr-[1px]">
+      <label className="input input-bordered border-secondary input-md rounded-none flex items-center gap-2 flex-1 max-w-sm  pr-0">
          <input onChange={handleChage} type="text" className="grow" placeholder={placeholder} />
          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Searc
                clipRule="evenodd" />
          </svg> */}
 
-         <button onClick={handleClick} className='btn min-h-[45px] h-[45px]   bg-secondary hover:bg-secondary/80 text-white my-2 rounded-none'> <FaSearch /> Search </button>
+         <button onClick={handleClick} className='btn btn-md border border-secondary   bg-secondary hover:bg-secondary/80 text-white rounded-none'> <FaSearch /> Search </button>
       </label>
    )
 }
