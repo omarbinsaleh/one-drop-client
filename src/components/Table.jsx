@@ -11,10 +11,10 @@ const Table = ({ tabelData, handleAction }) => {
    }
 
    return (
-      <div className="overflow-x-auto p-1">
+      <div className="overflow-auto max-h-[350px]">
          <table className="table">
             {/* head */}
-            <thead className='bg-secondary text-white'>
+            <thead className='bg-secondary text-white sticky top-0'>
                <tr className=''>
                   <th></th>
                   <th>Recipient Name</th>
@@ -27,7 +27,7 @@ const Table = ({ tabelData, handleAction }) => {
                   <th>Action</th>
                </tr>
             </thead>
-            <tbody>
+            <tbody className=''>
                {/* row 1 */}
                {tabelData.map((data, index) => <tr key={data._id}>
                   {/* serial number */}

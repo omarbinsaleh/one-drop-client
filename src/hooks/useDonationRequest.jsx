@@ -9,6 +9,7 @@ const useDonationRequest = ({
    upazilas = true,
    districts = true,
    filter = '',
+   search = ''
 }) => {
    const { user } = useAuth();
 
@@ -33,7 +34,7 @@ const useDonationRequest = ({
          if (currentUserDonationRequests) {
             // FETCH CURRENT USER'S DONATION REQUESTS
             try {
-               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
+               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}&search=${search}`);
                result.currentUserDonationRequests = { data: userDonationRequests, success: true, message: 'Data is returned successfully' };
             } catch (error) {
                result.currentUserDonationRequests = { success: false, message: 'Something went wrong', data: [], error };

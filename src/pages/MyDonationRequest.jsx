@@ -4,7 +4,6 @@ import NoData from '../components/NoData';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import useAuth from '../hooks/useAuth';
-import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import SearchBox from '../components/SearchBox';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,6 +16,7 @@ const MyDonationRequest = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
   const [filter, setFilter] = useState('');
+  const [search, setSearch] = useState('');
 
   // FETCH NECESSARY DATA
   const { isPending, data, error, refetch, isFetching } = useDonationRequest({
@@ -48,7 +48,14 @@ const MyDonationRequest = () => {
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
-    console.log(event.target.value);
+    if(event.target.value === '') {
+      setSearch(event.target.value);
+    }
+  }
+
+  // HANDLE THE SEARCH BUTTON CLICK
+  const handlSearchButtonClick = (inputValue) => {
+    setSearch(inputValue);
   }
 
   // HANDLE THE ACTION BUTTON CLICK
@@ -154,7 +161,7 @@ const MyDonationRequest = () => {
   }
 
   // RENDER THE SPINNER WHILE THE DATA IS BING LOADED
-  if (isPending || loading) {
+  if (loading) {
     return <Spinner />
   }
 
@@ -164,16 +171,16 @@ const MyDonationRequest = () => {
 
       <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
         {/* search box to search donation request by recipient name */}
-        <SearchBox onChange={handleSearch} search={search}/>
+        <SearchBox onChange={handleSearch}  onSearchButtonClick={handlSearchButtonClick} placeholder='Search by recipient name' />
         {/* filter based on the status */}
-        <select onChange={handleFilter} value={filter} className='select select-sm rounded-none border border-gray-300'>
+        <select onChange={handleFilter} value={filter} className='select select-md rounded-none border border-gray-300'>
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>
           <option value="pending">Pending</option>
           <option value="done">Done</option>
         </select>
       </div>
-      <main className='border border-secondary/10 my-10 mt-2 min-h-80 flex-1'>
+      <main className='border border-secondary/10 my-10 mt-3 min-h-80 flex-1 overflow-auto'>
         {isFetching
           ?
           // display a message while data refetching

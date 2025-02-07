@@ -10,3 +10,13 @@ nav ul li a.active {
    background-color: #1f2b5b;
    color: white;
 }
+
+/* .tableFixHead {
+   overflow-y: auto;
+   height: 450px;
+}
+
+.tableFixHead thead {
+   position: sticky;
+   top: 0;
+} */
