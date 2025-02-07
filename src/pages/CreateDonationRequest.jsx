@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Title from "../components/Title";
+import useDonationRequest from "../hooks/useDonationRequest";
 
 const CreateDonationRequest = () => {
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
@@ -14,20 +15,26 @@ const CreateDonationRequest = () => {
    document.title = "New Donation Request | One Drop";
 
    // FETCH DATA FROM THE DATABASE
-   const { isPending, data, error } = useQuery({
-      queryKey: ['districtsData', 'upazilasData'],
-      queryFn: async () => {
-         // FETCH THE DISTRICTS DATA
-         const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-         const districts = districtsData.find(item => item.name === 'districts').data;
-
-         // FETCH UPAZILAS DATA
-         const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-         const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
-
-         return { districts, upazilas }
-      }
+   const { isPending, data, error } = useDonationRequest({
+      allDonationRequests: false,
+      currentUserDonationRequests: false,
+      recentDonationRequests: false,
    })
+
+   // const { isPending, data, error } = useQuery({
+   //    queryKey: ['districtsData', 'upazilasData'],
+   //    queryFn: async () => {
+   //       // FETCH THE DISTRICTS DATA
+   //       const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
+   //       const districts = districtsData.find(item => item.name === 'districts').data;
+
+   //       // FETCH UPAZILAS DATA
+   //       const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
+   //       const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
+
+   //       return { districts, upazilas }
+   //    }
+   // })
 
    // RENDER THE SPINNER, WHILE THE DATA IS BEING FETCHED
    if (isPending || loading) {
@@ -37,9 +44,9 @@ const CreateDonationRequest = () => {
    // HANDLE DISTRICT CHANGE
    const handleDistrictsChange = (e) => {
       const districtName = e.target.value;
-      const district = data.districts.find(district => district.name === districtName);
+      const district = data?.districts?.data?.find(district => district.name === districtName);
       const districtId = district.id;
-      const upazilasData = data.upazilas.filter(upazila => upazila.district_id === districtId);
+      const upazilasData = data?.upazilas?.data?.filter(upazila => upazila.district_id === districtId);
       setUpazilas(upazilasData);
    }
 
@@ -171,7 +178,7 @@ const CreateDonationRequest = () => {
                   </div>
                   <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue='' name='district' required>
                      <option value=''>Choose your district</option>
-                     {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
+                     {data?.districts?.data?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
                   </select>
                </label>
                {/* Recipient Upazilas Input Field   */}

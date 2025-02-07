@@ -109,7 +109,6 @@ const MyDonationRequest = () => {
 
       const updatedDoc = {
         status: 'done',
-        donorInfo: { name: user.displayName, email: user.email }
       };
       const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
       console.log(data);

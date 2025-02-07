@@ -18,7 +18,7 @@ const Table = ({ tabelData, handleAction }) => {
                <tr className=''>
                   <th></th>
                   <th>Recipient Name</th>
-                  <th>Recipient Location</th>
+                  <th className='min-w-[260px]'>Recipient Location</th>
                   <th>Donation Date</th>
                   <th>Donation Time</th>
                   <th>Blood Group</th>
