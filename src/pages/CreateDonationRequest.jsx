@@ -16,30 +16,15 @@ const CreateDonationRequest = () => {
 
    // FETCH DATA FROM THE DATABASE
    const { isPending, data, error } = useDonationRequest({
-      allDonationRequests: false,
-      currentUserDonationRequests: false,
-      recentDonationRequests: false,
-   })
-
-   // const { isPending, data, error } = useQuery({
-   //    queryKey: ['districtsData', 'upazilasData'],
-   //    queryFn: async () => {
-   //       // FETCH THE DISTRICTS DATA
-   //       const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`)
-   //       const districts = districtsData.find(item => item.name === 'districts').data;
-
-   //       // FETCH UPAZILAS DATA
-   //       const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
-   //       const upazilas = upazilasData.find(item => item.name === 'upazilas').data;
-
-   //       return { districts, upazilas }
-   //    }
-   // })
+      allDonationRequests: false, // do not fetch all the donation requests data
+      currentUserDonationRequests: false, // do not fetch current user's donation requests data
+      recentDonationRequests: false, // do not fetch current user's recent donation request data
+   });
 
    // RENDER THE SPINNER, WHILE THE DATA IS BEING FETCHED
    if (isPending || loading) {
-      return <Spinner></Spinner>
-   }
+      return <Spinner></Spinner>;
+   };
 
    // HANDLE DISTRICT CHANGE
    const handleDistrictsChange = (e) => {

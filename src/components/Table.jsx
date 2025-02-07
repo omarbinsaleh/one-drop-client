@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import DonorInfo from './DonorInfo';
 
 const Table = ({ tabelData, handleAction }) => {
 
@@ -23,7 +24,7 @@ const Table = ({ tabelData, handleAction }) => {
                   <th>Donation Time</th>
                   <th>Blood Group</th>
                   <th>Status</th>
-                  <th>Donor Info</th>
+                  <th className='min-w-28'>Donor Info</th>
                   <th>Action</th>
                </tr>
             </thead>
@@ -55,11 +56,8 @@ const Table = ({ tabelData, handleAction }) => {
                   <td className='capitalize'> {data.status} </td>
 
                   {/* donor information */}
-                  <td className='capitalize'>
-                     <div>
-                        <h3>Name: <span className='text-slate-600'>{data.status === 'done' ? data?.donorInfo?.name : 'N/A'}</span></h3>
-                        <h3>Email: <span className='text-slate-600 lowercase'>{data.status === 'done' ? data?.donorInfo?.email : 'N/A'}</span></h3>
-                     </div>
+                  <td >
+                     <DonorInfo donorInfo={data?.donorInfo} status={data?.status} />
                   </td>
 
                   {/* action */}

@@ -11,6 +11,7 @@ const useDonationRequest = ({
    filter = '',
    search = ''
 }) => {
+   // GET THE CURRENT USER INFORMATION
    const { user } = useAuth();
 
    const query = useQuery({

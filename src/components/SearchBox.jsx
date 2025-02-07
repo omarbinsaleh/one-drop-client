@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import { FaSearch } from 'react-icons/fa';
 
-const SearchBox = ({onChange, onSearchButtonClick, search, placeholder='Search'}) => {
+const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Search' }) => {
    const [inputValue, setInputValue] = useState('');
 
    const handleClick = (e) => {
@@ -8,7 +9,7 @@ const SearchBox = ({onChange, onSearchButtonClick, search, placeholder='Search'}
    }
    // HANDLE ON CHANGE EVENT
    const handleChage = (e) => {
-      if(onChange) {
+      if (onChange) {
          onChange(e);
       }
       setInputValue(e.target.value);
@@ -28,7 +29,7 @@ const SearchBox = ({onChange, onSearchButtonClick, search, placeholder='Search'}
                clipRule="evenodd" />
          </svg> */}
 
-         <button onClick={handleClick} className='btn min-h-[45px] h-[45px]  bg-secondary hover:bg-secondary/80 text-white my-2 rounded-none'>Search</button>
+         <button onClick={handleClick} className='btn min-h-[45px] h-[45px]   bg-secondary hover:bg-secondary/80 text-white my-2 rounded-none'> <FaSearch /> Search </button>
       </label>
    )
 }
