@@ -1,10 +1,22 @@
 import React from 'react'
 import defaultAvatar from '../assets/profile.png';
+import useAuth from '../hooks/useAuth';
 
 
-const UserRow = ({ user, currentUser }) => {
+const UserRow = ({ user, handleAction }) => {
+   const { user: currentUser } = useAuth();
+
+   // handle the different kind of action performed on each individual user by the admin
+   const handleActionChange = async (e, userId, userStatus, userRole) => {
+      const { success } = await handleAction(e, userId, userStatus, userRole);
+
+      if (success) {
+         e.target.value = '';
+      }
+   };
+
    return (
-      <tr key={user._id} className={`${user?.email === currentUser?.email ? 'hidden' : ''}`}>
+      <tr className={`${user?.email === currentUser?.email ? 'hidden' : ''}`}>
          {/* user avatar */}
          <th>
             <img className='avatar w-12 h-12 rounded-md' src={user.photoURL || defaultAvatar} alt="" />

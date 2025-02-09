@@ -26,16 +26,7 @@ const MyDonationRequest = () => {
     search: search,
     upazilas: false,
     districts: false
-  })
-
-  // const { isPending, data, error, refetch, isFetching } = useQuery({
-  //   queryKey: ['donation-request', filter, user?.email],
-  //   queryFn: async () => {
-  //     const { data: donationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}`);
-
-  //     return { donationRequests };
-  //   }
-  // })
+  });
 
   // CHANGE THE PAGE TITLE
   document.title = "My Donation Requests | One Drop";
@@ -156,7 +147,6 @@ const MyDonationRequest = () => {
     }
 
     return { success: false, message: 'something went wrong' }
-
   }
 
   // RENDER THE SPINNER WHILE THE DATA IS BING LOADED

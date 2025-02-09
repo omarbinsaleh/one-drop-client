@@ -18,7 +18,7 @@ const UpdateDonationRequest = () => {
    const { user, loading } = useAuth();
 
    // CHANGE THE PAGE TITLE
-   document.title = "New Donation Request | One Drop";
+   document.title = "Update Donation Request | One Drop";
 
    // FETCH DATA FROM THE DATABASE
    const { isPending, data, error, refetch, isFetching } = useSingleDonationRequest({donationRequestId:donationRequestId})

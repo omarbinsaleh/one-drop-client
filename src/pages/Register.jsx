@@ -23,7 +23,7 @@ const Register = () => {
       email: '',
       password: '',
       confirmPassword: ''
-   })
+   });
 
    // FETCH DATA FROM THE DATABASE
    const { isPending, data, error } = useQuery({
@@ -39,7 +39,7 @@ const Register = () => {
 
          return { districts, upazilas }
       }
-   })
+   });
 
    console.log('districts from register page --> ', data);
 

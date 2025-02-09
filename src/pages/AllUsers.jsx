@@ -12,7 +12,10 @@ const AllUsers = () => {
    const { user } = useAuth();
    const [filter, setFilter] = useState('');
 
+   // CHANGE THE PAGE TITLE:
+   document.title = "All Users | One Drop"
 
+   // FETCH ALL THE EXISTING USERS DATA
    const { isPending, data, error, isFetching, refetch } = useAllUsers({ userStatus: filter })
 
    // HANDLE FILTER
@@ -20,35 +23,38 @@ const AllUsers = () => {
       setFilter(e.target.value)
    };
 
-   // HANDLE ACTIONS
+   // HANDLE DIFFERENT KIND OF ACTIONS PERFORMED ON EACH INDIVIDUAL USER BY ADMIN
    const handleAction = async (e, userId, userStatus, userRole) => {
       const action = e.target.value;
 
       // when the unblock button is clicked on
       if (action === 'active') {
+         // do not allow to make a user active when he is already an active user
          if (userStatus === 'active') {
             toast.warn("Action not allowed")
             return { success: true, modifiedCount: 0, message: 'Action not allowed' }
          }
 
          try {
+            // send request to the backend to change the user status to active
             const userEmail = user?.email;
             const updatedInfo = { status: 'active' }
             const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, { userEmail, updatedInfo });
 
-            // check for any server side error
+            // check for any server side error and diplay the error message
             if (data.statusCode === 403 || data.statusCode === 401) {
                toast.error(data.message);
                return { success: false, modifiedCount: 0, message: data.message };
             }
 
-            // check for data update
+            // check for data update and display a success message and refetch the data again
             if (data.modifiedCount) {
                refetch();
                toast.success("User has been unblocked successfully!!");
                return { success: true, modifiedCount: data.modifiedCount, message: "User's status has been switched to active mood" };
             }
          } catch (error) {
+            // catch the error and display an error message to the user
             toast.error("Something went wrong")
             return { success: false, modifiedCount: 0, message: "Something went wrong!!", error }
          };
@@ -89,14 +95,14 @@ const AllUsers = () => {
       if (action === 'make-donor') {
          if (userRole === 'donor') {
             toast.warn("Action not allowed");
-            return {success: true, modifiedCount: 0, message: 'Action is not allowed'};
+            return { success: true, modifiedCount: 0, message: 'Action is not allowed' };
          }
 
          try {
             const userEmail = user?.email;
-            const updatedInfo = {role: 'donor'};
-            const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, {userEmail, updatedInfo});
-            
+            const updatedInfo = { role: 'donor' };
+            const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, { userEmail, updatedInfo });
+
             // check for any server side error
             if (data.statusCode === 403 || data.statusCode === 401) {
                toast.error(data.message);
@@ -107,11 +113,11 @@ const AllUsers = () => {
             if (data.modifiedCount) {
                refetch();
                toast.success("User role changed successfully!!");
-               return {success: true, modifiedCount: data.modifiedCount, message: "User role has been changed to donor successfully"};
+               return { success: true, modifiedCount: data.modifiedCount, message: "User role has been changed to donor successfully" };
             }
          } catch (error) {
             toast.error("Something went wrong!!");
-            return { success: false, modifiedCount: 0, message: "Something went wrong!!", error};
+            return { success: false, modifiedCount: 0, message: "Something went wrong!!", error };
          }
       }
 
@@ -119,13 +125,13 @@ const AllUsers = () => {
       if (action === 'make-admin') {
          if (userRole === 'admin') {
             toast.warn("Action not allowed");
-            return { success: true, modifiedCount: 0, message: "Action is not allowed"};
+            return { success: true, modifiedCount: 0, message: "Action is not allowed" };
          }
 
          try {
             const userEmail = user?.email;
-            const updatedInfo = {role: 'admin'};
-            const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, {userEmail, updatedInfo});
+            const updatedInfo = { role: 'admin' };
+            const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, { userEmail, updatedInfo });
 
             // check for any server side error
             if (data.statusCode === 403 || data.statusCode === 401) {
@@ -141,16 +147,43 @@ const AllUsers = () => {
             }
          } catch (error) {
             toast.error("Something went wrong!!");
-            return {success: false, modifiedCount: 0, message: "Something went wrong!!"};
+            return { success: false, modifiedCount: 0, message: "Something went wrong!!" };
          }
       }
 
-      
+      // when the make vlunteer button is clicked on
+      if (action === 'make-volunteer') {
+         // do not allow changing the user role to a volunteer when his current role is a volunteer already
+         if (userRole === 'volunteer') {
+            toast.warn('Action not allowed');
+            return { success: true, modifiedCount: 0, message: 'Action is not allowed!!' };
+         };
 
+         // make an api call requesting the backend to change the user role to a volunteer
+         try {
+            const userEmail = user?.email;
+            const updatedInfo = { role: 'volunteer' };
+            const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/users/update/${userId}`, { userEmail, updatedInfo });
 
+            // check for any server side error:
+            if (data.statusCode === 403 || data.statusCode === 401) {
+               toast.error(data.message);
+               return { success: false, modifiedCount: 0, message: data.message };
+            };
 
-      // return { success: true }
-   }
+            // check for data update
+            if (data.modifiedCount) {
+               refetch();
+               toast.success("User role changed successfully");
+               return { success: true, modifiedCount: data.modifiedCount, message: "User role has been changed to a Volunteer successfully!!" };
+            };
+         } catch (error) {
+            toast.error("Sommething went wrong!!");
+            return { success: false, modifiedCount: 0, message: "Somthing went wrong!!"};
+         };
+      };
+
+   };
 
    return (
       <section className='py-8 pt-2 max-h-screen flex flex-col w-full'>
