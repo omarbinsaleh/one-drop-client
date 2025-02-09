@@ -42,7 +42,7 @@ const Login = () => {
          .then((result) => {
             setUser(result.user);
             toast.success("User logged in successfully")
-            { location.state ? navigate(location.state) : navigate('/'); }
+            location.state ? navigate(location.state) : navigate('/');
             // setLoading(false);
          })
          .catch((err) => {

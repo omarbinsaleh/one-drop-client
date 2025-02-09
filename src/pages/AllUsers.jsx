@@ -118,7 +118,7 @@ const AllUsers = () => {
       // when the make admin button is clicked on
       if (action === 'make-admin') {
          if (userRole === 'admin') {
-            toast.wart("Action not allowed");
+            toast.warn("Action not allowed");
             return { success: true, modifiedCount: 0, message: "Action is not allowed"};
          }
 

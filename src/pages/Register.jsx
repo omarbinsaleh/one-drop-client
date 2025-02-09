@@ -125,7 +125,7 @@ const Register = () => {
 
                         // 10. redirect the user to a particular page, where he wated to go
                         // by default, user will be redirected to the home page
-                        { location.state ? navigate(location.state) : navigate('/') }
+                        location.state ? navigate(location.state) : navigate('/')
                         setLoading(false);
 
                      }).catch((err) => {
