@@ -9,13 +9,13 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import DashboardHome from "../pages/DashboardHome";
 import MyDonationRequest from "../pages/MyDonationRequest";
 import Blogs from "../pages/Blogs";
-import AllDonationRequest from "../pages/AllDonationRequest";
 import UserProfile from "../pages/UserProfile";
 import CreateDonationRequest from "../pages/CreateDonationRequest";
 import AdminRoutes from "./AdminRoutes";
 import UpdateDonationRequest from "../pages/UpdateDonationRequest";
 import AllUsers from "../pages/AllUsers";
 import AllDonationRequests from "../pages/AllDonationRequests";
+import AllPendingDonationRequests from "../pages/AllPendingDonationRequests";
 
 export const router = createBrowserRouter([
    {
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
          },
          {
             path: '/donation-requests',
-            element: <AllDonationRequest></AllDonationRequest>
+            element: <AllPendingDonationRequests></AllPendingDonationRequests>
          }
       ]
    },
