@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { MdDashboard } from 'react-icons/md'
+import { MdBloodtype, MdDashboard } from 'react-icons/md'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import defaultAvatar from '../assets/profile.png'
-import { FaAngleLeft, FaAngleRight, FaHome, FaListAlt, FaUser, FaUsers } from 'react-icons/fa'
+import { FaAngleLeft, FaAngleRight, FaDonate, FaHome, FaListAlt, FaUser, FaUsers } from 'react-icons/fa'
 import SidebarButton from '../components/SidebarButton'
 import { BsDatabaseFillAdd } from 'react-icons/bs'
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
+import { GiBlood } from 'react-icons/gi'
+import { AiFillMedicineBox } from 'react-icons/ai'
 
 const DashboardLayout = () => {
    const navigate = useNavigate();
@@ -30,7 +32,8 @@ const DashboardLayout = () => {
    const adminLinks = [
       { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
       { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
-      {name: 'All Users', path: '/dashboard/all-users', icon: <FaUsers className='text-[20px]' />}
+      {name: 'All Users', path: '/dashboard/all-users', icon: <FaUsers className='text-[20px]' />},
+      {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> }
    ]
 
    // CLICK EVENT HANDLER ON THE MAIN CONTENT

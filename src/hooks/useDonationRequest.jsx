@@ -23,7 +23,7 @@ const useDonationRequest = ({
          if (allDonationRequests) {
             // FETCH ALL DONATION REQUEST DATA
             try {
-               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests`);
+               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}`);
                result.allDonationRequests = { data: allDonationRequests, success: true, message: 'Data is returned successfully' };
             } catch (error) {
                result.allDonationRequests = { success: false, message: "Something went wrong", data: [], error };
