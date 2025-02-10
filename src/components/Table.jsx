@@ -12,7 +12,7 @@ const Table = ({ tabelData, handleAction }) => {
    }
 
    return (
-      <div className="overflow-auto max-h-[350px]">
+      <div className="overflow-auto max-h-[750px]">
          <table className="table">
             {/* head */}
             <thead className='bg-secondary text-white sticky top-0'>

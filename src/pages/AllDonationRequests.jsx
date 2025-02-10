@@ -29,7 +29,7 @@ const AllDonationRequests = () => {
    });
 
    // CHANGE THE PAGE TITLE
-   document.title = "My Donation Requests | One Drop";
+   document.title = "All Donation Requests | One Drop";
 
    // HANDLE FILTER
    const handleFilter = (e) => {
@@ -155,8 +155,8 @@ const AllDonationRequests = () => {
    }
 
    return (
-      <section className='py-8 pt-2 max-h-screen flex flex-col w-full'>
-         <Title title='My Donation Requests' />
+      <section className='pt-2 max-h-screen flex flex-col w-full'>
+         <Title title='All Donation Requests' />
 
          <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
             {/* search box to search donation request by recipient name */}
@@ -169,7 +169,7 @@ const AllDonationRequests = () => {
                <option value="done">Done</option>
             </select>
          </div>
-         <main className='border border-secondary/10 my-10 mt-3 min-h-80 flex-1 overflow-auto'>
+         <main className='border border-secondary/10  mt-3 min-h-80 flex-1 overflow-auto'>
             {isFetching
                ?
                // display a message while data refetching
