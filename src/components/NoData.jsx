@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaBoxOpen, FaArrowRight } from "react-icons/fa";
 
-const NoData = ({ message, actionText, actionLink }) => {
+const NoData = ({ message, title, actionText, actionLink }) => {
    return (
       <div className="flex flex-col items-center justify-center p-8 text-center">
          {/* Animated Icon */}
@@ -10,12 +10,13 @@ const NoData = ({ message, actionText, actionLink }) => {
             <FaBoxOpen className="text-6xl text-gray-500 dark:text-gray-300" />
          </div>
 
-         {/* Message */}
+         {/* Title */}
          <h2 className="text-2xl font-semibold mt-6 text-gray-700 dark:text-gray-300">
-            {message || "Nothing to Show Here"}
+            {title || "Nothing to Show Here"}
          </h2>
+         {/* Message */}
          <p className="text-gray-500 dark:text-gray-400 mt-2">
-            It looks like there's no data available right now.
+            {message || "It looks like there's no data available right now."}
          </p>
 
          {/* Action Button */}

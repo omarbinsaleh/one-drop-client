@@ -72,7 +72,7 @@ const DonationRequestDetails = () => {
          style={{
             backgroundImage: `url(${bgImg})`
          }}
-         className="bg-center bg-cover bg-opacity-80"
+         className="bg-center bg-cover bg-opacity-80 "
       >
          <div className=" p-6 lg:px-10 bg-white dark:bg-gray-900 relative w-full min-h-screen bg-cover bg-center bg-opacity-95">
             {/* TITLE FOR THIS PAGE */}

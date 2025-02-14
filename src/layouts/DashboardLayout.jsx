@@ -3,7 +3,7 @@ import { MdBloodtype, MdDashboard } from 'react-icons/md'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import defaultAvatar from '../assets/profile.png'
-import { FaAngleLeft, FaAngleRight, FaDonate, FaHome, FaListAlt, FaUser, FaUsers } from 'react-icons/fa'
+import { FaAngleLeft, FaAngleRight, FaBlog, FaDonate, FaHome, FaListAlt, FaUser, FaUsers } from 'react-icons/fa'
 import SidebarButton from '../components/SidebarButton'
 import { BsDatabaseFillAdd } from 'react-icons/bs'
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
@@ -34,6 +34,7 @@ const DashboardLayout = () => {
       { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
       {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> },
       {name: 'All Users', path: '/dashboard/all-users', icon: <FaUsers className='text-[20px]' />},
+      { name: 'Content Management', path: '/dashboard/content-management', icon: <FaBlog /> }
    ]
 
    // CLICK EVENT HANDLER ON THE MAIN CONTENT

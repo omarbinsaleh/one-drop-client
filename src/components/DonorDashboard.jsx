@@ -201,7 +201,7 @@ const DonorDashboard = () => {
                         // when there is no donation requests to display
                         (
                            <NoData
-                              message="You haven't made any donation requests yet."
+                              title="You haven't made any donation requests yet."
                               actionText="Create a Request"
                               actionLink="/dashboard/create-donation-request"
                            />

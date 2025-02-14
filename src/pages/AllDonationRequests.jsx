@@ -185,7 +185,7 @@ const AllDonationRequests = () => {
                      // when there is no donation requests to display
                      : (
                         <NoData
-                           message="There is not donation requests made yet"
+                           title="There is not donation requests made yet"
                            actionText="Create a Request"
                            actionLink="/dashboard/create-donation-request"
                         />
