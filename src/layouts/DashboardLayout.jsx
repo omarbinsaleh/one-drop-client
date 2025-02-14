@@ -25,15 +25,15 @@ const DashboardLayout = () => {
    // DONOR NAVLINK:
    const donorLinks = [
       { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
-      { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
+      { name: "Create New Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
    ]
 
    // ADMIN NAVLINKS
    const adminLinks = [
-      { name: "New Donation Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
+      { name: "Create New Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
       { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
+      {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> },
       {name: 'All Users', path: '/dashboard/all-users', icon: <FaUsers className='text-[20px]' />},
-      {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> }
    ]
 
    // CLICK EVENT HANDLER ON THE MAIN CONTENT

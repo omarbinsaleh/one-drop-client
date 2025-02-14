@@ -253,7 +253,7 @@ const CreateDonationRequest = () => {
                type="submit"
                className="btn btn-primary btn-block capitalize  max-w-sm mx-auto bg-secondary hover:bg-secondary/90 focus:ring-2 ring-offset-2 ring-secondary text-white mt-4 rounded-sm"
             >
-               Request
+               Create New
             </button>
          </form>
       </div>
