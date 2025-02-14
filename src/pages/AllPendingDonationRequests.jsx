@@ -1,19 +1,14 @@
-import { useNavigate } from "react-router-dom";
 import useDonationRequest from "../hooks/useDonationRequest";
 import Spinner from "../components/Spinner";
-import useAuth from "../hooks/useAuth";
 import DonationRequest from "../components/DonationRequest";
 import Title from "../components/Title";
 
-const fetchPendingRequests = async () => {
-  const res = await fetch("/api/donation-requests?status=pending");
-  return res.json();
-};
-
 const AllPendingDonationRequests = () => {
-  const navigate = useNavigate();
-  const { user, loading } = useAuth(); // Check if user is logged in
 
+  // CHANGE THE PAGE TITLE
+  document.title = 'All Requests | One Drop'
+
+  // FETCH ALL THE PENDING BLOOD DONATION REQUESTS
   const { data: requests, isLoading } = useDonationRequest({
     currentUserDonationRequests: false,
     recentDonationRequests: false,
@@ -22,7 +17,8 @@ const AllPendingDonationRequests = () => {
     upazilas: false,
   })
 
-  if (loading) return <Spinner />;
+  // RENDER THE SPINNER WHILE THE DATA LOADING
+  if (isLoading) return <Spinner />;
 
   return (
     <div className=" mx-auto px-4 py-8 max-h-screen overflow-auto border w-full">
