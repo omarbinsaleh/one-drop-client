@@ -25,7 +25,7 @@ const AllPendingDonationRequests = () => {
   if (loading) return <Spinner />;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-h-screen overflow-auto">
+    <div className=" mx-auto px-4 py-8 max-h-screen overflow-auto border w-full">
       <header >
         <Title title="Donations Requests" />
       </header>
@@ -36,7 +36,7 @@ const AllPendingDonationRequests = () => {
         ) : requests?.allDonationRequests?.data?.length === 0 ? (
           <p className="text-center text-gray-500">No pending donation requests available.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {requests?.allDonationRequests?.data.map((request) => <DonationRequest key={request._id} request={request} />)}
           </div>
         )}

@@ -66,8 +66,8 @@ const Table = ({ tabelData, handleAction }) => {
                         <option value="">Take Action</option>
                         <option value="edit">📝 Edit</option>
                         <option value="inprogress">⌛ Inprogress</option>
-                        <option value="done">✅ Done</option>
-                        <option value="cancel">❌ Cancel</option>
+                        { data.status === 'inprogress' && <option value="done">✅ Done</option>}
+                        {<option value="cancel">❌ Cancel</option>}
                         <option value="delete">🗑️ Delete</option>
                      </select>
                   </td>

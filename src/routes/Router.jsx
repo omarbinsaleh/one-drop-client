@@ -16,6 +16,7 @@ import UpdateDonationRequest from "../pages/UpdateDonationRequest";
 import AllUsers from "../pages/AllUsers";
 import AllDonationRequests from "../pages/AllDonationRequests";
 import AllPendingDonationRequests from "../pages/AllPendingDonationRequests";
+import DonationRequestDetails from "../pages/DonationRequestDetails";
 
 export const router = createBrowserRouter([
    {
@@ -33,6 +34,12 @@ export const router = createBrowserRouter([
          {
             path: '/donation-requests',
             element: <AllPendingDonationRequests></AllPendingDonationRequests>
+         },
+         {
+            path: '/donation-requests/:id',
+            element: <PrivateRoutes>
+               <DonationRequestDetails></DonationRequestDetails>
+            </PrivateRoutes>
          }
       ]
    },
