@@ -6,6 +6,7 @@ import Title from "../components/Title";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const AddBlog = () => {
    const {user, loading} = useAuth();
@@ -14,6 +15,7 @@ const AddBlog = () => {
    const [content, setContent] = useState("");
    const editor = useRef(null);
    const queryClient = useQueryClient();
+   const navigate = useNavigate();
 
    // CHANGE THE PAGE TITLE
    document.title = 'Add Blog | One Drop';
@@ -31,6 +33,7 @@ const AddBlog = () => {
       onSuccess: () => {
          queryClient.invalidateQueries(['blogs']);
          toast.success("Blog created successfully!");
+         navigate('/dashboard/content-management');
       },
       onError: () => {
          toast.error("Failed to create blog.");
