@@ -4,7 +4,6 @@ import { FaEdit, FaTrash, FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import NoData from "../components/NoData";
-import Title from "../components/Title";
 import SearchBox from "../components/SearchBox";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
@@ -13,16 +12,19 @@ const ContentManagement = () => {
    const [filter, setFilter] = useState("");
    const queryClient = useQueryClient();
 
-   // Fetch blogs
+   // CHANGE THE PAGE TITLE
+   document.title = 'Content Management | One Drop';
+
+   // FETCH BLOGS
    const { data: blogs = [], isLoading, isFetching } = useQuery({
       queryKey: ["blogs", filter],
       queryFn: async () => {
-         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs?filter=${filter}`);
+         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs?status=${filter}`);
          return data;
       },
    });
 
-   // Publish/unpublish blog
+   // PUBLISH / UNPUBLISH BLOG
    const toggleStatusMutation = useMutation({
       mutationFn: async ({ id, status }) => {
          const blog = { status }
@@ -34,7 +36,7 @@ const ContentManagement = () => {
       },
    });
 
-   // Delete blog
+   // DELETE BLOG
    const deleteMutation = useMutation({
       mutationFn: async (id) => {
          const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/blogs/${id}`)
@@ -45,26 +47,25 @@ const ContentManagement = () => {
       },
    });
 
-   // Hanle filter
+   // HANDLE FILTER
    const handleFilter = (e) => {
       setFilter(e.target.value);
    }
 
-   // Handle on Change event in Search box
+   // HANDLE ON CHANGE EVENT ON THE SEARCH BOX
    const handleSearch = (e) => {
       console.log(e.targe.value);
    }
 
-   // Handle search button click
+   // HANDLE CLICK EVENT ON THE SEARCH BUTTON
    const handleSearchButtonClick = (inputValue) => {
       console.log(inputValue);
    }
 
+   // RENDER THE SPINNER WHILE LOADING DATA
    if (isLoading) {
       return <Spinner></Spinner>
    }
-
-   console.log(blogs);
 
    return (
       <div className="p-6 h-full w-full flex flex-col">
