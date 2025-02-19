@@ -7,10 +7,15 @@ import NoData from "../components/NoData";
 import SearchBox from "../components/SearchBox";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
+import useAuth from "../hooks/useAuth";
+import { Parser } from "html-to-react";
 
 const ContentManagement = () => {
+   const {user, loading} = useAuth();
    const [filter, setFilter] = useState("");
    const queryClient = useQueryClient();
+
+   const htmlParser = Parser();
 
    // CHANGE THE PAGE TITLE
    document.title = 'Content Management | One Drop';
@@ -63,9 +68,9 @@ const ContentManagement = () => {
    }
 
    // RENDER THE SPINNER WHILE LOADING DATA
-   if (isLoading) {
-      return <Spinner></Spinner>
-   }
+   // if (isLoading) {
+   //    return <Spinner></Spinner>
+   // }
 
    return (
       <div className="p-6 h-full w-full flex flex-col">
@@ -99,11 +104,19 @@ const ContentManagement = () => {
             ) : (
                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {blogs.map((blog) => (
-                     <div key={blog._id} className="p-4 shadow-lg">
-
+                     <div
+                        key={blog._id}
+                        className="p-4 shadow-lg"
+                     >
+                        {/* blog title */}
                         <h3 className="text-xl font-semibold">{blog.title}</h3>
+                        {/* blog status */}
                         <p className="text-sm text-gray-600">{blog.status.toUpperCase()}</p>
-                        <div className="flex gap-1 mt-4 w-full justify-between">
+                        {/* blog content: display after the blog is published by admin */}
+                        {blog.status === 'published' && htmlParser.parse(blog?.content) }
+                        {/* actions buttons */}
+                        <div className="flex gap-1 mt-4 w-full justify-start flex-wrap">
+
                            {blog.status === "draft" ? (
                               <button
                                  onClick={() =>
@@ -129,15 +142,15 @@ const ContentManagement = () => {
                                  <FaTimes /> Unpublish
                               </button>
                            )}
-                           <button className="btn btn-sm bg-blue-500 flex items-center gap-2">
+                           <Link to={`/dashboard/content-management/blogs/edit/${blog._id}`} className="btn btn-sm bg-blue-500 flex items-center gap-2">
                               <FaEdit /> Edit
-                           </button>
-                           <button
+                           </Link>
+                           { user?.isAdmin && <button
                               onClick={() => deleteMutation.mutate(blog._id)}
                               className="btn btn-sm bg-red-500 flex items-center gap-2"
                            >
                               <FaTrash /> Delete
-                           </button>
+                           </button>}
                         </div>
                      </div>
 

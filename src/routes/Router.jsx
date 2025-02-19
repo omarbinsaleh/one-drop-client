@@ -19,6 +19,7 @@ import AllPendingDonationRequests from "../pages/AllPendingDonationRequests";
 import DonationRequestDetails from "../pages/DonationRequestDetails";
 import ContentManagement from "../pages/ContentManagement";
 import AddBlog from "../pages/AddBlog";
+import EditBlog from "../pages/EditBlog";
 
 export const router = createBrowserRouter([
    {
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
             element: <AdminRoutes>
                <AddBlog></AddBlog>
             </AdminRoutes>
+         },
+         {
+            path: '/dashboard/content-management/blogs/edit/:blogId',
+            element: <EditBlog></EditBlog>
          }
       ]
    },
