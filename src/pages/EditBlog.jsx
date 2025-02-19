@@ -21,7 +21,7 @@ const EditBlog  = () => {
    // CHANGE THE PAGE TITLE
    document.title = 'Edit Blog | One Drop';
 
-   // FETCH THE BLOG DATA
+   // FETCH THE BLOG DATA USING A BLOG ID
    const {data:blog, isLoading} = useQuery({
       queryKey: ['blog', blogId],
       queryFn: async () => {
@@ -36,7 +36,7 @@ const EditBlog  = () => {
    // SPECIFY THE IMAGEBB API KEY
    const imageBB_API = import.meta.env.VITE_IMGBB_API_KEY;
 
-   // HANDLE EDIT BLOG
+   // HANDLE UPDATE BLOG
    const mutation = useMutation({
       mutationFn: async (newBlog) => {
          const blog = { ...newBlog }
@@ -45,11 +45,11 @@ const EditBlog  = () => {
       },
       onSuccess: () => {
          queryClient.invalidateQueries(['blogs']);
-         toast.success("Blog created successfully!");
+         toast.success("Blog updated successfully!");
          navigate('/dashboard/content-management');
       },
       onError: () => {
-         toast.error("Failed to create blog.");
+         toast.error("Failed to update the blog.");
       },
    });
 
@@ -92,7 +92,7 @@ const EditBlog  = () => {
          return;
       }
 
-      // 03. create a new blog object
+      // 03. create the updated blog object
       const newBlog = {
          title,
          thumbnail,

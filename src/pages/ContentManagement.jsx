@@ -115,7 +115,7 @@ const ContentManagement = () => {
                         {/* blog content: display after the blog is published by admin */}
                         {blog.status === 'published' && htmlParser.parse(blog?.content) }
                         {/* actions buttons */}
-                        <div className="flex gap-1 mt-4 w-full justify-start flex-wrap">
+                        <div className="flex gap-2 mt-4 w-full justify-start flex-wrap">
 
                            {blog.status === "draft" ? (
                               <button
@@ -125,7 +125,7 @@ const ContentManagement = () => {
                                        status: "published",
                                     })
                                  }
-                                 className="btn btn-sm bg-green-500 flex items-center gap-2"
+                                 className="btn btn-sm bg-transparent border-1 border-green-500 text-green-500 hover:bg-green-500 hover:text-white focus:ring-1 ring-green-500 ring-offset-1 flex items-center gap-2"
                               >
                                  <FaCheck /> Publish
                               </button>
@@ -137,17 +137,17 @@ const ContentManagement = () => {
                                        status: "draft",
                                     })
                                  }
-                                 className="btn btn-sm bg-yellow-500 flex items-center gap-2"
+                                 className="btn btn-sm flex items-center gap-2 border-1 text-yellow-500 border-yellow-500 bg-transparent hover:bg-yellow-500 hover:text-white focus:ring-1 ring-yellow-500 ring-offset-1"
                               >
                                  <FaTimes /> Unpublish
                               </button>
                            )}
-                           <Link to={`/dashboard/content-management/blogs/edit/${blog._id}`} className="btn btn-sm bg-blue-500 flex items-center gap-2">
+                           <Link to={`/dashboard/content-management/blogs/edit/${blog._id}`} className="btn btn-sm bg-transparent border-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
                               <FaEdit /> Edit
                            </Link>
                            { user?.isAdmin && <button
                               onClick={() => deleteMutation.mutate(blog._id)}
-                              className="btn btn-sm bg-red-500 flex items-center gap-2"
+                              className="btn btn-sm bg-transparent text-red-500 border-1 border-red-500 hover:bg-red-500 hover:text-white focus:ring-1 ring-red-500 ring-offset-1 flex items-center gap-2"
                            >
                               <FaTrash /> Delete
                            </button>}
