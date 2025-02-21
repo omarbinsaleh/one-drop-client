@@ -85,9 +85,8 @@ const ContentManagement = () => {
    return (
       <div className=" h-full w-full flex flex-col">
          <div className="flex justify-end items-center mb-4">
-            {/* <h2 className="text-2xl font-bold">Content Management</h2> */}
             <Link to="/dashboard/content-management/add-blog">
-               <button className="btn bg-primary flex items-center gap-2 hover:bg-red-500/90 focus:ring-2 ring-red-500 ring-offset-2">
+               <button className="btn bg-primary flex items-center gap-2 hover:bg-red-500/90 focus:ring-2 ring-red-500 ring-offset-2 text-white">
                   <FaPlus /> Add Blog
                </button>
             </Link>
@@ -105,7 +104,8 @@ const ContentManagement = () => {
                <option value="published">Published</option>
             </select>
          </div>
-         <div className="border flex-1">
+
+         <main className="flex-1" >
             {isFetching ? (
                <DataFethingMessage />
             ) : blogs.length === 0 ? (
@@ -118,7 +118,7 @@ const ContentManagement = () => {
                   {blogs.map((blog) => (
                      <div
                         key={blog._id}
-                        className="p-4 shadow-lg"
+                        className="p-4 shadow-md border"
                      >
                         {/* blog title */}
                         <h3 className="text-xl font-semibold">{blog.title}</h3>
@@ -137,7 +137,7 @@ const ContentManagement = () => {
                                        status: "published",
                                     })
                                  }
-                                 className="btn btn-sm bg-transparent border-1 border-green-500 text-green-500 hover:bg-green-500 hover:text-white focus:ring-1 ring-green-500 ring-offset-1 flex items-center gap-2"
+                                 className="btn btn-sm rounded-md bg-transparent border-1 border-green-500 text-green-500 hover:bg-green-500 hover:text-white focus:ring-1 ring-green-500 ring-offset-1 flex items-center gap-2"
                               >
                                  <FaCheck /> Publish
                               </button>
@@ -149,28 +149,27 @@ const ContentManagement = () => {
                                        status: "draft",
                                     })
                                  }
-                                 className="btn btn-sm flex items-center gap-2 border-1 text-yellow-500 border-yellow-500 bg-transparent hover:bg-yellow-500 hover:text-white focus:ring-1 ring-yellow-500 ring-offset-1"
+                                 className="btn btn-sm rounded-md flex items-center gap-2 border-1 text-yellow-500 border-yellow-500 bg-transparent hover:bg-yellow-500 hover:text-white focus:ring-1 ring-yellow-500 ring-offset-1"
                               >
                                  <FaTimes /> Unpublish
                               </button>
                            )}
-                           <button onClick={() =>handlEditButtonClick(blog?.author?.email, blog?._id)} className="btn btn-sm bg-transparent border-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
+                           <button onClick={() =>handlEditButtonClick(blog?.author?.email, blog?._id)} className="btn btn-sm bg-transparent border-1 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
                               <FaEdit /> Edit
                            </button>
                            {user?.isAdmin && <button
                               onClick={() => deleteMutation.mutate(blog._id)}
-                              className="btn btn-sm bg-transparent text-red-500 border-1 border-red-500 hover:bg-red-500 hover:text-white focus:ring-1 ring-red-500 ring-offset-1 flex items-center gap-2"
+                              className="btn btn-sm rounded-md bg-transparent text-red-500 border-1 border-red-500 hover:bg-red-500 hover:text-white focus:ring-1 ring-red-500 ring-offset-1 flex items-center gap-2"
                            >
                               <FaTrash /> Delete
                            </button>}
                         </div>
                      </div>
-
                   ))
                   }
                </div>
             )}
-         </div>
+         </main>
       </div>
    );
 };

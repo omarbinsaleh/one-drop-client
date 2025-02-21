@@ -40,6 +40,11 @@ const CreateDonationRequest = () => {
       // 01. block the native behaviour of the form submision
       e.preventDefault();
 
+      // check if the user has been blocked
+      if (user?.isBlocked) {
+         return toast.warn("Sorry!!, You are blocked to performe this action")
+      };
+
       // 02. take user input
       const form = new FormData(e.target);
       const requesterName = form.get('requesterName');

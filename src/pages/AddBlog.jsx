@@ -99,16 +99,16 @@ const AddBlog = () => {
    if (loading) return <Spinner />
 
    return (
-      <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-md rounded-lg">
+      <div className="h-full md:px-5 bg-white dark:bg-gray-800 flex flex-col ">
          <Title title="Create a New Blog"></Title>
 
-         <form onSubmit={handleSubmit} className="space-y-4">
+         <form onSubmit={handleSubmit} className="space-y-4 flex-1 mt-10">
             {/* Title Input */}
             <div>
                <label className="block text-gray-700 dark:text-white mb-2">Title</label>
                <input
                   type="text"
-                  className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-primary/50"
                   placeholder="Enter blog title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -137,7 +137,7 @@ const AddBlog = () => {
             {/* Submit Button */}
             <button
                type="submit"
-               className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded font-bold transition"
+               className="btn btn-block max-w-sm bg-red-500 hover:bg-red-600 text-white py-2 rounded font-bold transition"
             >
                Create Blog
             </button>

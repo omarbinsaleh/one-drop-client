@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaTint, FaHospital, FaMapMarkerAlt, FaClock, FaUser } from "react-icons/fa";
+import { FaTint, FaHospital, FaMapMarkerAlt, FaClock, FaUser, FaArrowCircleLeft, FaArrowLeft } from "react-icons/fa";
 import Title from "../components/Title";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
@@ -10,12 +10,16 @@ import Spinner from "../components/Spinner";
 import bgImg from '../assets/bg-donation-details.jpg';
 
 const DonationRequestDetails = () => {
+   const navigate = useNavigate();
    const { user, loading } = useAuth();
    const { id } = useParams();
    const queryClient = useQueryClient();
    const [isModalOpen, setIsModalOpen] = useState(false);
 
-   // FETCH THE BLOOD DONATION REQUEST DATA USING A PARTICULAR ID
+   // CHANGE THE PAGE TITLE
+   document.title = 'Request Detials | One Drop';
+
+   // FETCH THE BLOOD DONATION REQUEST DATA USING ID
    const { data: request, isLoading } = useQuery({
       queryKey: ["donationRequest", id],
       queryFn: async () => {
@@ -23,9 +27,6 @@ const DonationRequestDetails = () => {
          return data;
       },
    });
-
-   // CHANGE THE PAGE TITLE
-   document.title = 'Request Detials | One Drop';
 
    // UPDATE THE DONATION STATUS TO 'inprogress'
    const mutation = useMutation({
@@ -46,7 +47,7 @@ const DonationRequestDetails = () => {
          // close the confirmation modal
          setIsModalOpen(false);
          // display a success message
-         toast.success("Than you for interest!!\nYour request for this donation is under review")
+         toast.success("Thank you for interest!!\nYour request for this donation is under review")
       },
 
       // 3rd Parameter: display an error message when something goes wrong while updating the data
@@ -60,12 +61,26 @@ const DonationRequestDetails = () => {
 
    // HANDLE THE CONFIRM DONATION
    const handleConfirmDonation = () => {
-      const donorInfo = { name: user.displayName, email: user.email }
+      const donorInfo = {
+         name: user.displayName,
+         email: user.email,
+         photoURL: user.photoURL,
+         bloodGroup: user.blood,
+         upazila: user.upazila,
+         district: user.district
+      }
       // trigger the update
       mutation.mutate({ id, donorInfo });
    };
 
-   console.log(request)
+   // HANDLE DONATE NOW BUTTON CLICK
+   const handleDonateNow = (bloodRequest) => {
+      if (bloodRequest.bloodGroup !== user.blood) {
+         return toast.warn("Sorry!! Your blood group does not match with the expected blood group");
+      };
+
+      return setIsModalOpen(true);
+   };
 
    return (
       <div
@@ -75,10 +90,15 @@ const DonationRequestDetails = () => {
          className="bg-center bg-cover bg-fixed"
       >
          <div className=" p-6 lg:px-10 bg-white dark:bg-gray-900 relative w-full min-h-screen bg-cover bg-center bg-opacity-90">
+            <button
+               onClick={() => navigate(-1)}
+               className="btn absolute bg-primary/50 text-secondary hover:bg-primary/60 rounded-lg top-5 left-1">
+               <FaArrowLeft /> Go Back
+            </button>
             {/* TITLE FOR THIS PAGE */}
             <Title title="Donation Request Details" className="my-1" />
 
-            <main className="mt-10 dark:text-white">
+            <main className="mt-14 dark:text-white">
                {/* DETAILED INFORMATION ABOUT THE BLOOD DONATION REUEST */}
                <section className="space-y-4">
                   <p className="text-lg flex items-center gap-2">
@@ -107,7 +127,7 @@ const DonationRequestDetails = () => {
                {/* DONATE NOW BUTTON: FACILATING THE DOANTION PROCESS */}
                {request.status === "pending" && (
                   <button
-                     onClick={() => setIsModalOpen(true)}
+                     onClick={() => handleDonateNow(request)}
                      className="btn btn-block max-w-[300px] mt-4 bg-secondary/90 hover:bg-secondary focus:ring-2 ring-offset-2 ring-secondary text-white px-6 py-2"
                   >
                      Donate Now

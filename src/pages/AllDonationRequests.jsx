@@ -158,7 +158,7 @@ const AllDonationRequests = () => {
       <section className='pt-2 max-h-screen flex flex-col w-full'>
          <Title title='All Donation Requests' />
 
-         <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
+         <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1 mt-10'>
             {/* search box to search donation request by recipient name */}
             <SearchBox onChange={handleSearch} onSearchButtonClick={handlSearchButtonClick} placeholder='Search by recipient name' />
             {/* filter based on the status */}
