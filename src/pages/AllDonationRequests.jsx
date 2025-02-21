@@ -162,7 +162,7 @@ const AllDonationRequests = () => {
             {/* search box to search donation request by recipient name */}
             <SearchBox onChange={handleSearch} onSearchButtonClick={handlSearchButtonClick} placeholder='Search by recipient name' />
             {/* filter based on the status */}
-            <select onChange={handleFilter} value={filter} className='select select-md rounded-none border border-gray-300 bg-secondary text-white'>
+            <select onChange={handleFilter} value={filter} className='select select-md rounded-md border border-gray-300 bg-secondary text-white'>
                <option value="">Filter by Status</option>
                <option value="inprogress">Inprogress</option>
                <option value="pending">Pending</option>

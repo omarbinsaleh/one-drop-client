@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import DonorInfo from './DonorInfo';
 import useAuth from '../hooks/useAuth';
 
-const Table = ({ tabelData, handleAction }) => {
+const MyTable = ({ tabelData, handleAction }) => {
    const {user} = useAuth();
 
    // HANDLE THE ONACTION CHANGE
@@ -16,6 +16,7 @@ const Table = ({ tabelData, handleAction }) => {
    return (
       <div className="overflow-auto max-h-[750px]">
          <table className="table">
+            {/* head */}
             <thead className='bg-secondary text-white sticky top-0'>
                <tr className=''>
                   <th></th>
@@ -30,48 +31,46 @@ const Table = ({ tabelData, handleAction }) => {
                </tr>
             </thead>
             <tbody className=''>
-               {/* DATA ROW */}
+               {/* row 1 */}
                {tabelData.map((data, index) => <tr key={data._id}>
-                  {/* SERIAL NUMBER */}
+                  {/* serial number */}
                   <th>{index + 1}</th>
 
-                  {/* RECIPIENT NAME */}
+                  {/* recipient name */}
                   <td className='capitalize'> {data.recipientName} </td>
 
-                  {/* RECIPIENT LOCATION */}
+                  {/* recipient location */}
                   <td className='capitalize'>
                      <div>{data.hospitalName}</div>
                      <div>{data.district}, {data.upazila}</div>
                   </td>
 
-                  {/* DONATION DATE */}
+                  {/* donation date */}
                   <td> {data.donationDate} </td>
 
-                  {/* DONATION TIME */}
+                  {/* donation time */}
                   <td> {data.donationTime} </td>
 
-                  {/* BLOOD GROUP NEEDED */}
+                  {/* blood group needed */}
                   <td> {data.bloodGroup} </td>
 
-                  {/* DONATION STATUS */}
+                  {/* donation status */}
                   <td className='capitalize'> {data.status} </td>
 
-                  {/* DONOR INFORMATION */}
+                  {/* donor information */}
                   <td >
                      <DonorInfo donorInfo={data?.donorInfo} status={data?.status} />
                   </td>
 
-                  {/* ACTION TO TAKE */}
+                  {/* action */}
                   <td className='capitalize'>
                      <select onChange={(e) => handleActionChange(e, data._id, data.status)} defaultValue='' className='select select-sm rounded-sm'>
                         <option value="">Take Action</option>
-                        {/* ***only admin can edit*** */}
-                        {user?.isAdmin && <option value="edit">📝 Edit</option>}
+                        <option value="edit">📝 Edit</option>
                         <option value="inprogress">⌛ Inprogress</option>
                         { data.status === 'inprogress' && <option value="done">✅ Done</option>}
                         {<option value="cancel">❌ Cancel</option>}
-                        {/* ***only admin can delete*** */}
-                        {user.isAdmin && <option value="delete">🗑️ Delete</option>}
+                        <option value="delete">🗑️ Delete</option>
                      </select>
                   </td>
                </tr>)}
@@ -82,4 +81,4 @@ const Table = ({ tabelData, handleAction }) => {
    )
 }
 
-export default Table
+export default MyTable

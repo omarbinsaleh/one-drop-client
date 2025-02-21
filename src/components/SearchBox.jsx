@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa';
 
-const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Search' }) => {
+const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Search', btnCassList='', classList  }) => {
    const [inputValue, setInputValue] = useState('');
 
    const handleClick = (e) => {
@@ -16,7 +16,7 @@ const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Searc
    };
 
    return (
-      <label className="input input-bordered border-secondary input-md rounded-none flex items-center gap-2 flex-1 max-w-sm  pr-0">
+      <label className={`input input-bordered border-slate-400 input-md rounded-md flex items-center gap-2 flex-1 max-w-sm pr-0 ${classList}`}>
          <input onChange={handleChage} type="text" className="grow" placeholder={placeholder} />
          {/* <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ const SearchBox = ({ onChange, onSearchButtonClick, search, placeholder = 'Searc
                clipRule="evenodd" />
          </svg> */}
 
-         <button onClick={handleClick} className='btn btn-md border border-secondary   bg-secondary hover:bg-secondary/80 text-white rounded-none'> <FaSearch /> Search </button>
+         <button onClick={handleClick} className={`btn btn-md border border-secondary bg-secondary hover:bg-secondary/80 text-white rounded-none rounded-tr-md rounded-br-md ${btnCassList}`}> <FaSearch /> Search </button>
       </label>
    )
 }

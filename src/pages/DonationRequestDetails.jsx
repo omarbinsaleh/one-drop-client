@@ -72,9 +72,9 @@ const DonationRequestDetails = () => {
          style={{
             backgroundImage: `url(${bgImg})`
          }}
-         className="bg-center bg-cover bg-opacity-80 "
+         className="bg-center bg-cover bg-fixed"
       >
-         <div className=" p-6 lg:px-10 bg-white dark:bg-gray-900 relative w-full min-h-screen bg-cover bg-center bg-opacity-95">
+         <div className=" p-6 lg:px-10 bg-white dark:bg-gray-900 relative w-full min-h-screen bg-cover bg-center bg-opacity-90">
             {/* TITLE FOR THIS PAGE */}
             <Title title="Donation Request Details" className="my-1" />
 
@@ -108,7 +108,7 @@ const DonationRequestDetails = () => {
                {request.status === "pending" && (
                   <button
                      onClick={() => setIsModalOpen(true)}
-                     className="btn btn-block max-w-[300px] mt-4 bg-primary hover:bg-red-600 focus:ring-2 ring-offset-2 ring-red-600 text-white px-6 py-2"
+                     className="btn btn-block max-w-[300px] mt-4 bg-secondary/90 hover:bg-secondary focus:ring-2 ring-offset-2 ring-secondary text-white px-6 py-2"
                   >
                      Donate Now
                   </button>

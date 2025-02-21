@@ -12,6 +12,7 @@ import DataFethingMessage from './DataFethingMessage';
 import { FaArrowAltCircleDown, FaArrowAltCircleRight } from 'react-icons/fa';
 import Title from './Title';
 import useDonationRequest from '../hooks/useDonationRequest';
+import MyTable from './MyTable';
 
 const DonorDashboard = () => {
    const location = useLocation();
@@ -187,7 +188,7 @@ const DonorDashboard = () => {
                         ?
                         // if there is any donation request
                         <>
-                           <Table tabelData={data.recentDonationRequests?.data} handleAction={handleAction}></Table>
+                           <MyTable tabelData={data.recentDonationRequests?.data} handleAction={handleAction}></MyTable>
                            <div className='text-center my-4'>
                               <Link
                                  to='/dashboard/my-donation-requests'

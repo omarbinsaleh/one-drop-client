@@ -9,13 +9,14 @@ const useDonationRequest = ({
    upazilas = true,
    districts = true,
    filter = '',
-   search = ''
+   search = '',
+   bloodGroup = ''
 }) => {
    // GET THE CURRENT USER INFORMATION
    const { user } = useAuth();
 
    const query = useQuery({
-      queryKey: ['donation-request-data', user?.email, filter, search],
+      queryKey: ['donation-request-data', user?.email, filter, search, bloodGroup],
       queryFn: async () => {
          // INITIAL RESULT DATA
          const result = {};
@@ -23,7 +24,7 @@ const useDonationRequest = ({
          if (allDonationRequests) {
             // FETCH ALL DONATION REQUEST DATA
             try {
-               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}`);
+               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}&bloodGroup=${bloodGroup}`);
                result.allDonationRequests = { data: allDonationRequests, success: true, message: 'Data is returned successfully' };
             } catch (error) {
                result.allDonationRequests = { success: false, message: "Something went wrong", data: [], error };
@@ -35,7 +36,7 @@ const useDonationRequest = ({
          if (currentUserDonationRequests) {
             // FETCH CURRENT USER'S DONATION REQUESTS
             try {
-               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}&search=${search}`);
+               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}&search=${search}&bloodGroup=${bloodGroup}`);
                result.currentUserDonationRequests = { data: userDonationRequests, success: true, message: 'Data is returned successfully' };
             } catch (error) {
                result.currentUserDonationRequests = { success: false, message: 'Something went wrong', data: [], error };

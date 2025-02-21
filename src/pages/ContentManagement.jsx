@@ -9,9 +9,10 @@ import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import useAuth from "../hooks/useAuth";
 import { Parser } from "html-to-react";
+import DataFethingMessage from "../components/DataFethingMessage";
 
 const ContentManagement = () => {
-   const {user, loading} = useAuth();
+   const { user, loading } = useAuth();
    const [filter, setFilter] = useState("");
    const queryClient = useQueryClient();
 
@@ -21,7 +22,7 @@ const ContentManagement = () => {
    document.title = 'Content Management | One Drop';
 
    // FETCH BLOGS
-   const { data: blogs = [], isLoading, isFetching } = useQuery({
+   const { data: blogs = [], isLoading, isFetching, isSuccess } = useQuery({
       queryKey: ["blogs", filter],
       queryFn: async () => {
          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs?status=${filter}`);
@@ -71,9 +72,9 @@ const ContentManagement = () => {
    // if (isLoading) {
    //    return <Spinner></Spinner>
    // }
-
+   
    return (
-      <div className="p-6 h-full w-full flex flex-col">
+      <div className=" h-full w-full flex flex-col">
          <div className="flex justify-end items-center mb-4">
             {/* <h2 className="text-2xl font-bold">Content Management</h2> */}
             <Link to="/dashboard/content-management/add-blog">
@@ -82,10 +83,14 @@ const ContentManagement = () => {
                </button>
             </Link>
          </div>
-         <div className="flex justify-end mb-4 items-center gap-2">
-            <SearchBox onChange={handleSearch} onSearchButtonClick={handleSearchButtonClick} placeholder="Search by title"></SearchBox>
+         <div className="flex md:justify-end mb-4 items-center gap-2 flex-wrap">
+            <SearchBox
+               onChange={handleSearch}
+               onSearchButtonClick={handleSearchButtonClick}
+               placeholder="Search by title"
+            ></SearchBox>
             {/* <h3 className="text-lg ">Filter</h3> */}
-            <select className="select select-bordered rounded-sm" onChange={handleFilter} defaultValue="all">
+            <select className="select select-bordered rounded-md bg-secondary text-white" onChange={handleFilter} defaultValue="all">
                <option value="">All</option>
                <option value="draft">Draft</option>
                <option value="published">Published</option>
@@ -93,9 +98,7 @@ const ContentManagement = () => {
          </div>
          <div className="border flex-1">
             {isFetching ? (
-               <div className="w-full h-full flex items-center justify-center">
-                  <p>Loading blogs...</p>
-               </div>
+               <DataFethingMessage />
             ) : blogs.length === 0 ? (
                <NoData
                   title='No Blogs added yet!!'
@@ -113,7 +116,7 @@ const ContentManagement = () => {
                         {/* blog status */}
                         <p className="text-sm text-gray-600">{blog.status.toUpperCase()}</p>
                         {/* blog content: display after the blog is published by admin */}
-                        {blog.status === 'published' && htmlParser.parse(blog?.content) }
+                        {blog.status === 'published' && htmlParser.parse(blog?.content)}
                         {/* actions buttons */}
                         <div className="flex gap-2 mt-4 w-full justify-start flex-wrap">
 
@@ -145,7 +148,7 @@ const ContentManagement = () => {
                            <Link to={`/dashboard/content-management/blogs/edit/${blog._id}`} className="btn btn-sm bg-transparent border-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
                               <FaEdit /> Edit
                            </Link>
-                           { user?.isAdmin && <button
+                           {user?.isAdmin && <button
                               onClick={() => deleteMutation.mutate(blog._id)}
                               className="btn btn-sm bg-transparent text-red-500 border-1 border-red-500 hover:bg-red-500 hover:text-white focus:ring-1 ring-red-500 ring-offset-1 flex items-center gap-2"
                            >

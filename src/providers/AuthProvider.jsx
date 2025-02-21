@@ -93,6 +93,7 @@ const AuthProvider = ({ children }) => {
                   currentUser.status = data.status;
                   currentUser.isAdmin = data.role === 'admin';
                   currentUser.isDonor = data.role === 'donor';
+                  currentUser.isVolunteer = data.role === 'volunteer'
                   currentUser.isBlocked = data.status === 'blocked';
 
                   setUser(currentUser);

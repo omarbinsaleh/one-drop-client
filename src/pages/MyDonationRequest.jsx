@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Table from '../components/Table';
 import NoData from '../components/NoData';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
@@ -10,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Title from '../components/Title';
 import DataFethingMessage from '../components/DataFethingMessage';
 import useDonationRequest from '../hooks/useDonationRequest';
+import MyTable from '../components/MyTable';
 
 const MyDonationRequest = () => {
   const location = useLocation();
@@ -39,7 +39,7 @@ const MyDonationRequest = () => {
 
   // HANDLE SEARCH
   const handleSearch = (event) => {
-    if(event.target.value === '') {
+    if (event.target.value === '') {
       setSearch(event.target.value);
     }
   }
@@ -155,14 +155,18 @@ const MyDonationRequest = () => {
   }
 
   return (
-    <section className='py-8 pt-2 max-h-screen flex flex-col w-full'>
+    <section className=' max-h-screen flex flex-col w-full'>
       <Title title='My Donation Requests' />
 
-      <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1'>
+      <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1 mt-5'>
         {/* search box to search donation request by recipient name */}
-        <SearchBox onChange={handleSearch}  onSearchButtonClick={handlSearchButtonClick} placeholder='Search by recipient name' />
+        <SearchBox onChange={handleSearch} onSearchButtonClick={handlSearchButtonClick} placeholder='Search by recipient name' />
         {/* filter based on the status */}
-        <select onChange={handleFilter} value={filter} className='select select-md rounded-none border border-gray-300 bg-secondary text-white'>
+        <select
+          onChange={handleFilter}
+          value={filter}
+          className='select select-md rounded-md border border-gray-300 bg-secondary text-white'
+        >
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>
           <option value="pending">Pending</option>
@@ -180,7 +184,7 @@ const MyDonationRequest = () => {
           <>
             {data?.currentUserDonationRequests?.data?.length
               // if there is any donation request
-              ? <Table tabelData={data?.currentUserDonationRequests?.data} handleAction={handleAction}></Table>
+              ? <MyTable tabelData={data?.currentUserDonationRequests?.data} handleAction={handleAction}></MyTable>
 
               // when there is no donation requests to display
               : (
