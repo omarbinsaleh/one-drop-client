@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react'
 import useAuth from '../hooks/useAuth'
 import Spinner from '../components/Spinner';
 import DashboardWelcome from '../components/DashboardWelcome';
-import Table from '../components/Table';
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import NoData from './NoData';
 import { toast } from 'react-toastify';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import DataFethingMessage from './DataFethingMessage';
-import { FaArrowAltCircleDown, FaArrowAltCircleRight } from 'react-icons/fa';
+import { FaArrowAltCircleRight } from 'react-icons/fa';
 import Title from './Title';
 import useDonationRequest from '../hooks/useDonationRequest';
 import MyTable from './MyTable';
@@ -19,23 +16,14 @@ const DonorDashboard = () => {
    const navigate = useNavigate();
    const { user, loading } = useAuth();
 
-   // FETCH NECESSARY DATA
-   // const { isPending, data, error, refetch, isFetching } = useQuery({
-   //    queryKey: ['donation-request', user?.email],
-   //    queryFn: async () => {
-   //       const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3`);
-
-   //       return { recentDonationRequests };
-   //    }
-   // });
-
+   // FETCH THE NCESSARY DATA
    const { isPending, data, error, refetch, isFetching } = useDonationRequest({
       allDonationRequests: false,
       currentUserDonationRequests: false,
-   })
+   });
 
    // CHANGE THE PAGE TITLE:
-   document.title = "Dashboard | One Drop"
+   document.title = "Dashboard | One Drop";
 
    // HANDLE THE ACTION BUTTON CLICK
    const handleAction = async (e, id, currentStatus) => {
@@ -48,12 +36,12 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'eidt' already
          if (currentStatus === 'edit') {
             toast.warn('Action not allowed');
-            return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
-         }
+            return { success: true, message: 'Navigation to Update Donation Request page was successfull' };
+         };
 
          navigate(`/dashboard/update-donation-request/${id}`, { state: location.pathname });
-         return { success: true, message: 'Navigation to Update Donation Request page was successfull' }
-      }
+         return { success: true, message: 'Navigation to Update Donation Request page was successfull' };
+      };
 
       // 03. when the Inprogress button is clicked on
       if (action === 'inprogress') {
@@ -61,8 +49,8 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'done' already
          if (currentStatus === 'inprogress') {
             toast.warn('Action not allowed');
-            return { success: true, modifiedCount: 0, message: `Action not allowed` }
-         }
+            return { success: true, modifiedCount: 0, message: `Action not allowed` };
+         };
 
          // information to be updated
          const updatedDoc = {
@@ -78,9 +66,9 @@ const DonorDashboard = () => {
          if (data.modifiedCount) {
             refetch();
             toast.success("Status is updated successfully");
-            return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Inprogress' };
-         }
-      }
+            return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'inprogress', message: 'Donation status has been changed to Inprogress' };
+         };
+      };
 
       // 04. when the Done button is clicked on
       if (action === 'done') {
@@ -88,13 +76,12 @@ const DonorDashboard = () => {
          // do not proceed any further if the current status is 'done' already
          if (currentStatus === 'done') {
             toast.warn('Action not allowed');
-            return { success: true, modifiedCount: 0, message: `Action not allowed` }
-         }
+            return { success: true, modifiedCount: 0, message: `Action not allowed` };
+         };
 
          // information to be updated
          const updatedDoc = {
             status: 'done',
-            // donorInfo: { name: user.displayName, email: user.email }
          };
 
          // make an API call to make that update
@@ -106,8 +93,8 @@ const DonorDashboard = () => {
             refetch();
             toast.success("Status is updated successfully");
             return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'done', message: 'donation status has been changed to Done' };
-         }
-      }
+         };
+      };
 
       // 05. when the Cancel button is clicked on
       if (action === 'cancel') {
@@ -116,13 +103,13 @@ const DonorDashboard = () => {
          if (currentStatus === 'pending') {
             toast.warn('Action not allowed');
             return { success: true, modifiedCount: 0, message: 'Action not allowed' };
-         }
+         };
 
          // information to be updated
          const updatedDoc = {
             status: 'pending',
             donorInfo: { name: '', email: '' }
-         }
+         };
 
          // make an API call to make necessary update
          const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
@@ -133,8 +120,8 @@ const DonorDashboard = () => {
             refetch();
             toast.success("Status is updated successfully");
             return { success: true, modifiedCount: data.modifiedCount, donationStatus: 'pending', message: 'donation request has been set to pending state' };
-         }
-      }
+         };
+      };
 
       // 06. when the Delete button is clicked on
       if (action === 'delete') {
@@ -152,16 +139,16 @@ const DonorDashboard = () => {
             toast.success("Deleted Successfully");
             return { success: true, deletedCount: data.deletedCount, message: 'donation request has been deleted successfully' };
          };
-      }
+      };
 
-      return { success: false, message: 'something went wrong' }
+      return { success: false, message: 'something went wrong' };
 
-   }
+   };
 
    // RENDER THE SPINNER WHILE THE DATA IS BING LOADED
    if (isPending || loading) {
       return <Spinner />
-   }
+   };
 
 
    return (
