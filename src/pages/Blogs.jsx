@@ -41,12 +41,12 @@ const Blogs = () => {
   document.title = 'Blogs | One Drop';
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen p-4 dark:bg-gray-900 mt-5">
       <div className="">
-        <Title title="Published Blogs" />
+        {/* <Title title="Published Blogs" /> */}
 
         {/* Search Bar */}
-        <div className="flex justify-end">
+        <div className="flex justify-center py-4">
           <SearchBox onChange={handleSearch} onSearchButtonClick={handleSearchButtonClick} />
           {/* <div className="flex items-center gap-2 mb-6 bg-white dark:bg-gray-800 shadow-md p-3 rounded-lg w-full max-w-sm">
             <FaSearch className="text-gray-500 dark:text-gray-400" />
