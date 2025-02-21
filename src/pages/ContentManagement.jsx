@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaPlus, FaCheck, FaTimes } from "react-icons/fa";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -12,6 +12,7 @@ import { Parser } from "html-to-react";
 import DataFethingMessage from "../components/DataFethingMessage";
 
 const ContentManagement = () => {
+   const navigate = useNavigate();
    const { user, loading } = useAuth();
    const [filter, setFilter] = useState("");
    const queryClient = useQueryClient();
@@ -68,11 +69,19 @@ const ContentManagement = () => {
       console.log(inputValue);
    }
 
+   const handlEditButtonClick = (authorEmail, blogId) => {
+      // if (authorEmail !== user?.email) {
+      //    return toast.warn("You are not allowed to edit this blog")
+      // }
+
+      navigate(`/dashboard/content-management/blogs/edit/${blogId}`)
+   }
+
    // RENDER THE SPINNER WHILE LOADING DATA
    // if (isLoading) {
    //    return <Spinner></Spinner>
    // }
-   
+
    return (
       <div className=" h-full w-full flex flex-col">
          <div className="flex justify-end items-center mb-4">
@@ -121,7 +130,7 @@ const ContentManagement = () => {
                         <div className="flex gap-2 mt-4 w-full justify-start flex-wrap">
 
                            {blog.status === "draft" ? (
-                              <button
+                              user?.isAdmin && <button
                                  onClick={() =>
                                     toggleStatusMutation.mutate({
                                        id: blog._id,
@@ -133,7 +142,7 @@ const ContentManagement = () => {
                                  <FaCheck /> Publish
                               </button>
                            ) : (
-                              <button
+                              user?.isAdmin && <button
                                  onClick={() =>
                                     toggleStatusMutation.mutate({
                                        id: blog._id,
@@ -145,9 +154,9 @@ const ContentManagement = () => {
                                  <FaTimes /> Unpublish
                               </button>
                            )}
-                           <Link to={`/dashboard/content-management/blogs/edit/${blog._id}`} className="btn btn-sm bg-transparent border-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
+                           <button onClick={() =>handlEditButtonClick(blog?.author?.email, blog?._id)} className="btn btn-sm bg-transparent border-1 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
                               <FaEdit /> Edit
-                           </Link>
+                           </button>
                            {user?.isAdmin && <button
                               onClick={() => deleteMutation.mutate(blog._id)}
                               className="btn btn-sm bg-transparent text-red-500 border-1 border-red-500 hover:bg-red-500 hover:text-white focus:ring-1 ring-red-500 ring-offset-1 flex items-center gap-2"

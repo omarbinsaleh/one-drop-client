@@ -20,6 +20,7 @@ import DonationRequestDetails from "../pages/DonationRequestDetails";
 import ContentManagement from "../pages/ContentManagement";
 import AddBlog from "../pages/AddBlog";
 import EditBlog from "../pages/EditBlog";
+import AdminAndVolunteerRoutes from "./AdminAndVolunteerRoutes";
 
 export const router = createBrowserRouter([
    {
@@ -88,25 +89,27 @@ export const router = createBrowserRouter([
          },
          {
             path: '/dashboard/all-donation-requests',
-            element: <AdminRoutes>
+            element: <AdminAndVolunteerRoutes>
                <AllDonationRequests></AllDonationRequests>
-            </AdminRoutes>
+            </AdminAndVolunteerRoutes>
          },
          {
             path: '/dashboard/content-management',
-            element: <AdminRoutes>
+            element: <AdminAndVolunteerRoutes>
                <ContentManagement></ContentManagement>
-            </AdminRoutes>
+            </AdminAndVolunteerRoutes>
          },
          {
             path: '/dashboard/content-management/add-blog',
-            element: <AdminRoutes>
+            element: <AdminAndVolunteerRoutes>
                <AddBlog></AddBlog>
-            </AdminRoutes>
+            </AdminAndVolunteerRoutes>
          },
          {
             path: '/dashboard/content-management/blogs/edit/:blogId',
-            element: <EditBlog></EditBlog>
+            element: <AdminAndVolunteerRoutes>
+               <EditBlog></EditBlog>
+            </AdminAndVolunteerRoutes>
          }
       ]
    },

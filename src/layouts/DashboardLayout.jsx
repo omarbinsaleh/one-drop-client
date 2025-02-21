@@ -1,32 +1,30 @@
 import React, { useState } from 'react'
-import { MdBloodtype, MdDashboard } from 'react-icons/md'
+import { MdDashboard } from 'react-icons/md'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import defaultAvatar from '../assets/profile.png'
-import { FaAngleLeft, FaAngleRight, FaBlog, FaDonate, FaHome, FaListAlt, FaUser, FaUsers } from 'react-icons/fa'
+import { FaBlog, FaHome, FaListAlt, FaUsers } from 'react-icons/fa'
 import SidebarButton from '../components/SidebarButton'
 import { BsDatabaseFillAdd } from 'react-icons/bs'
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
-import { GiBlood } from 'react-icons/gi'
 import { AiFillMedicineBox } from 'react-icons/ai'
+import Spinner from '../components/Spinner'
 
 const DashboardLayout = () => {
    const navigate = useNavigate();
-   const { user } = useAuth();
+   const { user, loading } = useAuth();
    const [hideSidebar, setHideSidebar] = useState(false);
-   const isAdmin = user?.role === 'admin';
-   const isDonor = user?.role === 'donor';
 
    // SHARED NAVLINK:
    const sharedLinks = [
       { name: "Home", path: '/', icon: <FaHome className='text-[20px]' /> },
-   ]
+   ];
 
    // DONOR NAVLINK:
    const donorLinks = [
       { name: "My Requests", path: '/dashboard/my-donation-requests', icon: <FaListAlt className='text-[20px]' /> },
       { name: "Create New Request", path: '/dashboard/create-donation-request', icon: <BsDatabaseFillAdd /> },
-   ]
+   ];
 
    // ADMIN NAVLINKS
    const adminLinks = [
@@ -35,25 +33,35 @@ const DashboardLayout = () => {
       {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> },
       {name: 'All Users', path: '/dashboard/all-users', icon: <FaUsers className='text-[20px]' />},
       { name: 'Content Management', path: '/dashboard/content-management', icon: <FaBlog /> }
-   ]
+   ];
+
+   // VOLUNTEER NAVLINKS
+   const volunteerLink = [
+      {name: 'All Requests', path: '/dashboard/all-donation-requests', icon: <AiFillMedicineBox /> },
+      { name: 'Content Management', path: '/dashboard/content-management', icon: <FaBlog /> }
+   ];
 
    // CLICK EVENT HANDLER ON THE MAIN CONTENT
    const handleMainContentClick = (e) => {
       if (window.innerWidth <= 450) {
          setHideSidebar(true);
-      }
-   }
+      };
+   };
 
    // HELPER FUNCTION: TO DISPLAY AND HIDE THE SIDEBAR LINKS
    const hideSidebarLinks = () => {
       setHideSidebar(true);
-   }
+   };
 
    // HANDLE CLICK EVENT ON DASHBOARD HOME BUTTON ON THE TOP OF THE SIDEBAR
    const handleDashboardHomeButtonClick = () => {
       navigate('/dashboard');
-   }
+   };
 
+   if (loading) {
+      return <Spinner></Spinner>
+   };
+   
    return (
       <section className='flex w-screen min-h-screen'>
          {/* DASHBOARD: SIDEBAR */}
@@ -77,10 +85,13 @@ const DashboardLayout = () => {
                {sharedLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
 
                {/* admin's nav links */}
-               {isAdmin && adminLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
+               {user?.isAdmin && adminLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
 
                {/* donor's nav links */}
-               {isDonor && donorLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
+               {user?.isDonor && donorLinks.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
+               
+               {/* volunteer's nav links */}
+               {user?.isVolunteer && volunteerLink.map((link, index) => <SidebarButton key={index} icon={link.icon} name={link.name} path={link.path} />)}
             </ul>
 
             {/* SIDEBAR: footer section */}
@@ -101,6 +112,6 @@ const DashboardLayout = () => {
          </div>
       </section>
    )
-}
+};
 
-export default DashboardLayout
+export default DashboardLayout;

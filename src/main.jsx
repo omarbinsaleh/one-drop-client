@@ -9,7 +9,6 @@ import { Toaster } from 'react-hot-toast'
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
 const queryClient = new QueryClient();

@@ -43,7 +43,7 @@ const Login = () => {
             setUser(result.user);
             toast.success("User logged in successfully")
             location.state ? navigate(location.state) : navigate('/');
-            // setLoading(false);
+            setLoading(false);
          })
          .catch((err) => {
             toast.error(err.message);
