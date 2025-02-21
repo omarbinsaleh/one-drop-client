@@ -21,6 +21,7 @@ import ContentManagement from "../pages/ContentManagement";
 import AddBlog from "../pages/AddBlog";
 import EditBlog from "../pages/EditBlog";
 import AdminAndVolunteerRoutes from "./AdminAndVolunteerRoutes";
+import AboutUs from "../components/AboutUs";
 
 export const router = createBrowserRouter([
    {
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
             element: <PrivateRoutes>
                <DonationRequestDetails></DonationRequestDetails>
             </PrivateRoutes>
+         },
+         {
+            path: '/about-us',
+            element: <AboutUs></AboutUs>
          }
       ]
    },

@@ -75,10 +75,12 @@ const DonationRequestDetails = () => {
 
    // HANDLE DONATE NOW BUTTON CLICK
    const handleDonateNow = (bloodRequest) => {
+      // check the user's blood group 
       if (bloodRequest.bloodGroup !== user.blood) {
          return toast.warn("Sorry!! Your blood group does not match with the expected blood group");
       };
 
+      // open the confirmation modal
       return setIsModalOpen(true);
    };
 
@@ -90,11 +92,13 @@ const DonationRequestDetails = () => {
          className="bg-center bg-cover bg-fixed"
       >
          <div className=" p-6 lg:px-10 bg-white dark:bg-gray-900 relative w-full min-h-screen bg-cover bg-center bg-opacity-90">
+            {/* BUTTON TO GO BACK */}
             <button
                onClick={() => navigate(-1)}
                className="btn absolute bg-primary/50 text-secondary hover:bg-primary/60 rounded-lg top-5 left-1">
                <FaArrowLeft /> Go Back
             </button>
+
             {/* TITLE FOR THIS PAGE */}
             <Title title="Donation Request Details" className="my-1" />
 
