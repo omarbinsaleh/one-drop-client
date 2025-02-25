@@ -38,7 +38,7 @@ const UserRow = ({ user, handleAction }) => {
 
          {/* action */}
          <td className='capitalize text-end'>
-            <select onChange={(e) => handleActionChange(e, user?._id, user?.status, user?.role)} defaultValue='' className='select select-sm rounded-sm'>
+            <select onChange={(e) => handleActionChange(e, user?._id, user?.status, user?.role)} defaultValue='' className='select select-sm rounded-sm dark:bg-gray-900'>
                <option value="">Take Action</option>
                {user?.status === 'active' || <option value="active">🔄 Unblock</option>}
                {user?.status === 'blocked' || <option value="block">🚫 Block</option>}

@@ -90,9 +90,9 @@ const UserProfile = () => {
   console.log('user in user profile --->', user);
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg">
+    <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg dark:bg-inherit">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-secondary">Profile</h1>
+        <h1 className="text-2xl font-bold text-secondary dark:text-white">Profile</h1>
         {!isEditable ? (
           <button
             className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
@@ -112,22 +112,22 @@ const UserProfile = () => {
         )}
       </div>
 
-      <div className="flex items-center space-x-6 mb-6">
+      <div className="flex items-center space-x-6 mb-6 justify-center flex-col">
         <img
           src={user.photoURL || defaultAvatar}
           alt="User Avatar"
           className="w-24 h-24 rounded-full object-cover border-2 border-primary p-1"
         />
-        <div>
+        <div className="text-center">
           <h2 className="text-2xl font-semibold">{user?.displayName}</h2>
-          <p className="text-gray-600">{user.email}</p>
+          <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
         </div>
       </div>
 
       <form className="space-y-4" ref={formRef}>
         {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 label py-1">
+          <label className="block text-sm font-medium text-gray-700 label py-1 dark:text-white">
             Name
           </label>
           <input
@@ -136,16 +136,16 @@ const UserProfile = () => {
             defaultValue={user?.displayName}
             onChange={handleInputChange}
             disabled={!isEditable}
-            className={`w-full mt-1 p-3 border rounded-sm ${isEditable
+            className={`w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 ${isEditable
               ? "focus:ring-primary focus:border-primary"
-              : "bg-gray-200 cursor-not-allowed"
+              : "bg-gray-200 cursor-not-allowed dark:bg-gray-400 dark:border-none dark:text-black"
               }`}
           />
         </div>
 
         {/* Email (Non-editable) */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 label py-1">
+          <label className="block text-sm font-medium text-gray-700 label py-1 dark:text-white">
             Email
           </label>
           <input
@@ -153,7 +153,7 @@ const UserProfile = () => {
             name="email"
             defaultValue={user.email}
             disabled
-            className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed"
+            className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed dark:bg-gray-400 dark:border-none dark:text-black"
           />
         </div>
 
@@ -162,9 +162,9 @@ const UserProfile = () => {
             {/* districts input field   */}
             <label className="form-control w-full rounded-sm">
               <div className="label">
-                <span className="block text-sm font-medium text-gray-700">District</span>
+                <span className="block text-sm font-medium text-gray-700 dark:text-white">District</span>
               </div>
-              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleDistrictsChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
+              <select className={`select select-bordered rounded-sm font-semibold disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white dark:border-gray-300 " : "bg-gray-200  cursor-not-allowed"}`} onChange={handleDistrictsChange} defaultValue={user?.district} disabled={!isEditable} name='district'>
                 <option value=''>Choose your district</option>
                 {data?.districts?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
               </select>
@@ -175,9 +175,9 @@ const UserProfile = () => {
             {/* upazila    */}
             <label className="form-control w-full rounded-sm">
               <div className="label py-2">
-                <span className="block text-sm font-medium text-gray-700">Upazila</span>
+                <span className="block text-sm font-medium text-gray-700 dark:text-white">Upazila</span>
               </div>
-              <select className={`select select-bordered font-semibold rounded-sm disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.upazila} disabled={!isEditable} name='upazila'>
+              <select className={`select select-bordered font-semibold rounded-sm disabled:bg-gray-200 disabled:text-black ${isEditable ? "focus:ring-primary focus:border-primary dark:bg-gray-700 dark:text-white dark:border-gray-300 " : "bg-gray-200 cursor-not-allowed"}`} onChange={handleInputChange} defaultValue={user?.upazila} disabled={!isEditable} name='upazila'>
                 <option value=''>Choose your district</option>
                 {data?.upazilas?.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
               </select>
@@ -186,7 +186,7 @@ const UserProfile = () => {
 
           {/* Blood Group    */}
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 label py-1">
+            <label className="block text-sm font-medium text-gray-700 label py-1 dark:text-white">
               Blood Group
             </label>
             <input
@@ -194,9 +194,9 @@ const UserProfile = () => {
               name="blood"
               defaultValue={user?.blood}
               disabled={!isEditable}
-              className={`w-full mt-1 p-3 border rounded-sm ${isEditable
-                ? "focus:ring-primary focus:border-primary"
-                : "bg-gray-200 cursor-not-allowed"
+              className={`w-full mt-1 p-3 border rounded-sm  ${isEditable
+                ? "focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-300"
+                : "bg-gray-200 dark:bg-gray-400 dark:text-black cursor-not-allowed"
                 }`}
             />
           </div>

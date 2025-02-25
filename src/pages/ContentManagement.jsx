@@ -118,12 +118,12 @@ const ContentManagement = () => {
                   {blogs.map((blog) => (
                      <div
                         key={blog._id}
-                        className="p-4 shadow-md border"
+                        className="p-4 shadow-md border dark:bg-gray-800 dark:border-gray-500"
                      >
                         {/* blog title */}
                         <h3 className="text-xl font-semibold">{blog.title}</h3>
                         {/* blog status */}
-                        <p className="text-sm text-gray-600">{blog.status.toUpperCase()}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-500">{blog.status.toUpperCase()}</p>
                         {/* blog content: display after the blog is published by admin */}
                         {blog.status === 'published' && htmlParser.parse(blog?.content)}
                         {/* actions buttons */}

@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div>
+    <div className=''>
       {/* welcome section */}
       <section>
         <DashboardWelcome user={user}></DashboardWelcome>

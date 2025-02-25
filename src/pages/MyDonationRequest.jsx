@@ -165,7 +165,7 @@ const MyDonationRequest = () => {
         <select
           onChange={handleFilter}
           value={filter}
-          className='select select-md rounded-md border border-gray-300 bg-secondary text-white'
+          className='select  rounded-md border border-gray-300 dark:border-none bg-secondary text-white'
         >
           <option value="">Filter by Status</option>
           <option value="inprogress">Inprogress</option>

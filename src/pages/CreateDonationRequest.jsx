@@ -107,7 +107,7 @@ const CreateDonationRequest = () => {
                      name="requesterName"
                      value={user?.displayName}
                      readOnly
-                     className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed dark:bg-gray-700"
+                     className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600"
                   />
                </div>
 
@@ -121,7 +121,7 @@ const CreateDonationRequest = () => {
                      name="requesterEmail"
                      value={user?.email}
                      readOnly
-                     className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed dark:bg-gray-700"
+                     className="w-full mt-1 p-3 border rounded-sm bg-gray-200 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600"
                   />
                </div>
             </div>
@@ -144,9 +144,9 @@ const CreateDonationRequest = () => {
                {/* blood group input field   */}
                <label className="form-control w-full rounded-sm flex-1">
                   <div className="label">
-                     <span className="label-text font-medium">Blood Group</span>
+                     <span className="label-text font-medium dark:text-white">Blood Group</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" defaultValue='' name='blood-group' required>
+                  <select className="select select-bordered rounded-sm dark:bg-gray-700 dark:border-gray-300" defaultValue='' name='blood-group' required>
                      <option value=''>Choose your blood group</option>
                      <option value='A+'>A+</option>
                      <option value='A-'>A-</option>
@@ -164,9 +164,9 @@ const CreateDonationRequest = () => {
                {/* Recipient Districts Input Field   */}
                <label className="form-control w-full rounded-sm flex-1">
                   <div className="label">
-                     <span className="label-text font-medium">District</span>
+                     <span className="label-text font-medium dark:text-white">District</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" onChange={handleDistrictsChange} defaultValue='' name='district' required>
+                  <select className="select select-bordered rounded-sm dark:bg-gray-700 dark:border-gray-300" onChange={handleDistrictsChange} defaultValue='' name='district' required>
                      <option value=''>Choose your district</option>
                      {data?.districts?.data?.map(district => <option key={district.id} value={district.name}>{district.name}</option>)}
                   </select>
@@ -174,9 +174,9 @@ const CreateDonationRequest = () => {
                {/* Recipient Upazilas Input Field   */}
                <label className="form-control w-full rounded-sm flex-1">
                   <div className="label">
-                     <span className="label-text font-medium">Upazila</span>
+                     <span className="label-text font-medium dark:text-white">Upazila</span>
                   </div>
-                  <select className="select select-bordered rounded-sm" defaultValue='' name='upazila' required>
+                  <select className="select select-bordered rounded-sm dark:bg-gray-700 dark:border-gray-300" defaultValue='' name='upazila' required>
                      <option value=''>Choose your upazila</option>
                      {upazilas?.map(upazila => <option key={upazila.id} value={upazila.name}>{upazila.name}</option>)}
                   </select>

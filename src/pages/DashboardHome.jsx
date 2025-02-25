@@ -17,7 +17,7 @@ const DashboardHome = () => {
   }
 
   return (
-    <div>
+    <div className=''>
       {/* display the admin dashboard when user is an admin */}
       {user?.isAdmin && <AdminDashboard />}
 

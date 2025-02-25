@@ -62,8 +62,8 @@ const Table = ({ tabelData, handleAction }) => {
                   </td>
 
                   {/* ACTION TO TAKE */}
-                  <td className='capitalize'>
-                     <select onChange={(e) => handleActionChange(e, data._id, data.status)} defaultValue='' className='select select-sm rounded-sm'>
+                  <td className='capitalize '>
+                     <select onChange={(e) => handleActionChange(e, data._id, data.status)} defaultValue='' className='select select-sm rounded-sm dark:bg-gray-900'>
                         <option value="">Take Action</option>
                         {/* ***only admin can edit*** */}
                         {user?.isAdmin && <option value="edit">📝 Edit</option>}

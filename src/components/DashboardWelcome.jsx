@@ -5,7 +5,7 @@ import { FaHandHoldingHeart, FaTint, FaUserPlus } from "react-icons/fa";
 const DashboardWelcome = ({user}) => {
 
   return (
-    <div className="bg-gradient-to-r from-red-500 to-red-700 text-white p-8 rounded-sm shadow-sm">
+    <div className="bg-gradient-to-r from-red-500 to-red-700 dark:from-red-800/20 dark:to-red-900/30 text-white p-8 rounded-sm shadow-sm">
       {/* Greeting Section */}
       <h1 className="text-3xl font-bold flex items-center gap-2">
         Welcome, {user.displayName} 👋
@@ -18,7 +18,7 @@ const DashboardWelcome = ({user}) => {
       {/* Quick Actions Section */}
       <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Donate Blood Card */}
-        <div className="p-4 bg-white rounded-md shadow-md text-center text-gray-800">
+        <div className="p-4 bg-white dark:bg-white/80 rounded-md shadow-md text-center text-gray-800">
           <FaTint className="text-4xl text-red-600 mx-auto" />
           <h3 className="text-lg font-semibold mt-2">Donate Blood</h3>
           <p className="text-sm text-gray-600 mt-1">
@@ -33,7 +33,7 @@ const DashboardWelcome = ({user}) => {
         </div>
 
         {/* Find a Donor Card */}
-        <div className="p-4 bg-white rounded-md shadow-md text-center text-gray-800">
+        <div className="p-4 bg-white dark:bg-white/80 rounded-md shadow-md text-center text-gray-800">
           <FaHandHoldingHeart className="text-4xl text-red-600 mx-auto" />
           <h3 className="text-lg font-semibold mt-2">Find a Donor</h3>
           <p className="text-sm text-gray-600 mt-1">
@@ -48,7 +48,7 @@ const DashboardWelcome = ({user}) => {
         </div>
 
         {/* Update Profile Card */}
-        <div className="p-4 bg-white rounded-md shadow-md text-center text-gray-800">
+        <div className="p-4 bg-white dark:bg-white/80 rounded-md shadow-md text-center text-gray-800">
           <FaUserPlus className="text-4xl text-red-600 mx-auto" />
           <h3 className="text-lg font-semibold mt-2">Update Profile</h3>
           <p className="text-sm text-gray-600 mt-1">

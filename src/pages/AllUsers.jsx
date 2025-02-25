@@ -189,8 +189,8 @@ const AllUsers = () => {
       <section className='py-8 pt-2 max-h-screen flex flex-col w-full'>
          <Title title='All Users'></Title>
 
-         <div className='flex items-center  sm:justify-end  gap-3 flex-wrap mt-10 px-1'>
-            <select onChange={handleFilter} value={filter} className='select select-md rounded-none border border-gray-300 bg-secondary text-white'>
+         <div className='flex items-center sm:justify-end  gap-3 flex-wrap mt-10 px-1'>
+            <select onChange={handleFilter} value={filter} className='select select-md rounded-md border dark:border-none border-gray-300 bg-secondary text-white'>
                <option value="">Filter by Status</option>
                <option value="active">Active</option>
                <option value="blocked">Blocked</option>

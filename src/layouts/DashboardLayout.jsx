@@ -64,7 +64,7 @@ const DashboardLayout = () => {
    };
    
    return (
-      <section className={`flex w-screen min-h-screen dark:bg-gray-800 dark:text-white ${darkMood ? 'dark' : ''}`}>
+      <section className={`flex w-screen min-h-screen dark:bg-gray-900 dark:text-white ${darkMood ? 'dark' : ''}`}>
          {/* DASHBOARD: SIDEBAR */}
          <div
             id='sidebar'
@@ -108,7 +108,7 @@ const DashboardLayout = () => {
          </div>
 
          {/* DASHBOARD: MAIN CONTENT */}
-         <div onClick={handleMainContentClick} className='flex-1 max-h-screen overflow-auto p-4'>
+         <div onClick={handleMainContentClick} className='flex-1 max-h-screen overflow-auto p-4 dark:bg-gray-900'>
             <Outlet></Outlet>
          </div>
       </section>
