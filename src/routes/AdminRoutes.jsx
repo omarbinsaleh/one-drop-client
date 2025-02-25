@@ -3,7 +3,7 @@ import Spinner from '../components/Spinner'
 import { Navigate, useLocation } from 'react-router-dom'
 
 const AdminRoutes = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, setLoading } = useAuth();
   const location = useLocation();
 
 

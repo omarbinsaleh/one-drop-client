@@ -90,12 +90,12 @@ const CreateDonationRequest = () => {
    };
 
    return (
-      <div className=" mx-auto px-6 bg-base-100 shadow-lg rounded-sm dark:bg-gray-800">
+      <div className=" px-6 bg-base-100 shadow-md rounded-sm dark:bg-gray-800">
          <header>
             <Title title="Create Donation Requests" />
          </header>
 
-         <form onSubmit={handleSubmit} className="space-y-4 pb-10 max-w-5xl mx-auto">
+         <form onSubmit={handleSubmit} className="space-y-4 pb-10 max-w-5xl mx-auto mt-10">
             <div className="flex items-center gap-3 flex-wrap flex-col sm:flex-row">
                {/* Requester Name */}
                <div className="flex-1 w-full">

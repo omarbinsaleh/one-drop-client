@@ -2,25 +2,32 @@ import { FaUsers, FaGlobe, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
+import Spinner from "./Spinner";
 
 const AboutUs = () => {
-  const {user} = useAuth();
+  const {user, loading} = useAuth();
   const navigate = useNavigate();
 
   const handleBecomeADonor = () => {
-    if (user.isDonor) {
-      return toast.warn("You are a donor already!! with us");
-    };
-
-    if (user.isAdmin) {
-      return toast.warn("You are an Admin here!!");
-    }
-
-    if (user.isVolunteer) {
-      return toast.warn("You are a volunteer already");
+    if(user) {
+      if (user.isDonor) {
+        return toast.warn("You are a donor already!! with us");
+      };
+  
+      if (user.isAdmin) {
+        return toast.warn("You are an Admin here!!");
+      }
+  
+      if (user.isVolunteer) {
+        return toast.warn("You are a volunteer already");
+      }
     }
 
     navigate('/auth/sign-up');
+  }
+
+  if (loading) {
+    return <Spinner></Spinner>
   }
 
   return (
@@ -63,7 +70,7 @@ const AboutUs = () => {
         <p className="mt-4 text-gray-600 dark:text-gray-300">
           Every drop of blood can make a difference. Become a donor today and be a hero to someone in need.
         </p>
-        {user.isAdmin || user.isDonor || user.isVolunteer ? <button className="mt-6 btn hover:bg-blue-900 rounded-none bg-blue-900 border-none text-white">Thanks fo being with us</button>  :<button onClick={handleBecomeADonor} className="mt-6 btn btn-primary text-white">Become a Donor</button>}
+        {user?.isAdmin || user?.isDonor || user?.isVolunteer ? <button className="mt-6 btn hover:bg-blue-900 rounded-none bg-blue-900 border-none text-white">Thanks fo being with us</button>  :<button onClick={handleBecomeADonor} className="mt-6 btn btn-primary text-white">Become a Donor</button>}
       </div>
     </div>
   );

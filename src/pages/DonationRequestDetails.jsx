@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FaTint, FaHospital, FaMapMarkerAlt, FaClock, FaUser, FaArrowCircleLeft, FaArrowLeft } from "react-icons/fa";
+import { FaTint, FaHospital, FaMapMarkerAlt, FaClock, FaUser, FaArrowLeft } from "react-icons/fa";
 import Title from "../components/Title";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
@@ -23,8 +23,13 @@ const DonationRequestDetails = () => {
    const { data: request, isLoading } = useQuery({
       queryKey: ["donationRequest", id],
       queryFn: async () => {
-         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
+         try {
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
          return data;
+         } catch (error) {
+            toast.error("Something went wrong");
+            console.log(error)
+         }
       },
    });
 
@@ -77,7 +82,7 @@ const DonationRequestDetails = () => {
    const handleDonateNow = (bloodRequest) => {
       // check the user's blood group 
       if (bloodRequest.bloodGroup !== user.blood) {
-         return toast.warn("Sorry!! Your blood group does not match with the expected blood group");
+         return toast.warn("Sorry!!, Your blood group does not match with the requested blood group");
       };
 
       // open the confirmation modal

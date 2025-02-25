@@ -35,7 +35,7 @@ const AllPendingDonationRequests = () => {
   }
 
   return (
-    <div className=" mx-auto px-4 py-8 max-h-screen overflow-auto border w-full">
+    <div className=" mx-auto px-4 py-8 max-h-screen overflow-auto border w-full dark:bg-gray-800">
       <header className="">
         {/* <Title title="Donations Requests" /> */}
         <div className="flex md:justify-end flex-wrap gap-2">
