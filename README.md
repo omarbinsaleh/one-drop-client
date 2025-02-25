@@ -1,36 +1,82 @@
-# setup tailwindcss
-   1. install tailwindcss --> done
-   2. update the `tailwind.config.js` file --> done
-   3. update the `index.css` file --> done
+# Blood Donation Application
 
-# routing setup with react-router-dom
-   1. install `react-router-dom` --> done
-   2. create a routes directory in the src folder --> done
-   3. define all your allowable routes in the `/src/routes/router.jsx` file -->
+## Overview
+The One Drop is a user-friendly platform designed to facilitate blood donation activities by connecting donors with those in need. Built using the MERN stack (MongoDB, Express.js, React, Node.js), this application ensures a seamless and efficient donation process.
 
-# setup firebase authentication system
-   1. create a firebase project --> done
-   2. install the firebase SDK --> done
-   3. copy the firebase config and save in the `.env.local` file --> done
+## Live Website
+[Live Site URL](#) (https://one-drop.netlify.app)
 
-# create Dashboard Home Page
-   1. setup route for this page --> [done]
-   2. desing this page
-      - section 1: header section which will contain the a welcome message for the user.
-      - section 2: user's donation requests displayed in the tabular format
-         - step 1: create API end points
-            - POST `/donation-request` : to create a donation request and save in the database
-            - GET `/donation-requests` : to retrive donation requests from database.
-            - GET `/donation-requests?email=[userEmail] : to retrive donation requests based on user's email
-            - GET `/donation-requests/:id` : retrive a single donation request using donation request ID
-         - step 2: check the role of the user
-         - step 3: check if the current user has posted any donation request yet or not
-         - step 4: hide this section if no data is found for the current user
-         - step 5: display the most 3 recent donation requests
-         - step 6: display a "View All Requests" button.
-            - create this button using the "Link" component provided by 'react-router-dom'
-            - set to property to '/dashboard/my-donation-requests'
-         - step 7: create the "MyDonationRequests.jsx" page
-            - create the component
-            - setup a route for this page in the "Router.jsx" file
-         
+## Features
+1. **Role-based Access Control**: Admin, Donor, and Volunteer roles with specific permissions.
+2. **Donor Registration**: Users can register with details such as name, email, blood group, and location.
+3. **Authentication System**: Secure login and user management.
+4. **Donation Requests**: Users can create and manage blood donation requests.
+5. **Volunteer Functionality**: Volunteers can manage donation requests.
+6. **Admin Dashboard**: Full control over users, donation requests, and content management.
+7. **Profile Management**: Users can update their profiles.
+8. **Search for Donors**: Filter donors based on blood group and location.
+9. **Content Management**: Admins and volunteers can add, edit, and manage blog posts.
+10. **Responsive Design**: Fully optimized for mobile, tablet, and desktop devices.
+
+## Technology Stack
+- **Frontend**: React.js, Tailwind CSS, DaisyUI
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **State Management**: TanStack Query (React Query), Context API
+- **Authentication**: Firebase Authentication (email/password login)
+- **Image Hosting**: ImageBB API
+
+## Installation & Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/omarbinsaleh/blood-donation-app.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd blood-donation-app
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Create a `.env.local` file in the root directory and add the following environment variables:
+   ```plaintext
+   VITE_apiKey=your_firebase_api_key
+   VITE_authDomain=your_firebase_auth_domain
+   VITE_projectId=your_firebase_project_id
+   VITE_storageBucket=your_firebase_storage_bucket
+   VITE_messagingSenderId=your_firebase_messaging_sender_id
+   VITE_appId=your_firebase_app_id
+
+   VITE_API_UR=your_backend_api_base_url
+   VITE_IMGBB_API_KEY=your_imagebb_api_key
+   ```
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Challenges Implemented
+- [x] CRUD operations with notifications (SweetAlert/Toast)
+- [x] Firebase authentication integration
+- [x] Secure user authentication
+- [x] Dynamic user role management
+- [x] Role-based access control
+- [x] Blog content management with Jodit React
+- [x] Admin dashboard with analytics
+- [x] Volunteer access with limited permissions
+- [x] Mobile responsiveness for all pages
+
+## Future Enhancements
+- Implementing email verification and password reset functionality.
+- Introducing social login options.
+- Add real-time chat for donor-recipient communication.
+
+## License
+This project is open-source and available under the [MIT License](LICENSE).
+
+## Contact
+For any queries, reach out to:
+- **Email**: omarbinsaleh44@gmail.com
+- **GitHub**: [Your GitHub Profile](https://github.com/omarbinsaleh)
+

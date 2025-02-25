@@ -6,7 +6,7 @@ const UsersTable = ({ tabelData, handleAction }) => {
       <div className="overflow-auto max-h-[350px]">
          <table className="table ">
             {/* user table header */}
-            <thead className='bg-secondary text-white sticky top-0'>
+            <thead className='bg-secondary text-white sticky top-0 '>
                <tr className=''>
                   <th>Avatar</th>
                   <th>User</th>
