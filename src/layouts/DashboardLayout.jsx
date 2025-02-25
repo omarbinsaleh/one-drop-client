@@ -14,6 +14,7 @@ const DashboardLayout = () => {
    const navigate = useNavigate();
    const { user, loading } = useAuth();
    const [hideSidebar, setHideSidebar] = useState(false);
+   const {darkMood} = useAuth();
 
    // SHARED NAVLINK:
    const sharedLinks = [
@@ -63,11 +64,11 @@ const DashboardLayout = () => {
    };
    
    return (
-      <section className='flex w-screen min-h-screen'>
+      <section className={`flex w-screen min-h-screen dark:bg-gray-800 dark:text-white ${darkMood ? 'dark' : ''}`}>
          {/* DASHBOARD: SIDEBAR */}
          <div
             id='sidebar'
-            className={` ${hideSidebar ? 'w-[2px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen max-h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200`}>
+            className={` ${hideSidebar ? 'w-[2px]' : 'min-w-[30px]'}  max-w-[250px] sidebar h-screen max-h-screen flex flex-col fixed sm:relative z-50 bg-white/60 backdrop-blur-2xl border-r-2 border-gray-200 dark:border-gray-500 dark:bg-inherit`}>
             <button
                onClick={() => setHideSidebar(!hideSidebar)}
                className='w-8 h-8 text-xl flex items-center justify-center border-2 border-gray-200 rounded-sm absolute -right-[30px] bg-white font-bold top-[9px]  z-50 sm:hidden text-secondary'>
@@ -75,8 +76,8 @@ const DashboardLayout = () => {
             </button>
 
             {/* SIDEBAR: header section */}
-            <header className='border-b-2 border-gray-200'>
-               {hideSidebar || <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 text-secondary rounded-none hover:bg-transparent text-2xl font-bold' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className=''>Dashboard</span> </button>}
+            <header className='border-b-2 border-gray-200 dark:border-gray-500'>
+               {hideSidebar || <button onClick={handleDashboardHomeButtonClick} className='btn btn-ghost btn-block justify-start px-2 text-secondary rounded-none hover:bg-transparent text-2xl font-bold dark:text-white' title='Dashboard Home'> <MdDashboard className='md:text-[30px]'></MdDashboard> <span className=''>Dashboard</span> </button>}
             </header>
 
             {/* SIDEBAR: nav links section */}
@@ -95,7 +96,7 @@ const DashboardLayout = () => {
             </ul>
 
             {/* SIDEBAR: footer section */}
-            <footer className=' border-t-2 border-gray-200'>
+            <footer className=' border-t-2 border-gray-200 dark:border-gray-500'>
                {hideSidebar || <Link to='/dashboard/profile' className=' flex gap-2 items-center w-full p-3'>
                   <img src={user?.photoURL || defaultAvatar} alt="Profile avatar" className=' w-[30px] md:w-10 border border-primary p-[2px] aspect-square rounded-full' />
                   <div className='flex flex-col'>
