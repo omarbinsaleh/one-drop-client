@@ -29,7 +29,7 @@ The One Drop is a user-friendly platform designed to facilitate blood donation a
 ## Installation & Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/omarbinsaleh/blood-donation-app.git
+   git clone https://github.com/omarbinsaleh/one-drop-client.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -78,5 +78,5 @@ This project is open-source and available under the [MIT License](LICENSE).
 ## Contact
 For any queries, reach out to:
 - **Email**: omarbinsaleh44@gmail.com
-- **GitHub**: [Your GitHub Profile](https://github.com/omarbinsaleh)
+- **GitHub**: [My GitHub Profile](https://github.com/omarbinsaleh)
 
