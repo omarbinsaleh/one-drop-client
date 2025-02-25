@@ -42,7 +42,7 @@ const Blogs = () => {
   document.title = 'Blogs | One Drop';
 
   return (
-    <div className="min-h-screen p-4 dark:bg-gray-900 mt-5">
+    <div className="min-h-screen p-4 dark:bg-gray-900 pt-8">
       <div className="">
         {/* <Title title="Published Blogs" /> */}
 
@@ -73,7 +73,7 @@ const Blogs = () => {
                       {htmlParser.parse(blog.content.substring(0, 100))}
                     </p>
                     <Link
-                      to={`/blog/${blog._id}`}
+                      to={`/blogs/${blog._id}`}
                       className="inline-block mt-3 text-red-500 hover:underline"
                     >
                       Read More →
