@@ -4,7 +4,7 @@
 The One Drop is a user-friendly platform designed to facilitate blood donation activities by connecting donors with those in need. Built using the MERN stack (MongoDB, Express.js, React, Node.js), this application ensures a seamless and efficient donation process.
 
 ## Live Website
-[Live Site URL](#) (https://one-drop.netlify.app)
+[Live Site URL](https://one-drop.netlify.app)
 
 ## Features
 1. **Role-based Access Control**: Admin, Donor, and Volunteer roles with specific permissions.
