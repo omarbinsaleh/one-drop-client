@@ -33,7 +33,7 @@ The One Drop is a user-friendly platform designed to facilitate blood donation a
    ```
 2. Navigate to the project directory:
    ```bash
-   cd blood-donation-app
+   cd one-drop-client
    ```
 3. Install dependencies:
    ```bash
