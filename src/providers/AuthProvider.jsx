@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react'
 import { auth } from '../firebase/firebase.config';
 import axios from 'axios';
@@ -29,6 +29,12 @@ const AuthProvider = ({ children }) => {
    function updateUserInfo(userInfoObj) {
       setLoading(true);
       return updateProfile(auth.currentUser, userInfoObj);
+   }
+
+   // DELETE USER FROM THE FIREBASE
+   function deleteUserFromFirebae() {
+      setLoading(true);
+      return deleteUser(auth.currentUser);
    }
 
    // REFETCH USER DATA FROM DATA BASE

@@ -1,24 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
 import Spinner from "../components/Spinner";
 import NoData from "../components/NoData";
 import { Parser } from "html-to-react";
 import SearchBox from "../components/SearchBox";
 import Title from "../components/Title";
 import DataFethingMessage from "../components/DataFethingMessage";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Blogs = () => {
   const htmlParser = Parser();
   const [search, setSearch] = useState("");
+  const axiosPublic = useAxiosPublic();
 
   // FETCH THE ALL THE PUBLISHED BLOGS
   const { data: blogs, isLoading, error, isFetching } = useQuery({
     queryKey: ["publishedBlogs", search],
     queryFn: async () => {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs?status=published`);
+      // const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/blogs?status=published`);
+      const { data } = await axiosPublic.get(`/blogs?status=published`);
       return data
     },
   });
