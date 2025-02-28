@@ -92,30 +92,30 @@ const UserProfile = () => {
   console.log('user in user profile --->', user);
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg dark:bg-inherit">
+    <div className="max-w-7xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg dark:bg-inherit">
       {/* header section: title, edit and save button, logout button */}
       <header className="flex items-center justify-between mb-6 flex-col gap-4 md:flex-row">
         <h1 className="text-3xl font-bold text-secondary dark:text-white">Profile</h1>
         <div className="flex items-center gap-2">
-        {!isEditable ? (
-          <button
-            className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
-            onClick={handleEditClick}
-          >
-            <FaEdit />
-            Edit
-          </button>
-        ) : (
-          <button
-            className="btn btn-success bg-green-600 hover:bg-green-700 text-white rounded-[4px] btn-sm"
-            onClick={handleSaveClick}
-          >
-            <FaSave></FaSave>
-            Save
-          </button>
-        )}
+          {!isEditable ? (
+            <button
+              className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
+              onClick={handleEditClick}
+            >
+              <FaEdit />
+              Edit
+            </button>
+          ) : (
+            <button
+              className="btn btn-success bg-green-600 hover:bg-green-700 text-white rounded-[4px] btn-sm"
+              onClick={handleSaveClick}
+            >
+              <FaSave></FaSave>
+              Save
+            </button>
+          )}
 
-       <LogoutBtn></LogoutBtn>
+          <LogoutBtn></LogoutBtn>
         </div>
       </header>
 
@@ -144,7 +144,7 @@ const UserProfile = () => {
             defaultValue={user?.displayName}
             onChange={handleInputChange}
             disabled={!isEditable}
-            className={`w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 ${isEditable
+            className={`w-full mt-1 p-3 border rounded-sm dark:bg-gray-700 disabled:dark:text-slate-300 ${isEditable
               ? "focus:ring-primary focus:border-primary"
               : "bg-gray-200 cursor-not-allowed dark:bg-gray-400 dark:border-none dark:text-black"
               }`}

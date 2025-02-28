@@ -50,9 +50,11 @@ const MyDonationRequest = () => {
   }
 
   // HANDLE THE ACTION BUTTON CLICK
-  const handleAction = async (e, id, currentStatus) => {
+  const handleAction = async (e, donationRequest) => {
     // identify the action triggered by using any of the action buttons in the Table
     const action = e.target.value;
+    const id = donationRequest._id;
+    const currentStatus = donationRequest.status;
 
     // when the edit button is clicked on
     if (action === 'edit') {
@@ -76,9 +78,21 @@ const MyDonationRequest = () => {
         return { success: true, modifiedCount: 0, message: `Action not allowed` }
       }
 
+      if (user.blood !== donationRequest.bloodGroup) {
+        toast.warn('Your blood group does not match with the needed blood!');
+        return { success: true, modifiedCount: 0, message: 'Your blood group does not match with the needed blood!' }
+      };
+
       const updatedDoc = {
         status: 'inprogress',
-        donorInfo: { name: '', email: '' }
+        donorInfo: {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          bloodGroup: user.blood,
+          upazila: user.upazila,
+          district: user.district
+        }
       };
       const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
       console.log(data);
@@ -121,7 +135,7 @@ const MyDonationRequest = () => {
 
       const updatedDoc = {
         status: 'pending',
-        donorInfo: { name: '', email: '' }
+        donorInfo: null
       }
       const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest: updatedDoc });
       console.log(data);

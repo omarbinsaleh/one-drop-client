@@ -6,8 +6,8 @@ const MyTable = ({ tabelData, handleAction }) => {
    const {user} = useAuth();
 
    // HANDLE THE ONACTION CHANGE
-   const handleActionChange = async (e, id, currentStatus) => {
-      const { success } = await handleAction(e, id, currentStatus);
+   const handleActionChange = async (e, donationRequest) => {
+      const { success } = await handleAction(e, donationRequest);
       if (success) {
          e.target.value = ''
       }
@@ -64,7 +64,7 @@ const MyTable = ({ tabelData, handleAction }) => {
 
                   {/* action */}
                   <td className='capitalize'>
-                     <select onChange={(e) => handleActionChange(e, data._id, data.status)} defaultValue='' className='select select-sm rounded-sm dark:bg-gray-900'>
+                     <select onChange={(e) => handleActionChange(e, data)} defaultValue='' className='select select-sm rounded-sm dark:bg-gray-900'>
                         <option value="">Take Action</option>
                         <option value="edit">📝 Edit</option>
                         <option value="inprogress">⌛ Inprogress</option>
