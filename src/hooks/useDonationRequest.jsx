@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios';
 import useAuth from './useAuth';
+import useAxiosPublic from './useAxiosPublic';
+import useAxiosSecure from './useAxiosSecure';
 
 const useDonationRequest = ({
    allDonationRequests = true,
@@ -14,6 +16,8 @@ const useDonationRequest = ({
 }) => {
    // GET THE CURRENT USER INFORMATION
    const { user } = useAuth();
+   const axiosPublic = useAxiosPublic();
+   const axiosSecure = useAxiosSecure();
 
    const query = useQuery({
       queryKey: ['donation-request-data', user?.email, filter, search, bloodGroup],
@@ -60,7 +64,7 @@ const useDonationRequest = ({
          if (districts) {
             // FETCH DISTRICTS
             try {
-               const { data: districtsData } = await axios.get(`${import.meta.env.VITE_API_URL}/districts`);
+               const { data: districtsData } = await axiosPublic.get(`/districts`);
                const finalDistrictsData = districtsData.find(item => item.name === 'districts').data;
                result.districts = { data: finalDistrictsData, success: true, message: 'Data is returned successfully' }
             } catch (error) {
@@ -73,7 +77,7 @@ const useDonationRequest = ({
          if (upazilas) {
             // FETCH UPAZILAS
             try {
-               const { data: upazilasData } = await axios.get(`${import.meta.env.VITE_API_URL}/upazilas`);
+               const { data: upazilasData } = await axiosPublic.get(`/upazilas`);
                const finalUpazilasData = upazilasData.find(item => item.name === 'upazilas').data;
                result.upazilas = { data: finalUpazilasData, success: true, message: 'Data is retured successfully' };
             } catch (error) {

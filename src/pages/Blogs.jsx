@@ -5,7 +5,6 @@ import Spinner from "../components/Spinner";
 import NoData from "../components/NoData";
 import { Parser } from "html-to-react";
 import SearchBox from "../components/SearchBox";
-import Title from "../components/Title";
 import DataFethingMessage from "../components/DataFethingMessage";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 

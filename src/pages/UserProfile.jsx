@@ -5,7 +5,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import defaultAvatar from '../assets/profile.png';
-import { FaEdit, FaSave } from "react-icons/fa";
+import { FaEdit, FaSave, FaSignOutAlt } from "react-icons/fa";
+import { VscSignOut } from "react-icons/vsc";
+import LogoutBtn from "../components/LogoutBtn";
 
 const UserProfile = () => {
   // State for edit mode
@@ -91,8 +93,10 @@ const UserProfile = () => {
 
   return (
     <div className="max-w-4xl mx-auto py-10 px-3 bg-gray-100/20 shadow-lg dark:bg-inherit">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-secondary dark:text-white">Profile</h1>
+      {/* header section: title, edit and save button, logout button */}
+      <header className="flex items-center justify-between mb-6 flex-col gap-4 md:flex-row">
+        <h1 className="text-3xl font-bold text-secondary dark:text-white">Profile</h1>
+        <div className="flex items-center gap-2">
         {!isEditable ? (
           <button
             className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
@@ -110,19 +114,23 @@ const UserProfile = () => {
             Save
           </button>
         )}
-      </div>
 
-      <div className="flex items-center space-x-6 mb-6 justify-center flex-col">
+       <LogoutBtn></LogoutBtn>
+        </div>
+      </header>
+
+      {/* user profile picture, name and email */}
+      <section className="flex items-center space-x-6 mb-6 justify-center flex-col">
         <img
           src={user.photoURL || defaultAvatar}
           alt="User Avatar"
           className="w-24 h-24 rounded-full object-cover border-2 border-primary p-1"
         />
         <div className="text-center">
-          <h2 className="text-2xl font-semibold">{user?.displayName}</h2>
-          <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
+          <h2 className="text-xl font-semibold">{user?.displayName}</h2>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">{user.email}</p>
         </div>
-      </div>
+      </section>
 
       <form className="space-y-4" ref={formRef}>
         {/* Name */}
