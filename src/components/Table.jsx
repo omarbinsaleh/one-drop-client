@@ -14,9 +14,9 @@ const Table = ({ tabelData, handleAction }) => {
    }
 
    return (
-      <div className="overflow-auto max-h-[750px]">
+      <div className="max-h-[750px] ">
          <table className="table">
-            <thead className='bg-secondary text-white sticky top-0'>
+            <thead className='bg-secondary text-white sticky top-0 '>
                <tr className=''>
                   <th></th>
                   <th>Recipient Name</th>

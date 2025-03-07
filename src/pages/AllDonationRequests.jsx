@@ -53,7 +53,11 @@ const AllDonationRequests = () => {
    const handleAction = async (e, donationRequest) => {
       // identify the action triggered by using any of the action buttons in the Table
       const action = e.target.value;
+
+      // donation request id
       const id = donationRequest._id;
+      
+      // current status of the donation request
       const currentStatus = donationRequest.status;
 
       // when the edit button is clicked on
@@ -79,7 +83,7 @@ const AllDonationRequests = () => {
          }
 
          // check if the user's blood matches with the reqested blood group
-         if (user.bood !== donationRequest.bloodGroup) {
+         if (user.blood !== donationRequest.bloodGroup) {
             toast.warn("Your blood group does not match with the needed blood group");
             return { success: true, modifiedCount: 0, message: "Your blood group does not match with the needed blood group!" };
          }
