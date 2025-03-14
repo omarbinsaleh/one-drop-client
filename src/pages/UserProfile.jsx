@@ -99,7 +99,7 @@ const UserProfile = () => {
         <div className="flex items-center gap-2">
           {!isEditable ? (
             <button
-              className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
+              className="btn border border-secondary/30 bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
               onClick={handleEditClick}
             >
               <FaEdit />

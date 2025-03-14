@@ -174,7 +174,7 @@ const AllDonationRequests = () => {
    }
 
    return (
-      <section className='pt-2 max-h-screen flex flex-col w-full'>
+      <section className='pt-2 max-h-screen flex flex-col w-full '>
          <Title title='All Donation Requests' />
 
          <div className='flex items-center  sm:justify-end  gap-3 flex-wrap px-1 mt-10'>

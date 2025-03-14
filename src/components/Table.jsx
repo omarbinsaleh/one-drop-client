@@ -14,7 +14,7 @@ const Table = ({ tabelData, handleAction }) => {
    }
 
    return (
-      <div className="max-h-[750px] ">
+      <div className="max-h-[500px]">
          <table className="table">
             <thead className='bg-secondary text-white sticky top-0 '>
                <tr className=''>

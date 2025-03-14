@@ -18,7 +18,7 @@ const LogoutBtn = () => {
    return (
       <button
          onClick={handleLogout}
-         className="btn border border-secondary bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
+         className="btn border border-secondary/30 bg-gray-200 hover:backdrop:bg-gray-400 text-black rounded-[4px] btn-sm"
       >
          <VscSignOut className=""></VscSignOut>
          Logout

@@ -67,7 +67,7 @@ const Blogs = () => {
               blogs.map((blog) => (
                 <div key={blog._id} className="bg-white dark:bg-gray-800 shadow-md rounded-md overflow-hidden">
                   <img src={blog.thumbnail} alt={blog.title} className="w-full h-48 object-cover" />
-                  <div className="p-4">
+                  <div className="p-4  ">
                     <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{blog.title}</h2>
                     <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
                       {htmlParser.parse(blog.content.substring(0, 100))}

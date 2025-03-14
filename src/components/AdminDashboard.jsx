@@ -45,6 +45,7 @@ const AdminDashboard = () => {
             title='Total Users'
             count={statistics?.users?.count}
             growth={statistics?.users?.growth}
+            link='/dashboard/all-users'
           />
 
           {/* total donation requests */}
@@ -52,7 +53,9 @@ const AdminDashboard = () => {
             icon={<FaTint className="text-green-500 text-3xl" />}
             title='Total Donation Requests'
             count={statistics?.bloodDonationRequests?.count}
-            growth={statistics?.bloodDonationRequests?.growth} />
+            growth={statistics?.bloodDonationRequests?.growth} 
+            link='/dashboard/all-donation-requests'
+            />
         </div>
       </section>
     </div>
