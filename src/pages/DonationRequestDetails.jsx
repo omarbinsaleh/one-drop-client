@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import bgImg from '../assets/bg-donation-details.jpg';
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const DonationRequestDetails = () => {
    const navigate = useNavigate();
@@ -15,6 +16,7 @@ const DonationRequestDetails = () => {
    const { id } = useParams();
    const queryClient = useQueryClient();
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const axiosSecure = useAxiosSecure();
 
    // CHANGE THE PAGE TITLE
    document.title = 'Request Detials | One Drop';
@@ -24,8 +26,8 @@ const DonationRequestDetails = () => {
       queryKey: ["donationRequest", id],
       queryFn: async () => {
          try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { withCredentials: true });
-         return data;
+            const { data } = await axiosSecure.get(`/donation-requests/${id}`);
+            return data;
          } catch (error) {
             toast.error("Something went wrong");
             console.log(error)
@@ -42,7 +44,7 @@ const DonationRequestDetails = () => {
             status: "inprogress",
             donorInfo
          };
-         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { donationRequest });
+         const { data } = await axiosSecure.patch(`/donation-requests/${id}`, { donationRequest });
       },
 
       // 2nd Parameter: on successfull data update, display a success message and close the modal

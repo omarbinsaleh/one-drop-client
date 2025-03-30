@@ -10,12 +10,14 @@ import Spinner from "../components/Spinner";
 import useAuth from "../hooks/useAuth";
 import { Parser } from "html-to-react";
 import DataFethingMessage from "../components/DataFethingMessage";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const ContentManagement = () => {
    const navigate = useNavigate();
    const { user, loading } = useAuth();
    const [filter, setFilter] = useState("");
    const queryClient = useQueryClient();
+   const axiosSecure = useAxiosSecure();
 
    const htmlParser = Parser();
 
@@ -35,7 +37,7 @@ const ContentManagement = () => {
    const toggleStatusMutation = useMutation({
       mutationFn: async ({ id, status }) => {
          const blog = { status }
-         const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/blogs/${id}`, { blog })
+         const { data } = await axiosSecure.patch(`/blogs/${id}`, { blog })
       },
       onSuccess: () => {
          queryClient.invalidateQueries(["blogs"]);
@@ -46,12 +48,15 @@ const ContentManagement = () => {
    // DELETE BLOG
    const deleteMutation = useMutation({
       mutationFn: async (id) => {
-         const { data } = await axios.delete(`${import.meta.env.VITE_API_URL}/blogs/${id}`)
+         const { data } = await axiosSecure.delete(`/blogs/${id}`)
       },
       onSuccess: () => {
          queryClient.invalidateQueries(["blogs"]);
          toast.success("Deleted successfully!")
       },
+      onError: () => {
+         toast.error("Something went wrong.");
+      }
    });
 
    // HANDLE FILTER
@@ -154,7 +159,7 @@ const ContentManagement = () => {
                                  <FaTimes /> Unpublish
                               </button>
                            )}
-                           <button onClick={() =>handlEditButtonClick(blog?.author?.email, blog?._id)} className="btn btn-sm bg-transparent border-1 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
+                           <button onClick={() => handlEditButtonClick(blog?.author?.email, blog?._id)} className="btn btn-sm bg-transparent border-1 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white focus:ring-1 ring-blue-500 ring-offset-1 flex items-center gap-2">
                               <FaEdit /> Edit
                            </button>
                            {user?.isAdmin && <button

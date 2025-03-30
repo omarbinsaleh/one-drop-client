@@ -6,10 +6,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Title from "../components/Title";
 import useDonationRequest from "../hooks/useDonationRequest";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const CreateDonationRequest = () => {
    const [upazilas, setUpazilas] = useState([]); // for the upazilas input field
    const { user, loading } = useAuth();
+   const axiosSecure = useAxiosSecure();
 
    // CHANGE THE PAGE TITLE
    document.title = "New Donation Request | One Drop";
@@ -77,7 +79,7 @@ const CreateDonationRequest = () => {
 
       // 04. send the data to the backend here
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, { donationRequest: request }, { withCredentials: true })
+         const { data } = await axiosSecure.post('/donation-requests', { donationRequest: request })
          if (data.insertedId) {
             toast.success("Request Posted Successfully!")
             // Reset form after submission

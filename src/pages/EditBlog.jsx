@@ -7,25 +7,27 @@ import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 import { useNavigate, useParams } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
-const EditBlog  = () => {
-   const {blogId} = useParams();
-   const {user, loading} = useAuth();
+const EditBlog = () => {
+   const { blogId } = useParams();
+   const { user, loading } = useAuth();
    const [title, setTitle] = useState("");
    const [thumbnail, setThumbnail] = useState(null);
    const [content, setContent] = useState("");
    const editor = useRef(null);
    const queryClient = useQueryClient();
    const navigate = useNavigate();
+   const axiosSecure = useAxiosSecure()
 
    // CHANGE THE PAGE TITLE
    document.title = 'Edit Blog | One Drop';
 
    // FETCH THE BLOG DATA USING A BLOG ID
-   const {data:blog, isLoading} = useQuery({
+   const { data: blog, isLoading } = useQuery({
       queryKey: ['blog', blogId],
       queryFn: async () => {
-         const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/blogs/${blogId}`);
+         const { data } = await axiosSecure.get(`/blogs/${blogId}`);
          setTitle(data.title);
          setContent(data.content);
          setThumbnail(data.thumbnail)
@@ -40,7 +42,7 @@ const EditBlog  = () => {
    const mutation = useMutation({
       mutationFn: async (newBlog) => {
          const blog = { ...newBlog }
-         const response = await axios.patch(`${import.meta.env.VITE_API_URL}/blogs/${blogId}`, { blog });
+         const response = await axiosSecure.patch(`/blogs/${blogId}`, { blog });
          return response.data;
       },
       onSuccess: () => {
@@ -142,7 +144,7 @@ const EditBlog  = () => {
             {/* Text Editor */}
             <div>
                <label className="block text-gray-700 dark:text-white mb-2">Content</label>
-               <JoditEditor className="" ref={editor}  value={content} onChange={(newContent) => setContent(newContent)} />
+               <JoditEditor className="" ref={editor} value={content} onChange={(newContent) => setContent(newContent)} />
             </div>
 
             {/* Submit Button */}

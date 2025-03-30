@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const AddBlog = () => {
    const {user, loading} = useAuth();
@@ -16,6 +17,7 @@ const AddBlog = () => {
    const editor = useRef(null);
    const queryClient = useQueryClient();
    const navigate = useNavigate();
+   const axiosSecure = useAxiosSecure();
 
    // CHANGE THE PAGE TITLE
    document.title = 'Add Blog | One Drop';
@@ -27,7 +29,7 @@ const AddBlog = () => {
    const mutation = useMutation({
       mutationFn: async (newBlog) => {
          const blog = { ...newBlog }
-         const response = await axios.post(`${import.meta.env.VITE_API_URL}/blogs`, { blog });
+         const response = await axiosSecure.post(`/blogs`, { blog });
          return response.data;
       },
       onSuccess: () => {
