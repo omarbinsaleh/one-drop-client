@@ -77,7 +77,7 @@ const CreateDonationRequest = () => {
 
       // 04. send the data to the backend here
       try {
-         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, { donationRequest: request })
+         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/donation-requests`, { donationRequest: request }, { withCredentials: true })
          if (data.insertedId) {
             toast.success("Request Posted Successfully!")
             // Reset form after submission

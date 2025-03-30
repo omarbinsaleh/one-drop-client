@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, deleteUser, onAuthStateChanged, signInW
 import React, { createContext, useEffect, useState } from 'react'
 import { auth } from '../firebase/firebase.config';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const AuthContext = createContext();
 
@@ -102,15 +103,36 @@ const AuthProvider = ({ children }) => {
                   currentUser.isVolunteer = data.role === 'volunteer'
                   currentUser.isBlocked = data.status === 'blocked';
 
-                  setUser(currentUser);
-                  setLoading(false);
+                  // make api request to generate the jwt token
+                  axios.post(`${import.meta.env.VITE_API_URL}/jwt/generate-verification-token`, currentUser, { withCredentials: true })
+                     .then(response => {
+                        if (response.data.success) {
+                           setUser(currentUser);
+                           setLoading(false);
+                        } else {
+                           setUser(null);
+                           setLoading(true)
+                           toast.error(response.data.message);
+                        }
+                     }).catch(error => {
+                        console.log('jwt error --> ', error.message);
+                        toast.error(error.message);
+                     });
+
                }).catch(error => {
-                  console.log(error.message);
+                  console.log('error heppened when retriving the user data from the DB -->', error);
+                  toast.error(error.message);
                })
          } else {
             // when user does not exists
-            setUser(currentUser);
-            setLoading(false);
+            axios.post(`${import.meta.env.VITE_API_URL}/jwt/clear-verification-token`, {}, { withCredentials: true })
+               .then(response => {
+                  if (response.data.success) {
+                     setUser(currentUser);
+                     setLoading(false);
+                     console.log('logout response --> ', response.data);
+                  }
+               })
          }
 
       })

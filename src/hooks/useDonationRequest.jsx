@@ -28,8 +28,9 @@ const useDonationRequest = ({
          if (allDonationRequests) {
             // FETCH ALL DONATION REQUEST DATA
             try {
-               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}&bloodGroup=${bloodGroup}`);
-               result.allDonationRequests = { data: allDonationRequests, success: true, message: 'Data is returned successfully' };
+               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}&bloodGroup=${bloodGroup}`, { withCredentials: true});
+               // result.allDonationRequests = { data: allDonationRequests, success: true, message: 'Data is returned successfully' };
+               result.allDonationRequests = allDonationRequests;
             } catch (error) {
                result.allDonationRequests = { success: false, message: "Something went wrong", data: [], error };
             };
@@ -40,8 +41,9 @@ const useDonationRequest = ({
          if (currentUserDonationRequests) {
             // FETCH CURRENT USER'S DONATION REQUESTS
             try {
-               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}&search=${search}&bloodGroup=${bloodGroup}`);
-               result.currentUserDonationRequests = { data: userDonationRequests, success: true, message: 'Data is returned successfully' };
+               const { data: userDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&filter=${filter}&search=${search}&bloodGroup=${bloodGroup}`, { withCredentials: true });
+               // result.currentUserDonationRequests = { data: userDonationRequests, success: true, message: 'Data is returned successfully' };
+               result.currentUserDonationRequests = userDonationRequests;
             } catch (error) {
                result.currentUserDonationRequests = { success: false, message: 'Something went wrong', data: [], error };
             }
@@ -52,8 +54,9 @@ const useDonationRequest = ({
          if (recentDonationRequests) {
             // FETCH RECENT THREE LATEST DONATION REQUESTS DATA
             try {
-               const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3&sort=dce`);
-               result.recentDonationRequests = { data: recentDonationRequests, success: true, message: 'Data is returned successfully' };
+               const { data: recentDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?email=${user?.email}&count=3&sort=dce`, { withCredentials: true });
+               // result.recentDonationRequests = { data: recentDonationRequests, success: true, message: 'Data is returned successfully' };
+               result.recentDonationRequests = recentDonationRequests;
             } catch (error) {
                result.recentDonationRequests = { success: false, message: 'Something went wrong', data: [], error };
             };

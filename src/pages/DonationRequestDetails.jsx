@@ -24,7 +24,7 @@ const DonationRequestDetails = () => {
       queryKey: ["donationRequest", id],
       queryFn: async () => {
          try {
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests/${id}`, { withCredentials: true });
          return data;
          } catch (error) {
             toast.error("Something went wrong");

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-const StatCard = ({ icon = 'icon', count = '10', title = 'Default title', growth = '1%', link = '' }) => {
+const StatCard = ({ icon = 'icon', count = '10', title = 'Default title', growth = '0%', link = '' }) => {
    const navigate = useNavigate();
 
    const handleLinkClick = () => {
@@ -23,8 +23,8 @@ const StatCard = ({ icon = 'icon', count = '10', title = 'Default title', growth
                {title}
             </button>
             <h3 className="text-3xl font-semibold">{count}</h3>
-            <p className="text-sm ">Changed by
-               <span className={`text-sm ${parseFloat(growth) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+            <p className="text-sm ">
+               <span className={`text-sm font-semibold ${parseFloat(growth) >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                   {parseFloat(growth) >= 0 ? ' ↑' : ' ↓'}   {growth}
                </span> this month
             </p>

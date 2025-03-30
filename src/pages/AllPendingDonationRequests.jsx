@@ -34,6 +34,8 @@ const AllPendingDonationRequests = () => {
     }
   }
 
+  console.log(requests)
+
   return (
     <div className=" mx-auto px-4 py-8 max-h-screen overflow-auto border w-full dark:bg-gray-900">
       <header className="">
