@@ -28,7 +28,7 @@ const useDonationRequest = ({
          if (allDonationRequests) {
             // FETCH ALL DONATION REQUEST DATA
             try {
-               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}&bloodGroup=${bloodGroup}`, { withCredentials: true});
+               const { data: allDonationRequests } = await axios.get(`${import.meta.env.VITE_API_URL}/donation-requests?search=${search}&filter=${filter}&bloodGroup=${bloodGroup}`);
                // result.allDonationRequests = { data: allDonationRequests, success: true, message: 'Data is returned successfully' };
                result.allDonationRequests = allDonationRequests;
             } catch (error) {

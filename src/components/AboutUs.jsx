@@ -70,7 +70,7 @@ const AboutUs = () => {
         <p className="mt-4 text-gray-600 dark:text-gray-300">
           Every drop of blood can make a difference. Become a donor today and be a hero to someone in need.
         </p>
-        {user?.isAdmin || user?.isDonor || user?.isVolunteer ? <button className="mt-6 btn hover:bg-blue-900 rounded-none bg-blue-900 border-none text-white">Thanks fo being with us</button>  :<button onClick={handleBecomeADonor} className="mt-6 btn btn-primary text-white">Become a Donor</button>}
+        {user?.isAdmin || user?.isDonor || user?.isVolunteer ? <button className="mt-6 btn hover:bg-blue-900 rounded-none bg-blue-900 border-none text-white">Thanks fo being with us</button>  :<button onClick={handleBecomeADonor} className="mt-6 btn btn-primary bg-secondary text-white">Become a Donor</button>}
       </div>
     </div>
   );

@@ -115,7 +115,7 @@ const ContentManagement = () => {
                <DataFethingMessage />
             ) : blogs.length === 0 ? (
                <NoData
-                  title='No Blogs added yet!!'
+                  title={`${filter === '' ? 'No Blogs added yet!!': filter === 'draft' ? 'No Blogs Drafted yet!!' : 'No Blogs Published yet!!' }`}
                   actionLink='/dashboard/content-management/add-blog'
                   actionText='Create New Blog'></NoData>
             ) : (

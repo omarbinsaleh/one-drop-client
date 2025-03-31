@@ -136,7 +136,7 @@ const DonationRequestDetails = () => {
                </section>
 
                {/* DONATE NOW BUTTON: FACILATING THE DOANTION PROCESS */}
-               {request.status === "pending" && (
+               {request?.status === "pending" && (
                   <button
                      onClick={() => handleDonateNow(request)}
                      className="btn btn-block max-w-[300px] mt-4 bg-secondary/90 hover:bg-secondary focus:ring-2 ring-offset-2 ring-secondary text-white px-6 py-2"
